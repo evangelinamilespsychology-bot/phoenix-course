@@ -1,0 +1,896 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Инструменты Феникса — Курс Евангелины Майлс</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Raleway:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #faf6f0;
+  --bg2: #f2ece2;
+  --surface: #ffffff;
+  --surface2: #f5f0e8;
+  --border: #e0d4c0;
+  --text: #1a1410;
+  --text-mid: #3d3020;
+  --text-soft: #5a4830;
+  --gold: #b8820a;
+  --gold-light: #d4a020;
+  --gold-dark: #8a6008;
+  --ember: #c44a1e;
+  --cream: #1a1410;
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Raleway', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  overflow-x: hidden;
+}
+
+/* HERO */
+.hero {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 80px 24px;
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(180deg, #1a1a1e 0%, #232228 40%, #1e1c20 100%);
+}
+
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 70% 55% at 50% 55%, rgba(196,74,30,0.22) 0%, transparent 60%),
+    radial-gradient(ellipse 40% 30% at 50% 85%, rgba(224,170,72,0.15) 0%, transparent 55%),
+    radial-gradient(ellipse 100% 20% at 50% 100%, rgba(196,74,30,0.1) 0%, transparent 100%);
+}
+
+.hero::after {
+  content: '🦅';
+  position: absolute;
+  font-size: 220px;
+  bottom: -20px;
+  left: 50%;
+  transform: translateX(-50%);
+  opacity: 0.06;
+  filter: blur(2px);
+  pointer-events: none;
+}
+
+.hero-content { position: relative; z-index: 1; max-width: 780px; }
+
+.hero-badge {
+  display: inline-block;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: #e0aa48;
+  border: 1px solid rgba(224,170,72,0.4);
+  padding: 7px 20px;
+  border-radius: 100px;
+  margin-bottom: 44px;
+  background: rgba(224,170,72,0.08);
+}
+
+.hero-eyebrow {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: rgba(224,170,72,0.7);
+  margin-bottom: 20px;
+}
+
+.hero-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(56px, 11vw, 104px);
+  font-weight: 900;
+  line-height: 0.92;
+  color: #fff8ee;
+  margin-bottom: 12px;
+  letter-spacing: -0.02em;
+  text-shadow: 0 4px 60px rgba(196,74,30,0.4), 0 0 120px rgba(224,170,72,0.15);
+}
+
+.hero-title-sub {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(18px, 3.5vw, 30px);
+  font-weight: 400;
+  font-style: italic;
+  color: #e0aa48;
+  margin-bottom: 44px;
+  line-height: 1.4;
+}
+
+.hero-desc {
+  font-size: 16px;
+  font-weight: 300;
+  line-height: 1.9;
+  color: rgba(250,242,226,0.75);
+  max-width: 520px;
+  margin: 0 auto 52px;
+}
+
+.btn-main {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: linear-gradient(135deg, var(--ember), var(--gold));
+  color: #fff;
+  font-family: 'Raleway', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  padding: 18px 48px;
+  border: none;
+  border-radius: 100px;
+  cursor: pointer;
+  transition: all 0.3s;
+  box-shadow: 0 8px 40px rgba(196,74,30,0.4);
+  text-decoration: none;
+}
+.btn-main:hover { transform: translateY(-3px); box-shadow: 0 16px 56px rgba(196,74,30,0.5); }
+
+.hero-note { font-size: 12px; color: rgba(224,170,72,0.5); margin-top: 14px; letter-spacing: 0.04em; }
+
+/* SHARED SECTION */
+section { padding: 80px 24px; }
+.inner { max-width: 760px; margin: 0 auto; }
+
+.section-label {
+  display: block;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 16px;
+}
+
+.section-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(28px, 5vw, 46px);
+  font-weight: 700;
+  line-height: 1.15;
+  color: var(--cream);
+  margin-bottom: 28px;
+}
+.section-title em { font-style: italic; color: var(--gold); }
+
+/* STORY */
+.story { background: var(--bg2); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+
+.story-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 56px;
+  align-items: start;
+}
+@media(max-width:640px){ .story-grid { grid-template-columns: 1fr; gap: 32px; } }
+
+.story-text p {
+  font-size: 17px;
+  font-weight: 300;
+  line-height: 2;
+  color: var(--text-mid);
+  margin-bottom: 20px;
+}
+.story-text p:last-child { margin-bottom: 0; }
+.story-text strong { color: var(--cream); font-weight: 500; }
+
+.fact-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--gold);
+  border-radius: 0 12px 12px 0;
+  padding: 18px 20px;
+  margin-bottom: 12px;
+}
+.fact-card:last-child { margin-bottom: 0; }
+.fact-label { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-soft); margin-bottom: 6px; font-weight: 600; }
+.fact-text { font-family: 'Playfair Display', serif; font-size: 16px; font-style: italic; color: var(--cream); line-height: 1.5; }
+
+/* FOR WHO */
+.forwho { background: var(--surface); }
+
+.forwho-list { display: flex; flex-direction: column; gap: 10px; }
+.forwho-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 18px 22px;
+  transition: border-color 0.2s;
+}
+.forwho-item:hover { border-color: var(--gold-dark); }
+.forwho-icon { font-size: 20px; min-width: 26px; margin-top: 2px; }
+.forwho-text { font-size: 17px; font-weight: 300; line-height: 1.75; color: var(--text-mid); }
+.forwho-text strong { color: var(--cream); font-weight: 500; }
+
+/* PROGRAM */
+.program { background: var(--bg2); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+
+.weeks { display: flex; flex-direction: column; gap: 10px; }
+
+.week-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: border-color 0.2s;
+}
+.week-card:hover { border-color: var(--gold-dark); }
+.week-card.premium { border-color: rgba(201,149,74,0.35); }
+
+.week-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 18px 22px;
+}
+.week-num {
+  width: 34px; height: 34px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--ember), var(--gold));
+  color: #fff;
+  font-size: 13px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.week-num.gold { background: linear-gradient(135deg, var(--gold), #e8c870); }
+.week-title { font-size: 16px; font-weight: 600; color: var(--cream); flex: 1; }
+.week-sub { font-size: 12px; color: var(--text-soft); margin-top: 2px; font-weight: 300; }
+.week-arrow { color: var(--text-soft); transition: transform 0.3s; font-size: 13px; }
+.week-card.open .week-arrow { transform: rotate(180deg); }
+
+.week-body {
+  display: none;
+  padding: 0 22px 18px;
+  border-top: 1px solid var(--border);
+}
+.week-card.open .week-body { display: block; }
+
+.day-list { list-style: none; padding-top: 14px; }
+.day-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 9px 0;
+  border-bottom: 1px solid rgba(61,48,37,0.5);
+  font-size: 16px;
+  color: var(--text-mid);
+  font-weight: 300;
+  line-height: 1.5;
+}
+.day-item:last-child { border-bottom: none; }
+.day-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--gold); flex-shrink: 0; margin-top: 8px; }
+
+.week-premium-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(201,149,74,0.1);
+  border: 1px solid rgba(201,149,74,0.3);
+  color: var(--gold);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  padding: 4px 12px;
+  border-radius: 100px;
+  margin-left: auto;
+}
+
+/* RESULTS */
+.results { background: var(--surface); }
+
+.results-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+@media(max-width:560px){ .results-grid { grid-template-columns: 1fr; } }
+
+.result-card {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 22px;
+  transition: border-color 0.2s;
+}
+.result-card:hover { border-color: var(--gold-dark); }
+.result-icon { font-size: 26px; margin-bottom: 10px; display: block; }
+.result-title { font-size: 15px; font-weight: 600; color: var(--cream); margin-bottom: 6px; }
+.result-text { font-size: 15px; font-weight: 300; color: var(--text-mid); line-height: 1.75; }
+
+/* QUOTE */
+.quote-section {
+  background: linear-gradient(180deg, var(--bg2) 0%, #120e08 100%);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  padding: 80px 24px;
+  text-align: center;
+}
+.big-quote {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(20px, 3.5vw, 34px);
+  font-weight: 400;
+  font-style: italic;
+  color: var(--cream);
+  line-height: 1.55;
+  max-width: 660px;
+  margin: 0 auto 16px;
+}
+.big-quote-attr { font-size: 13px; color: var(--gold); letter-spacing: 0.1em; }
+
+/* AUTHOR */
+.author { background: var(--bg2); }
+
+.author-grid {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 44px;
+  align-items: start;
+}
+@media(max-width:560px){ .author-grid { grid-template-columns: 1fr; gap: 24px; } }
+
+.author-avatar {
+  width: 110px; height: 110px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--ember), var(--gold));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 44px;
+  flex-shrink: 0;
+  border: 2px solid rgba(201,149,74,0.3);
+}
+
+.author-name { font-family: 'Playfair Display', serif; font-size: 26px; font-weight: 700; color: var(--cream); margin-bottom: 4px; }
+.author-role { font-size: 12px; color: var(--gold); letter-spacing: 0.12em; text-transform: uppercase; font-weight: 600; margin-bottom: 18px; }
+.author-bio p { font-size: 16px; font-weight: 300; line-height: 1.9; color: var(--text-mid); margin-bottom: 12px; }
+.author-bio strong { color: var(--cream); font-weight: 500; }
+.author-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 18px; }
+.author-tag { font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-soft); background: var(--surface); border: 1px solid var(--border); padding: 5px 12px; border-radius: 100px; }
+
+/* PRICING */
+.pricing { background: var(--surface); border-top: 1px solid var(--border); }
+
+.pricing-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 14px;
+  margin-top: 8px;
+}
+@media(max-width:760px){ .pricing-grid { grid-template-columns: 1fr; } }
+
+.price-card {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 32px 28px;
+  position: relative;
+  overflow: hidden;
+  transition: border-color 0.2s;
+}
+.price-card:hover { border-color: var(--gold-dark); }
+.price-card.featured {
+  border-color: rgba(201,149,74,0.5);
+  background: linear-gradient(160deg, #2e2218, #241c12);
+}
+.price-card.featured::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--ember), var(--gold));
+}
+
+.price-tag {
+  display: inline-block;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  padding: 4px 12px;
+  border-radius: 100px;
+  margin-bottom: 20px;
+}
+.price-tag.standard { background: rgba(255,255,255,0.06); color: var(--text-soft); border: 1px solid var(--border); }
+.price-tag.premium { background: rgba(201,149,74,0.12); color: var(--gold); border: 1px solid rgba(201,149,74,0.3); }
+
+.price-name { font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 700; color: var(--cream); margin-bottom: 6px; }
+.price-sub { font-size: 13px; color: var(--text-soft); font-weight: 300; margin-bottom: 20px; line-height: 1.5; }
+.price-amount { font-family: 'Playfair Display', serif; font-size: 60px; font-weight: 900; color: var(--gold); line-height: 1; margin-bottom: 4px; }
+.price-period { font-size: 13px; color: var(--text-soft); margin-bottom: 24px; font-weight: 300; }
+
+.price-items { display: flex; flex-direction: column; gap: 10px; margin-bottom: 28px; }
+.price-item { display: flex; align-items: flex-start; gap: 10px; font-size: 13px; color: var(--text-mid); font-weight: 300; line-height: 1.5; }
+.price-check { color: var(--gold); flex-shrink: 0; margin-top: 1px; }
+
+.btn-buy {
+  display: block;
+  width: 100%;
+  background: linear-gradient(135deg, var(--ember), var(--gold));
+  color: #fff;
+  font-family: 'Raleway', sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  padding: 15px;
+  border: none;
+  border-radius: 100px;
+  cursor: pointer;
+  transition: all 0.3s;
+  box-shadow: 0 6px 24px rgba(196,74,30,0.3);
+  text-decoration: none;
+  text-align: center;
+}
+.btn-buy:hover { transform: translateY(-2px); box-shadow: 0 10px 32px rgba(196,74,30,0.4); }
+
+.btn-buy-outline {
+  display: block;
+  width: 100%;
+  background: transparent;
+  color: var(--gold);
+  font-family: 'Raleway', sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  padding: 15px;
+  border: 1.5px solid rgba(201,149,74,0.4);
+  border-radius: 100px;
+  cursor: pointer;
+  transition: all 0.3s;
+  text-decoration: none;
+  text-align: center;
+}
+.btn-buy-outline:hover { border-color: var(--gold); background: rgba(201,149,74,0.08); }
+
+.price-note { font-size: 11px; color: var(--text-soft); margin-top: 12px; text-align: center; line-height: 1.6; }
+
+.pricing-footnote {
+  text-align: center;
+  margin-top: 24px;
+  font-size: 14px;
+  color: var(--text-soft);
+  font-weight: 300;
+  font-style: italic;
+  font-family: 'Playfair Display', serif;
+}
+
+/* FAQ */
+.faq { background: var(--bg2); border-top: 1px solid var(--border); }
+
+.faq-list { display: flex; flex-direction: column; gap: 8px; }
+.faq-item {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: border-color 0.2s;
+}
+.faq-item:hover { border-color: var(--gold-dark); }
+.faq-q {
+  padding: 17px 20px;
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--cream);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+.faq-icon { color: var(--gold); font-size: 18px; flex-shrink: 0; transition: transform 0.3s; }
+.faq-item.open .faq-icon { transform: rotate(45deg); }
+.faq-a {
+  display: none;
+  padding: 0 20px 16px;
+  font-size: 16px;
+  font-weight: 300;
+  color: var(--text-mid);
+  line-height: 1.8;
+  border-top: 1px solid var(--border);
+  padding-top: 14px;
+}
+.faq-item.open .faq-a { display: block; }
+
+/* FINAL CTA */
+.final-cta {
+  background: linear-gradient(180deg, #120e08 0%, #0a0704 100%);
+  padding: 100px 24px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  border-top: 1px solid var(--border);
+}
+.final-cta::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 70% 50% at 50% 50%, rgba(196,74,30,0.14) 0%, transparent 70%);
+}
+.final-inner { position: relative; z-index: 1; max-width: 580px; margin: 0 auto; }
+.final-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(32px, 6vw, 54px);
+  font-weight: 700;
+  color: var(--cream);
+  line-height: 1.2;
+  margin-bottom: 20px;
+}
+.final-title em { font-style: italic; color: var(--gold); }
+.final-text { font-size: 16px; font-weight: 300; color: var(--text-mid); line-height: 1.85; margin-bottom: 40px; }
+
+footer {
+  background: #080604;
+  border-top: 1px solid var(--border);
+  padding: 28px 24px;
+  text-align: center;
+  font-size: 12px;
+  color: var(--text-soft);
+  line-height: 1.8;
+}
+footer a { color: var(--gold-dark); text-decoration: none; }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-content">
+    <div class="hero-badge">Evangelina Miles Academy</div>
+    <div class="hero-eyebrow">Авторский курс</div>
+    <h1 class="hero-title">Инструменты<br>Феникса</h1>
+    <p class="hero-title-sub">Практики, которые меняют жизнь<br>по 10–20 минут в день</p>
+    <p class="hero-desc">Не мотивация. Не теория. Выжимка из 15 лет реального пути — от комнатушки за £400 до пентхауса в центре Лондона.</p>
+    <div>
+      <a href="#pricing" class="btn-main">Начать путь 🔥</a>
+      <p class="hero-note">Доступ сразу после оплаты</p>
+    </div>
+  </div>
+</section>
+
+<!-- STORY -->
+<section class="story">
+  <div class="inner">
+    <span class="section-label">Моя история</span>
+    <h2 class="section-title">Я прошла этот путь.<br><em>От нуля до пентхауса.</em></h2>
+    <div class="story-grid">
+      <div class="story-text">
+        <p>В 2009 году я попала в аварию. Если бы моя голова оказалась на несколько сантиметров ближе к двери — меня бы не было. Именно тогда я впервые по-настоящему посмотрела на свою жизнь.</p>
+        <p>Были времена, когда в кармане не было ни копейки. Я снимала комнатушку за £400, ездила зайцем, шла пешком на работу. Звонила маме в слезах — и она делилась с пенсии 70 фунтами.</p>
+        <p><strong>Без языка. Без поддержки. С маленьким ребёнком на руках.</strong> В чужой стране, рядом с мужем с зависимостями.</p>
+        <p>С 2012 года я постоянно в терапии — по 40 фунтов в неделю, потом по 200. Я отказывала себе во многом, чтобы продолжать эту работу. И собирала только то, что реально работает.</p>
+        <p>Сегодня я живу в центре Лондона, на Лондон Бридж. Мои клиенты — миллионеры. И я абсолютно точно знаю: <strong>безвыходных ситуаций не бывает.</strong></p>
+      </div>
+      <div>
+        <div class="fact-card">
+          <div class="fact-label">Переломный момент</div>
+          <div class="fact-text">«Авария 2009 года. Тогда я поняла: если хочу жить иначе — надо перестать ждать.»</div>
+        </div>
+        <div class="fact-card">
+          <div class="fact-label">15 лет в терапии</div>
+          <div class="fact-text">«Я проверяла каждую практику на себе. Оставляла только то, что работает.»</div>
+        </div>
+        <div class="fact-card">
+          <div class="fact-label">Результат</div>
+          <div class="fact-text">«Пентхаус на Лондон Бридж. Любимая работа. Клиенты-миллионеры. Спокойствие.»</div>
+        </div>
+        <div class="fact-card">
+          <div class="fact-label">Главный вывод</div>
+          <div class="fact-text">«Не нужно менять всё за один день. Нужны правильные инструменты и 10 минут в день.»</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOR WHO -->
+<section class="forwho">
+  <div class="inner">
+    <span class="section-label">Для кого</span>
+    <h2 class="section-title">Этот курс — <em>для вас,</em><br>если вы узнаёте себя</h2>
+    <div class="forwho-list">
+      <div class="forwho-item"><span class="forwho-icon">🌊</span><div class="forwho-text"><strong>Вы чувствуете, что жизнь могла бы быть другой</strong> — но что именно мешает, непонятно.</div></div>
+      <div class="forwho-item"><span class="forwho-icon">⏳</span><div class="forwho-text"><strong>Вы устали выживать</strong> и хотите наконец начать жить — спокойно, с опорой, без постоянного напряжения.</div></div>
+      <div class="forwho-item"><span class="forwho-icon">🔄</span><div class="forwho-text"><strong>Вы уже пробовали менять что-то</strong> — и останавливались. Снова и снова.</div></div>
+      <div class="forwho-item"><span class="forwho-icon">💫</span><div class="forwho-text"><strong>Вы знаете, что способны на большее</strong> — но что-то внутри всё время тормозит.</div></div>
+      <div class="forwho-item"><span class="forwho-icon">🌍</span><div class="forwho-text"><strong>Вы живёте в сложных обстоятельствах</strong> — эмиграция, одиночество, отношения, деньги, здоровье.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- PROGRAM -->
+<section class="program">
+  <div class="inner">
+    <span class="section-label">Программа курса</span>
+    <h2 class="section-title">4 недели.<br><em>28 практик. Один инструмент в день.</em></h2>
+    <div class="weeks">
+
+      <!-- WEEK 1 -->
+      <div class="week-card open" onclick="toggleWeek(this)">
+        <div class="week-header">
+          <div class="week-num">1</div>
+          <div style="flex:1">
+            <div class="week-title">Энергия и очистка</div>
+            <div class="week-sub">Где вы теряете силы — и как остановить утечку</div>
+          </div>
+          <div class="week-arrow">▼</div>
+        </div>
+        <div class="week-body">
+          <ul class="day-list">
+            <li class="day-item"><span class="day-dot"></span><div><strong>День 1. Где я трачу энергию?</strong><br>Составляем честный аудит: на что уходят ваши силы и где главные утечки.</div></li>
+            <li class="day-item"><span class="day-dot"></span><div><strong>День 2. Разговоры-«унитазы»</strong><br>Учимся распознавать пустые разговоры, которые забирают энергию без остатка.</div></li>
+            <li class="day-item"><span class="day-dot"></span><div><strong>День 3. Письмо обидчику</strong><br>Мощная практика освобождения от накопленных обид — без цензуры, без отправки.</div></li>
+            <li class="day-item"><span class="day-dot"></span><div><strong>День 4. Внутренний критик</strong><br>Откуда он взялся и как перестать верить чужим голосам в своей голове.</div></li>
+            <li class="day-item"><span class="day-dot"></span><div><strong>День 5. Практика похвалы</strong><br>Учимся видеть и доказывать себе: «Я молодец» — с реальными примерами.</div></li>
+            <li class="day-item"><span class="day-dot"></span><div><strong>День 6. Благодарность вместо жалоб</strong><br>Меняем привычку жаловаться на привычку замечать хорошее.</div></li>
+            <li class="day-item"><span class="day-dot"></span><div><strong>День 7. Итоги первой недели</strong><br>Подводим итог, выбираем одну практику для продолжения.</div></li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- WEEK 2 -->
+      <div class="week-card" onclick="toggleWeek(this)">
+        <div class="week-header">
+          <div class="week-num">2</div>
+          <div style="flex:1">
+            <div class="week-title">Ревизия и границы</div>
+            <div class="week-sub">Честный взгляд на себя и строительство своего государства</div>
+          </div>
+          <div class="week-arrow">▼</div>
+        </div>
+        <div class="week-body">
+          <ul class="day-list">
+            <li class="day-item"><span class="day-dot"></span><div><strong>День 8. Ревизия и работа над ошибками</strong><br>Смотрим честно: где оступились, что можно сделать лучше — без самобичевания.</div></li>
+            <li class="day-item"><span class="day-dot"></span><div><strong>День 9. «Если бы я хотела…»</strong><br>Возвращаем себе право на желания — пишем без ограничений и страха.</div></li>
+            <li class="day-item"><span class="day-dot"></span><div><strong>День 10. Право на отдых</strong><br>Разрешаем себе паузу без чувства вины. Отдых — часть работы, а не слабость.</div></li>
+            <li class="day-item"><span class="day-dot"></span><div><strong>День 11. Самоуважение и маленькие шаги</strong><br>Самоуважение растёт через выполненные обещания — даже самые маленькие.</div></li>
+            <li class="day-item"><span class="day-dot"></span><div><strong>День 12. Моё государство — границы</strong><br>Строим личные границы: что для вас неприкосновенно и как говорить «нет» твёрдо, но мягко.</div></li>
+            <li class="day-item"><span class="day-dot"></span><div><strong>День 13. Подарок себе</strong><br>Отмечаем результат — маленький подарок как знак уважения к своему труду.</div></li>
+            <li class="day-item"><span class="day-dot"></span><div><strong>День 14. Итоги второй недели</strong><br>Осознаём: ваш ресурс — ваш. Подводим итог и идём дальше.</div></li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- WEEK 3 -->
+      <div class="week-card" onclick="toggleWeek(this)">
+        <div class="week-header">
+          <div class="week-num">3</div>
+          <div style="flex:1">
+            <div class="week-title">Новые привычки и уверенность</div>
+            <div class="week-sub">Закладываем фундамент, который не сломается</div>
+          </div>
+          <div class="week-arrow">▼</div>
+        </div>
+        <div class="week-body">
+          <ul class="day-list">
+            <li class="day-item"><span class="day-dot"></span><div><strong>День 15. Новая привычка</strong><br>Выбираем одну маленькую привычку и закрепляем её — это фундамент больших перемен.</div></li>
+            <li class="day-item"><span class="day-dot"></span><div><strong>День 16. Мини-ритуалы силы</strong><br>Создаём личный утренний ритуал 5–10 минут, который даёт энергию на весь день.</div></li>
+            <li class="day-item"><span class="day-dot"></span><div><strong>День 17. Работа с окружением</strong><br>Честно смотрим: кто из близких даёт энергию, а кто забирает — и что с этим делать.</div></li>
+            <li class="day-item"><span class="day-dot"></span><div><strong>День 18. Уверенность и «я могу»</strong><br>Уверенность рождается из опыта. Вспоминаем свои победы и укрепляем веру в себя.</div></li>
+            <li class="day-item"><span class="day-dot"></span><div><strong>День 19. Мои маленькие победы</strong><br>Делимся историями прогресса — это закрепляет результат и вдохновляет двигаться дальше.</div></li>
+            <li class="day-item"><span class="day-dot"></span><div><strong>День 20. Осознанная забота о себе</strong><br>Подарок как опыт, а не вещь — массаж, прогулка, театр. Наполняем душу.</div></li>
+            <li class="day-item"><span class="day-dot"></span><div><strong>День 21. Итоги трёх недель</strong><br>Три недели позади. Записываем 5 главных изменений и ставим цель на следующий месяц.</div></li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- WEEK 4 -->
+      <div class="week-card premium" onclick="toggleWeek(this)">
+        <div class="week-header">
+          <div class="week-num gold">4</div>
+          <div style="flex:1">
+            <div class="week-title">Движение вперёд</div>
+            <div class="week-sub">Самая мощная неделя + 20 минут лично с Евангелиной 🎁</div>
+          </div>
+          <div class="week-premium-badge">✦ Бонус</div>
+          <div class="week-arrow">▼</div>
+        </div>
+        <div class="week-body">
+          <div style="background:rgba(184,130,10,0.08);border:1px solid rgba(184,130,10,0.25);border-radius:12px;padding:16px 18px;margin:16px 0;font-size:14px;color:#5a4830;line-height:1.7;">
+            🎁 <strong>Бонус 4-й недели:</strong> после завершения вы получаете <strong>20-минутную личную встречу с Евангелиной</strong> — обратная связь, ваши вопросы, направление дальнейшего пути.
+          </div>
+          <ul class="day-list">
+            <li class="day-item"><span class="day-dot"></span><div><strong>День 22. Поддерживающие микропрактики</strong><br>5 минут в день меняют жизнь — выбираем практику и закрепляем навсегда.</div></li>
+            <li class="day-item"><span class="day-dot"></span><div><strong>День 23. Я управляю временем</strong><br>Ваше время — ваша главная валюта. Учимся тратить её осознанно.</div></li>
+            <li class="day-item"><span class="day-dot"></span><div><strong>День 24. Работа с сопротивлением</strong><br>«Лень», «не хочу», «потом» — это не враги, а сигналы роста. Учимся с ними работать.</div></li>
+            <li class="day-item"><span class="day-dot"></span><div><strong>День 25. Цель и маленькие шаги</strong><br>Формируем цель на 3 месяца и разбиваем её на ежедневные шаги по 10–15 минут.</div></li>
+            <li class="day-item"><span class="day-dot"></span><div><strong>День 26. Мой прогресс за неделю</strong><br>Фиксируем изменения — каждая записанная победа укрепляет движение вперёд.</div></li>
+            <li class="day-item"><span class="day-dot"></span><div><strong>День 27. Финальный подарок себе</strong><br>Самый значимый подарок за весь курс — символ уважения к пройденному пути.</div></li>
+            <li class="day-item"><span class="day-dot"></span><div><strong>День 28. Финал. Феникс поднялся. 🔥</strong><br>Итоги курса, 10 открытий, одна привычка навсегда — и встреча с Евангелиной.</div></li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- RESULTS -->
+<section class="results">
+  <div class="inner">
+    <span class="section-label">Результаты</span>
+    <h2 class="section-title">После курса <em>вы почувствуете:</em></h2>
+    <div class="results-grid">
+      <div class="result-card"><span class="result-icon">⚡</span><div class="result-title">Больше энергии</div><div class="result-text">Вы увидите, куда она уходила — и остановите утечки.</div></div>
+      <div class="result-card"><span class="result-icon">🧭</span><div class="result-title">Внутренняя опора</div><div class="result-text">Устойчивость, которую не выбьют внешние события.</div></div>
+      <div class="result-card"><span class="result-icon">🔓</span><div class="result-title">Свобода от паттернов</div><div class="result-text">Вы поймёте, какая программа управляла вами — и выйдете из неё.</div></div>
+      <div class="result-card"><span class="result-icon">💛</span><div class="result-title">Отношения с собой</div><div class="result-text">Меньше самокритики. Больше понимания и тепла к себе.</div></div>
+      <div class="result-card"><span class="result-icon">💸</span><div class="result-title">Другое отношение к деньгам</div><div class="result-text">Связь самооценки и дохода — и первые шаги к изменениям.</div></div>
+      <div class="result-card"><span class="result-icon">🌅</span><div class="result-title">Ощущение движения</div><div class="result-text">Не «снова ничего не меняется» — а «я иду вперёд».</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- QUOTE -->
+<div class="quote-section">
+  <p class="big-quote">«Настоящая сила человека — не в том, чтобы быть удачливым или умным, а в том, чтобы уметь избегать ненужных неприятностей.»</p>
+  <p class="big-quote-attr">— Артур Шопенгауэр</p>
+</div>
+
+<!-- AUTHOR -->
+<section class="author">
+  <div class="inner">
+    <span class="section-label">Об авторе</span>
+    <div class="author-grid">
+      <div class="author-avatar">🦅</div>
+      <div>
+        <div class="author-name">Евангелина Майлс</div>
+        <div class="author-role">Психолог · Коуч · Основатель Evangelina Miles Academy</div>
+        <div class="author-bio">
+          <p>Родилась в Казахстане, работала в Москве в Альфа-Банке. <strong>Сейчас живу в центре Лондона</strong> и работаю с клиентами-миллионерами.</p>
+          <p>Путь был непростым: эмиграция без языка, сложный брак, одиночество, финансовые кризисы. <strong>С 2012 года постоянно в терапии</strong> — собирала только то, что реально работает.</p>
+          <p>Мой принцип: <strong>не теория, а инструменты.</strong> Проверенные на себе. В самых жёстких условиях.</p>
+        </div>
+        <div class="author-tags">
+          <span class="author-tag">15 лет практики</span>
+          <span class="author-tag">Лондон</span>
+          <span class="author-tag">Психология</span>
+          <span class="author-tag">Авторский метод</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="pricing" id="pricing">
+  <div class="inner">
+    <span class="section-label" style="text-align:center">Стоимость</span>
+    <h2 class="section-title" style="text-align:center">Выберите <em>свой путь</em></h2>
+    <div class="pricing-grid" style="grid-template-columns:1fr 1fr 1fr">
+
+      <div class="price-card">
+        <div class="price-tag standard">Старт</div>
+        <div class="price-name">3 недели</div>
+        <div class="price-sub">Энергия · Границы · Деньги<br>Фундамент изменений</div>
+        <div class="price-amount">£97</div>
+        <div class="price-period">полный доступ навсегда</div>
+        <div class="price-items">
+          <div class="price-item"><span class="price-check">✦</span>21 видеоурок</div>
+          <div class="price-item"><span class="price-check">✦</span>21 практическое задание</div>
+          <div class="price-item"><span class="price-check">✦</span>Рабочая тетрадь</div>
+          <div class="price-item"><span class="price-check">✦</span>Психологический тест</div>
+          <div class="price-item"><span class="price-check">✦</span>Доступ навсегда</div>
+        </div>
+        <a href="#" class="btn-buy-outline">Начать за £97</a>
+        <p class="price-note">Visa, Mastercard, PayPal</p>
+      </div>
+
+      <div class="price-card featured">
+        <div class="price-tag premium">✦ Лучший выбор</div>
+        <div class="price-name">4 недели</div>
+        <div class="price-sub">Все 3 недели + <strong style="color:var(--gold)">4-я неделя «Феникс»</strong></div>
+        <div class="price-amount">£147</div>
+        <div class="price-period">полный доступ навсегда</div>
+        <div class="price-items">
+          <div class="price-item"><span class="price-check">✦</span>28 видеоуроков</div>
+          <div class="price-item"><span class="price-check">✦</span>28 практических заданий</div>
+          <div class="price-item"><span class="price-check">✦</span>Рабочая тетрадь</div>
+          <div class="price-item"><span class="price-check">✦</span>Психологический тест</div>
+          <div class="price-item"><span class="price-check">✦</span>Неделя «Феникс» включена</div>
+          <div class="price-item"><span class="price-check">🎁</span><strong>20 минут лично с Евангелиной</strong></div>
+          <div class="price-item"><span class="price-check">✦</span>Доступ навсегда</div>
+        </div>
+        <a href="#" class="btn-buy">Полный курс за £147 🔥</a>
+        <p class="price-note">Visa, Mastercard, PayPal</p>
+      </div>
+
+      <div class="price-card">
+        <div class="price-tag standard">Дополнение</div>
+        <div class="price-name">4-я неделя</div>
+        <div class="price-sub">Только для тех, кто уже прошёл 3 недели</div>
+        <div class="price-amount">£69.99</div>
+        <div class="price-period">доступ навсегда</div>
+        <div class="price-items">
+          <div class="price-item"><span class="price-check">✦</span>7 видеоуроков</div>
+          <div class="price-item"><span class="price-check">✦</span>7 практических заданий</div>
+          <div class="price-item"><span class="price-check">✦</span>Будущее и движение вперёд</div>
+          <div class="price-item"><span class="price-check">✦</span>Финал — Феникс поднялся 🔥</div>
+          <div class="price-item"><span class="price-check">🎁</span><strong>20 минут лично с Евангелиной</strong></div>
+          <div class="price-item"><span class="price-check">✦</span>Доступ навсегда</div>
+        </div>
+        <a href="#" class="btn-buy-outline">Добавить за £69.99</a>
+        <p class="price-note">Visa, Mastercard, PayPal</p>
+      </div>
+
+    </div>
+    <p class="pricing-footnote">Начните с £97 — почувствуйте результат — добавьте 4-ю неделю за £69.99. Или сразу всё за £147 и сэкономьте £20.</p>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq">
+  <div class="inner">
+    <span class="section-label">Вопросы и ответы</span>
+    <h2 class="section-title">Часто <em>спрашивают</em></h2>
+    <div class="faq-list">
+      <div class="faq-item" onclick="toggleFaq(this)">
+        <div class="faq-q">Нужно ли мне много времени? <span class="faq-icon">+</span></div>
+        <div class="faq-a">Нет. Каждая практика занимает 10–20 минут. Курс создан для занятых людей — один небольшой шаг в день.</div>
+      </div>
+      <div class="faq-item" onclick="toggleFaq(this)">
+        <div class="faq-q">Это подходит мне без опыта в психологии? <span class="faq-icon">+</span></div>
+        <div class="faq-a">Да, и особенно если нет. Никакой терминологии. Только живые практики, которые работают без специальной подготовки.</div>
+      </div>
+      <div class="faq-item" onclick="toggleFaq(this)">
+        <div class="faq-q">Что если я начну с 3 недель — смогу потом добавить 4-ю? <span class="faq-icon">+</span></div>
+        <div class="faq-a">Да. Вы можете начать с £97, пройти первые 3 недели — и если почувствуете результат, докупить 4-ю неделю отдельно.</div>
+      </div>
+      <div class="faq-item" onclick="toggleFaq(this)">
+        <div class="faq-q">Что если я пропущу день? <span class="faq-icon">+</span></div>
+        <div class="faq-a">Ничего страшного. Доступ к материалам навсегда — можно идти в своём темпе и возвращаться когда угодно.</div>
+      </div>
+      <div class="faq-item" onclick="toggleFaq(this)">
+        <div class="faq-q">Можно получить личную консультацию? <span class="faq-icon">+</span></div>
+        <div class="faq-a">Да. Параллельно с курсом или после него вы можете записаться на личную сессию с Евангелиной.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section class="final-cta">
+  <div class="final-inner">
+    <h2 class="final-title">Феникс не ждёт<br><em>идеального момента.</em></h2>
+    <p class="final-text">Он поднимается из пепла. Трудно, медленно, иногда со страхом. Но поднимается. Этот курс — для тех, кто готов начать. Сегодня.</p>
+    <a href="#pricing" class="btn-main">Начать путь 🔥</a>
+  </div>
+</section>
+
+<footer>
+  <p>© 2025 Evangelina Miles Academy · Лондон, Великобритания</p>
+  <p style="margin-top:8px"><a href="#">Политика конфиденциальности</a> · <a href="#">Условия использования</a></p>
+</footer>
+
+<script>
+function toggleWeek(card) { card.classList.toggle('open'); }
+function toggleFaq(item) { item.classList.toggle('open'); }
+</script>
+</body>
+</html>
