@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Мой курс — Инструменты Феникса</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Raleway:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:#faf6f0; --bg2:#f2ece2; --surface:#ffffff; --surface2:#f5f0e8;
+  --border:#e0d4c0; --text:#1a1410; --text-mid:#3d3020; --text-soft:#5a4830;
+  --gold:#b8820a; --gold-light:#d4a020; --gold-dark:#8a6008;
+  --ember:#c44a1e;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body { font-family:'Raleway',sans-serif; background:var(--bg); color:var(--text); }
+
+/* TOPBAR */
+.topbar {
+  background:linear-gradient(135deg,#1a1410,#231c14);
+  padding:16px 28px; display:flex; align-items:center; gap:16px;
+  border-bottom:1px solid rgba(184,130,10,0.2); position:sticky; top:0; z-index:100;
+}
+.topbar-logo { font-family:'Playfair Display',serif; font-size:18px; color:#e0aa48; }
+.topbar-plan {
+  margin-left:auto; font-size:10px; font-weight:700; letter-spacing:0.15em;
+  text-transform:uppercase; background:rgba(184,130,10,0.12);
+  border:1px solid rgba(184,130,10,0.3); color:#e0aa48;
+  padding:5px 14px; border-radius:100px;
+}
+.topbar-back {
+  font-size:12px; color:rgba(224,170,72,0.5); text-decoration:none;
+  font-weight:500; transition:color 0.2s;
+}
+.topbar-back:hover { color:#e0aa48; }
+
+/* LAYOUT */
+.layout { display:grid; grid-template-columns:300px 1fr; min-height:calc(100vh - 57px); }
+@media(max-width:768px){ .layout { grid-template-columns:1fr; } }
+
+/* SIDEBAR */
+.sidebar {
+  background:var(--bg2); border-right:1px solid var(--border);
+  padding:24px 0; overflow-y:auto; position:sticky;
+  top:57px; height:calc(100vh - 57px);
+}
+@media(max-width:768px){ .sidebar { position:static; height:auto; max-height:320px; } }
+
+.sidebar-week {
+  padding:6px 0;
+  border-bottom:1px solid var(--border);
+}
+.sidebar-week:last-child { border-bottom:none; }
+
+.sidebar-week-header {
+  display:flex; align-items:center; gap:10px;
+  padding:10px 20px; cursor:pointer;
+  font-size:12px; font-weight:600; color:var(--text-soft);
+  letter-spacing:0.06em; text-transform:uppercase;
+  transition:color 0.2s;
+}
+.sidebar-week-header:hover { color:var(--gold); }
+.sidebar-week-header.locked { opacity:0.45; cursor:default; }
+.sidebar-week-num {
+  width:24px; height:24px; border-radius:50%; flex-shrink:0;
+  background:linear-gradient(135deg,var(--ember),var(--gold));
+  color:#fff; font-size:11px; font-weight:700;
+  display:flex; align-items:center; justify-content:center;
+}
+.sidebar-week-num.gold { background:linear-gradient(135deg,var(--gold),#e8c870); }
+.sidebar-week-num.locked { background:rgba(90,72,48,0.2); color:var(--text-soft); }
+
+.sidebar-lesson {
+  display:flex; align-items:center; gap:10px;
+  padding:9px 20px 9px 32px; cursor:pointer;
+  font-size:13px; color:var(--text-mid); font-weight:300;
+  transition:all 0.15s; border-left:3px solid transparent;
+}
+.sidebar-lesson:hover { background:rgba(184,130,10,0.06); color:var(--gold-dark); }
+.sidebar-lesson.active { background:rgba(184,130,10,0.08); border-left-color:var(--gold); color:var(--gold-dark); font-weight:500; }
+.sidebar-lesson.locked { opacity:0.4; cursor:not-allowed; }
+.lesson-num { font-size:10px; color:var(--text-soft); min-width:20px; font-weight:600; }
+.lesson-dot { width:6px; height:6px; border-radius:50%; background:var(--gold); flex-shrink:0; }
+.lesson-dot.done { background:#4caf50; }
+.lesson-dot.locked { background:rgba(90,72,48,0.25); }
+.lock-icon { font-size:11px; margin-left:auto; opacity:0.5; }
+
+/* MAIN PLAYER */
+.main { padding:40px 48px; overflow-y:auto; }
+@media(max-width:768px){ .main { padding:24px 20px; } }
+
+/* WELCOME STATE */
+.welcome {
+  max-width:560px;
+}
+.welcome-title {
+  font-family:'Playfair Display',serif;
+  font-size:clamp(28px,5vw,42px); font-weight:700; color:var(--text);
+  margin-bottom:14px; line-height:1.2;
+}
+.welcome-title em { font-style:italic; color:var(--gold); }
+.welcome-text { font-size:16px; font-weight:300; color:var(--text-mid); line-height:1.9; margin-bottom:28px; }
+
+.progress-wrap { margin-bottom:36px; }
+.progress-label {
+  display:flex; justify-content:space-between;
+  font-size:11px; font-weight:600; letter-spacing:0.1em;
+  text-transform:uppercase; color:var(--text-soft); margin-bottom:8px;
+}
+.progress-track { height:6px; background:rgba(90,72,48,0.15); border-radius:100px; overflow:hidden; }
+.progress-fill { height:100%; background:linear-gradient(90deg,var(--ember),var(--gold)); border-radius:100px; transition:width 0.5s; }
+
+.btn-start {
+  display:inline-flex; align-items:center; gap:10px;
+  background:linear-gradient(135deg,var(--ember),var(--gold));
+  color:#fff; font-family:'Raleway',sans-serif;
+  font-size:12px; font-weight:700; letter-spacing:0.14em; text-transform:uppercase;
+  padding:16px 36px; border:none; border-radius:100px; cursor:pointer;
+  box-shadow:0 8px 32px rgba(196,74,30,0.3); transition:all 0.25s; text-decoration:none;
+}
+.btn-start:hover { transform:translateY(-2px); box-shadow:0 12px 40px rgba(196,74,30,0.4); }
+
+/* LESSON PLAYER */
+.player { display:none; max-width:800px; }
+.player.visible { display:block; }
+
+.player-breadcrumb {
+  font-size:11px; color:var(--text-soft); letter-spacing:0.1em;
+  text-transform:uppercase; margin-bottom:8px;
+}
+.player-title {
+  font-family:'Playfair Display',serif;
+  font-size:clamp(22px,4vw,34px); font-weight:700; color:var(--text);
+  margin-bottom:6px; line-height:1.2;
+}
+.player-desc { font-size:15px; font-weight:300; color:var(--text-mid); line-height:1.8; margin-bottom:24px; }
+
+.video-frame {
+  background:#1a1410; border-radius:16px; overflow:hidden;
+  aspect-ratio:16/9; margin-bottom:28px;
+  box-shadow:0 12px 48px rgba(26,20,16,0.15);
+}
+.video-frame iframe { width:100%; height:100%; display:block; border:none; }
+.video-coming {
+  width:100%; height:100%; display:flex; flex-direction:column;
+  align-items:center; justify-content:center; gap:12px;
+  background:linear-gradient(135deg,#1a1410,#231c14);
+}
+.video-coming-icon { font-size:40px; opacity:0.4; }
+.video-coming-text { font-size:13px; color:rgba(224,170,72,0.4); font-weight:300; letter-spacing:0.1em; }
+
+/* PRACTICE BOX */
+.practice-box {
+  background:var(--surface2); border:1px solid var(--border);
+  border-left:3px solid var(--gold); border-radius:0 14px 14px 0;
+  padding:20px 24px; margin-bottom:28px;
+}
+.practice-label {
+  font-size:10px; font-weight:700; letter-spacing:0.2em; text-transform:uppercase;
+  color:var(--gold); margin-bottom:10px;
+}
+.practice-text { font-size:14px; color:var(--text-mid); font-weight:300; line-height:1.9; }
+
+/* NAV BUTTONS */
+.nav-row { display:flex; gap:12px; flex-wrap:wrap; }
+.btn-nav {
+  display:inline-flex; align-items:center; gap:8px;
+  font-family:'Raleway',sans-serif; font-size:12px; font-weight:700;
+  letter-spacing:0.1em; text-transform:uppercase; padding:13px 24px;
+  border-radius:100px; cursor:pointer; transition:all 0.2s; border:none;
+}
+.btn-next {
+  background:linear-gradient(135deg,var(--ember),var(--gold));
+  color:#fff; box-shadow:0 6px 24px rgba(196,74,30,0.25);
+}
+.btn-next:hover { transform:translateY(-1px); }
+.btn-prev {
+  background:var(--surface2); color:var(--text-soft);
+  border:1px solid var(--border);
+}
+.btn-prev:hover { border-color:var(--gold-dark); color:var(--gold-dark); }
+
+/* LOCKED STATE */
+.locked-state {
+  display:none; max-width:480px; text-align:center; padding:60px 24px;
+}
+.locked-state.visible { display:block; }
+.lock-big { font-size:52px; margin-bottom:20px; opacity:0.4; }
+.locked-title { font-family:'Playfair Display',serif; font-size:26px; color:var(--text); margin-bottom:12px; }
+.locked-text { font-size:15px; font-weight:300; color:var(--text-mid); line-height:1.8; margin-bottom:28px; }
+.btn-upgrade {
+  display:inline-block;
+  background:linear-gradient(135deg,var(--ember),var(--gold));
+  color:#fff; font-family:'Raleway',sans-serif;
+  font-size:12px; font-weight:700; letter-spacing:0.12em; text-transform:uppercase;
+  padding:15px 32px; border-radius:100px; text-decoration:none;
+  box-shadow:0 8px 28px rgba(196,74,30,0.3); transition:all 0.2s;
+}
+.btn-upgrade:hover { transform:translateY(-2px); }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <a href="index.html" class="topbar-back">← Главная</a>
+  <div class="topbar-logo">🦅 Инструменты Феникса</div>
+  <div class="topbar-plan" id="topbarPlan">Загрузка...</div>
+</div>
+
+<div class="layout">
+
+  <!-- SIDEBAR -->
+  <div class="sidebar" id="sidebar"></div>
+
+  <!-- MAIN -->
+  <div class="main" id="mainArea">
+
+    <!-- Welcome -->
+    <div class="welcome" id="welcomeState">
+      <h1 class="welcome-title">Ваш путь<br><em>начинается здесь.</em></h1>
+      <p class="welcome-text">Все материалы курса доступны прямо сейчас. Идите в своём темпе — один урок в день достаточно для глубокого изменения.</p>
+      <div class="progress-wrap">
+        <div class="progress-label">
+          <span>Прогресс курса</span>
+          <span id="progressText">0 уроков просмотрено</span>
+        </div>
+        <div class="progress-track"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
+      </div>
+      <a href="#" class="btn-start" onclick="startCourse(); return false;">Начать День 1 →</a>
+    </div>
+
+    <!-- Player -->
+    <div class="player" id="playerState">
+      <div class="player-breadcrumb" id="playerBreadcrumb"></div>
+      <h2 class="player-title" id="playerTitle"></h2>
+      <p class="player-desc" id="playerDesc"></p>
+      <div class="video-frame" id="videoFrame"></div>
+      <div class="practice-box" id="practiceBox" style="display:none">
+        <div class="practice-label">Практика урока</div>
+        <div class="practice-text" id="practiceText"></div>
+      </div>
+      <div class="nav-row">
+        <button class="btn-nav btn-prev" id="btnPrev" onclick="navigate(-1)">← Назад</button>
+        <button class="btn-nav btn-next" id="btnNext" onclick="navigate(1)">Следующий урок →</button>
+      </div>
+    </div>
+
+    <!-- Locked -->
+    <div class="locked-state" id="lockedState">
+      <div class="lock-big">🔒</div>
+      <div class="locked-title">Этот урок недоступен</div>
+      <p class="locked-text">Этот раздел не входит в ваш текущий план. Вы можете расширить доступ в любое время.</p>
+      <a href="index.html#pricing" class="btn-upgrade">Расширить доступ →</a>
+    </div>
+
+  </div>
+</div>
+
+<script>
+// ═══════════════════════════════════════════════════════════════
+//  LESSON VIDEOS — paste YouTube IDs here as you record lessons
+//  Format: { day_number: "YouTube_video_id" }
+// ═══════════════════════════════════════════════════════════════
+const LESSON_VIDEOS = {
+  1: "ZeCX4TMfzUs",
+  // 2: "",
+  // add more as you record them
+};
+
+// ═══════════════════════════════════════════════════════════════
+//  COURSE STRUCTURE
+// ═══════════════════════════════════════════════════════════════
+const WEEKS = [
+  {
+    num:1, title:"Неделя 1 — Энергия", gold:false,
+    days:[
+      {day:1, title:"Где я трачу энергию?",         desc:"Составляем честный аудит: на что уходят ваши силы и где главные утечки.",        practice:"1. Возьмите лист бумаги.\n2. Запишите 5 вещей, после которых чувствуете усталость и опустошение.\n3. Спросите: «Что из этого я готова уменьшить хотя бы на 1 день?»"},
+      {day:2, title:"Разговоры-«унитазы»",           desc:"Учимся распознавать пустые разговоры, которые забирают энергию без остатка.",    practice:"Запишите 3 разговора из последней недели, которые оставили вас опустошёнными. Что в них было общего?"},
+      {day:3, title:"Письмо обидчику",               desc:"Мощная практика освобождения от накопленных обид — без цензуры, без отправки.", practice:"Напишите письмо человеку, который причинил вам боль. Без цензуры. Не отправляйте. Просто выпустите."},
+      {day:4, title:"Внутренний критик",             desc:"Откуда он взялся и как перестать верить чужим голосам в своей голове.",         practice:"Запишите 3 фразы своего внутреннего критика. Затем напишите, чей это на самом деле голос — и что вы хотите сказать ему в ответ."},
+      {day:5, title:"Практика похвалы",              desc:"Учимся видеть и доказывать себе: «Я молодец» — с реальными примерами.",         practice:"Напишите 5 доказательств того, что вы молодец. Конкретных — не «я хорошая», а «я сделала X несмотря на Y»."},
+      {day:6, title:"Благодарность вместо жалоб",    desc:"Меняем привычку жаловаться на привычку замечать хорошее.",                      practice:"Каждый вечер 7 дней записывайте 3 вещи, за которые благодарны этому дню. Начните сегодня."},
+      {day:7, title:"Итоги первой недели",           desc:"Подводим итог, выбираем одну практику для продолжения.",                        practice:"Запишите: какой урок первой недели тронул вас больше всего? Какую одну практику вы продолжите?"},
+    ]
+  },
+  {
+    num:2, title:"Неделя 2 — Границы", gold:false,
+    days:[
+      {day:8,  title:"Ревизия и работа над ошибками", desc:"Смотрим честно: где оступились, что можно сделать лучше — без самобичевания.",          practice:"Напишите об одной ситуации, где вы поступили не так, как хотели. Без осуждения — только наблюдение и один урок."},
+      {day:9,  title:"«Если бы я хотела…»",           desc:"Возвращаем себе право на желания — пишем без ограничений и страха.",                    practice:"Закончите 10 предложений: «Если бы я хотела...» Пишите быстро, не думая — первое, что приходит."},
+      {day:10, title:"Право на отдых",                desc:"Разрешаем себе паузу без чувства вины. Отдых — часть работы, а не слабость.",            practice:"Запланируйте сегодня 20 минут полного отдыха — без телефона, без «продуктивности». Просто быть."},
+      {day:11, title:"Самоуважение и маленькие шаги", desc:"Самоуважение растёт через выполненные обещания — даже самые маленькие.",               practice:"Дайте себе одно маленькое обещание на сегодня — и выполните его. Запишите, как это ощущалось."},
+      {day:12, title:"Моё государство — границы",    desc:"Строим личные границы: что для вас неприкосновенно и как говорить «нет» твёрдо, но мягко.", practice:"Запишите 3 вещи, которые для вас неприкосновенны. Это ваши границы. Как вы будете их защищать?"},
+      {day:13, title:"Подарок себе",                  desc:"Отмечаем результат — маленький подарок как знак уважения к своему труду.",              practice:"Сделайте себе подарок сегодня. Не вещь — опыт. Прогулка, кофе в любимом месте, час с книгой."},
+      {day:14, title:"Итоги второй недели",           desc:"Осознаём: ваш ресурс — ваш. Подводим итог и идём дальше.",                              practice:"Напишите: какую границу вы поставили на этой неделе? Пусть даже маленькую — это шаг."},
+    ]
+  },
+  {
+    num:3, title:"Неделя 3 — Деньги и ценность", gold:false,
+    days:[
+      {day:15, title:"Новая привычка",              desc:"Выбираем одну маленькую привычку и закрепляем её — это фундамент больших перемен.",   practice:"Выберите одну привычку на 5–10 минут в день. Запишите: что, когда, где. Конкретно."},
+      {day:16, title:"Мини-ритуалы силы",           desc:"Создаём личный утренний ритуал 5–10 минут, который даёт энергию на весь день.",       practice:"Спроектируйте свой утренний ритуал: 3 действия по 2–3 минуты, которые дают вам силу."},
+      {day:17, title:"Работа с окружением",         desc:"Честно смотрим: кто из близких даёт энергию, а кто забирает — и что с этим делать.", practice:"Нарисуйте два круга: «даёт энергию» и «забирает». Расставьте людей. Что вы хотите изменить?"},
+      {day:18, title:"Уверенность и «я могу»",      desc:"Уверенность рождается из опыта. Вспоминаем свои победы и укрепляем веру в себя.",    practice:"Запишите 10 вещей, которые вы умеете делать хорошо. Включая «маленькие» — они тоже считаются."},
+      {day:19, title:"Мои маленькие победы",        desc:"Делимся историями прогресса — это закрепляет результат и вдохновляет двигаться дальше.", practice:"Запишите 3 победы этой недели. Что изменилось? Что вы заметили в себе?"},
+      {day:20, title:"Осознанная забота о себе",    desc:"Подарок как опыт, а не вещь — массаж, прогулка, театр. Наполняем душу.",             practice:"Запланируйте одну заботу о себе на эту неделю — что-то, что питает вашу душу."},
+      {day:21, title:"Итоги трёх недель",           desc:"Три недели позади. Записываем 5 главных изменений и ставим цель на следующий месяц.", practice:"Запишите 5 изменений за 3 недели. Одну цель на следующий месяц. Одну привычку навсегда."},
+    ]
+  },
+  {
+    num:4, title:"Неделя 4 — Феникс ✦", gold:true,
+    days:[
+      {day:22, title:"Поддерживающие микропрактики", desc:"5 минут в день меняют жизнь — выбираем практику и закрепляем навсегда.",            practice:"Выберите одну микропрактику на 5 минут в день. Внесите её в расписание прямо сейчас."},
+      {day:23, title:"Я управляю временем",          desc:"Ваше время — ваша главная валюта. Учимся тратить её осознанно.",                     practice:"Отследите сегодня, куда уходит ваше время. Запишите 3 «поглотителя» и одно решение."},
+      {day:24, title:"Работа с сопротивлением",      desc:"«Лень», «не хочу», «потом» — это не враги, а сигналы роста. Учимся с ними работать.", practice:"Когда почувствуете сопротивление сегодня — остановитесь и спросите: «Что это сопротивление защищает?»"},
+      {day:25, title:"Цель и маленькие шаги",        desc:"Формируем цель на 3 месяца и разбиваем её на ежедневные шаги по 10–15 минут.",      practice:"Запишите цель на 3 месяца. Разбейте на 4 этапа. Первый шаг — что вы сделаете завтра?"},
+      {day:26, title:"Мой прогресс за неделю",       desc:"Фиксируем изменения — каждая записанная победа укрепляет движение вперёд.",          practice:"Запишите 5 изменений, которые вы заметили в себе за весь курс. Большие и маленькие."},
+      {day:27, title:"Финальный подарок себе",       desc:"Самый значимый подарок за весь курс — символ уважения к пройденному пути.",          practice:"Придумайте подарок себе за прохождение курса. Что-то, что будет напоминать: вы это сделали."},
+      {day:28, title:"Финал. Феникс поднялся. 🔥",   desc:"Итоги курса, 10 открытий, одна привычка навсегда — и встреча с Евангелиной.",       practice:"Запишите 10 открытий курса. Одну привычку, которую вы берёте в жизнь навсегда. Вы это сделали."},
+    ]
+  }
+];
+
+// ═══════════════════════════════════════════════════════════════
+//  ACCESS RULES
+// ═══════════════════════════════════════════════════════════════
+const ACCESS = {
+  '3weeks': [1,2,3],
+  'week4':  [4],
+  'full':   [1,2,3,4],
+};
+
+const PLAN_LABELS = {
+  '3weeks': '3 недели · £97',
+  'week4':  'Неделя 4 · £69.99',
+  'full':   'Полный курс · £147',
+};
+
+// ═══════════════════════════════════════════════════════════════
+//  STATE
+// ═══════════════════════════════════════════════════════════════
+const params = new URLSearchParams(window.location.search);
+const plan = params.get('plan') || 'full';
+const accessWeeks = ACCESS[plan] || ACCESS['full'];
+const PROGRESS_KEY = 'phoenix_progress_' + plan;
+
+let watched = JSON.parse(localStorage.getItem(PROGRESS_KEY) || '[]');
+let currentDay = null;
+
+// ═══════════════════════════════════════════════════════════════
+//  INIT
+// ═══════════════════════════════════════════════════════════════
+document.getElementById('topbarPlan').textContent = PLAN_LABELS[plan] || 'Курс';
+renderSidebar();
+updateProgress();
+
+function allDays() {
+  return WEEKS.flatMap(w => w.days);
+}
+
+function isWeekAccessible(weekNum) {
+  return accessWeeks.includes(weekNum);
+}
+
+// ═══════════════════════════════════════════════════════════════
+//  SIDEBAR
+// ═══════════════════════════════════════════════════════════════
+function renderSidebar() {
+  const sb = document.getElementById('sidebar');
+  let html = '';
+  WEEKS.forEach(week => {
+    const accessible = isWeekAccessible(week.num);
+    const numClass = week.gold ? 'sidebar-week-num gold' : accessible ? 'sidebar-week-num' : 'sidebar-week-num locked';
+    const headerClass = accessible ? 'sidebar-week-header' : 'sidebar-week-header locked';
+    html += `<div class="sidebar-week">
+      <div class="${headerClass}">
+        <div class="${numClass}">${accessible ? week.num : '🔒'}</div>
+        <span>${week.title}</span>
+      </div>`;
+    week.days.forEach(lesson => {
+      const isActive = currentDay === lesson.day;
+      const isDone = watched.includes(lesson.day);
+      const dotClass = !accessible ? 'lesson-dot locked' : isDone ? 'lesson-dot done' : 'lesson-dot';
+      const pillClass = 'sidebar-lesson' + (isActive ? ' active' : '') + (!accessible ? ' locked' : '');
+      const lockIcon = !accessible ? '<span class="lock-icon">🔒</span>' : '';
+      const onclick = accessible ? `onclick="openLesson(${lesson.day})"` : '';
+      html += `<div class="${pillClass}" ${onclick}>
+        <span class="lesson-num">${lesson.day}</span>
+        <span class="${dotClass}"></span>
+        <span style="flex:1;font-size:12px">${lesson.title}</span>
+        ${lockIcon}
+      </div>`;
+    });
+    html += `</div>`;
+  });
+  sb.innerHTML = html;
+}
+
+// ═══════════════════════════════════════════════════════════════
+//  OPEN LESSON
+// ═══════════════════════════════════════════════════════════════
+function openLesson(dayNum) {
+  // Find week
+  let lesson = null, week = null;
+  WEEKS.forEach(w => { w.days.forEach(d => { if (d.day === dayNum) { lesson = d; week = w; } }); });
+  if (!lesson) return;
+
+  if (!isWeekAccessible(week.num)) {
+    document.getElementById('welcomeState').style.display = 'none';
+    document.getElementById('playerState').classList.remove('visible');
+    document.getElementById('lockedState').classList.add('visible');
+    currentDay = null;
+    renderSidebar();
+    return;
+  }
+
+  currentDay = dayNum;
+  document.getElementById('welcomeState').style.display = 'none';
+  document.getElementById('lockedState').classList.remove('visible');
+  document.getElementById('playerState').classList.add('visible');
+
+  // Breadcrumb
+  document.getElementById('playerBreadcrumb').textContent = week.title;
+  document.getElementById('playerTitle').textContent = `День ${lesson.day}. ${lesson.title}`;
+  document.getElementById('playerDesc').textContent = lesson.desc;
+
+  // Video
+  const videoId = LESSON_VIDEOS[dayNum];
+  const frame = document.getElementById('videoFrame');
+  if (videoId) {
+    frame.innerHTML = `<iframe src="https://www.youtube.com/embed/${videoId}" title="${lesson.title}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
+  } else {
+    frame.innerHTML = `<div class="video-coming"><div class="video-coming-icon">🎬</div><div class="video-coming-text">Урок скоро появится</div></div>`;
+  }
+
+  // Practice
+  const pb = document.getElementById('practiceBox');
+  const pt = document.getElementById('practiceText');
+  if (lesson.practice) {
+    pt.innerHTML = lesson.practice.replace(/\n/g, '<br>');
+    pb.style.display = 'block';
+  } else {
+    pb.style.display = 'none';
+  }
+
+  // Nav buttons
+  const days = allDays();
+  const idx = days.findIndex(d => d.day === dayNum);
+  document.getElementById('btnPrev').style.visibility = idx > 0 ? 'visible' : 'hidden';
+  document.getElementById('btnNext').textContent = idx < days.length - 1 ? 'Следующий урок →' : 'Завершить курс 🔥';
+
+  // Mark as watched
+  if (!watched.includes(dayNum)) {
+    watched.push(dayNum);
+    localStorage.setItem(PROGRESS_KEY, JSON.stringify(watched));
+  }
+
+  updateProgress();
+  renderSidebar();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function startCourse() {
+  // Find first accessible day
+  for (const week of WEEKS) {
+    if (isWeekAccessible(week.num)) {
+      openLesson(week.days[0].day);
+      return;
+    }
+  }
+}
+
+function navigate(dir) {
+  const days = allDays();
+  const idx = days.findIndex(d => d.day === currentDay);
+  const next = days[idx + dir];
+  if (next) openLesson(next.day);
+}
+
+function updateProgress() {
+  const accessible = WEEKS.filter(w => isWeekAccessible(w.num)).flatMap(w => w.days);
+  const done = watched.filter(d => accessible.some(l => l.day === d)).length;
+  const total = accessible.length;
+  document.getElementById('progressText').textContent = `${done} из ${total} уроков`;
+  document.getElementById('progressFill').style.width = total > 0 ? `${(done/total)*100}%` : '0%';
+}
+</script>
+
+</body>
+</html>
