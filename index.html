@@ -629,107 +629,144 @@ footer a { color: var(--gold-dark); text-decoration: none; }
   <div class="inner">
     <span class="section-label">Программа курса</span>
     <h2 class="section-title">4 недели.<br><em>28 практик. Один инструмент в день.</em></h2>
-    <div class="weeks">
-
-      <!-- WEEK 1 -->
-      <div class="week-card open" onclick="toggleWeek(this)">
-        <div class="week-header">
-          <div class="week-num">1</div>
-          <div style="flex:1">
-            <div class="week-title">Энергия и очистка</div>
-            <div class="week-sub">Где вы теряете силы — и как остановить утечку</div>
-          </div>
-          <div class="week-arrow">▼</div>
-        </div>
-        <div class="week-body">
-          <ul class="day-list">
-            <li class="day-item"><span class="day-dot"></span><div><strong>День 1. Где я трачу энергию?</strong><br>Составляем честный аудит: на что уходят ваши силы и где главные утечки.</div></li>
-            <li class="day-item"><span class="day-dot"></span><div><strong>День 2. Разговоры-«унитазы»</strong><br>Учимся распознавать пустые разговоры, которые забирают энергию без остатка.</div></li>
-            <li class="day-item"><span class="day-dot"></span><div><strong>День 3. Письмо обидчику</strong><br>Мощная практика освобождения от накопленных обид — без цензуры, без отправки.</div></li>
-            <li class="day-item"><span class="day-dot"></span><div><strong>День 4. Внутренний критик</strong><br>Откуда он взялся и как перестать верить чужим голосам в своей голове.</div></li>
-            <li class="day-item"><span class="day-dot"></span><div><strong>День 5. Практика похвалы</strong><br>Учимся видеть и доказывать себе: «Я молодец» — с реальными примерами.</div></li>
-            <li class="day-item"><span class="day-dot"></span><div><strong>День 6. Благодарность вместо жалоб</strong><br>Меняем привычку жаловаться на привычку замечать хорошее.</div></li>
-            <li class="day-item"><span class="day-dot"></span><div><strong>День 7. Итоги первой недели</strong><br>Подводим итог, выбираем одну практику для продолжения.</div></li>
-          </ul>
-        </div>
-      </div>
-
-      <!-- WEEK 2 -->
-      <div class="week-card" onclick="toggleWeek(this)">
-        <div class="week-header">
-          <div class="week-num">2</div>
-          <div style="flex:1">
-            <div class="week-title">Ревизия и границы</div>
-            <div class="week-sub">Честный взгляд на себя и строительство своего государства</div>
-          </div>
-          <div class="week-arrow">▼</div>
-        </div>
-        <div class="week-body">
-          <ul class="day-list">
-            <li class="day-item"><span class="day-dot"></span><div><strong>День 8. Ревизия и работа над ошибками</strong><br>Смотрим честно: где оступились, что можно сделать лучше — без самобичевания.</div></li>
-            <li class="day-item"><span class="day-dot"></span><div><strong>День 9. «Если бы я хотела…»</strong><br>Возвращаем себе право на желания — пишем без ограничений и страха.</div></li>
-            <li class="day-item"><span class="day-dot"></span><div><strong>День 10. Право на отдых</strong><br>Разрешаем себе паузу без чувства вины. Отдых — часть работы, а не слабость.</div></li>
-            <li class="day-item"><span class="day-dot"></span><div><strong>День 11. Самоуважение и маленькие шаги</strong><br>Самоуважение растёт через выполненные обещания — даже самые маленькие.</div></li>
-            <li class="day-item"><span class="day-dot"></span><div><strong>День 12. Моё государство — границы</strong><br>Строим личные границы: что для вас неприкосновенно и как говорить «нет» твёрдо, но мягко.</div></li>
-            <li class="day-item"><span class="day-dot"></span><div><strong>День 13. Подарок себе</strong><br>Отмечаем результат — маленький подарок как знак уважения к своему труду.</div></li>
-            <li class="day-item"><span class="day-dot"></span><div><strong>День 14. Итоги второй недели</strong><br>Осознаём: ваш ресурс — ваш. Подводим итог и идём дальше.</div></li>
-          </ul>
-        </div>
-      </div>
-
-      <!-- WEEK 3 -->
-      <div class="week-card" onclick="toggleWeek(this)">
-        <div class="week-header">
-          <div class="week-num">3</div>
-          <div style="flex:1">
-            <div class="week-title">Новые привычки и уверенность</div>
-            <div class="week-sub">Закладываем фундамент, который не сломается</div>
-          </div>
-          <div class="week-arrow">▼</div>
-        </div>
-        <div class="week-body">
-          <ul class="day-list">
-            <li class="day-item"><span class="day-dot"></span><div><strong>День 15. Новая привычка</strong><br>Выбираем одну маленькую привычку и закрепляем её — это фундамент больших перемен.</div></li>
-            <li class="day-item"><span class="day-dot"></span><div><strong>День 16. Мини-ритуалы силы</strong><br>Создаём личный утренний ритуал 5–10 минут, который даёт энергию на весь день.</div></li>
-            <li class="day-item"><span class="day-dot"></span><div><strong>День 17. Работа с окружением</strong><br>Честно смотрим: кто из близких даёт энергию, а кто забирает — и что с этим делать.</div></li>
-            <li class="day-item"><span class="day-dot"></span><div><strong>День 18. Уверенность и «я могу»</strong><br>Уверенность рождается из опыта. Вспоминаем свои победы и укрепляем веру в себя.</div></li>
-            <li class="day-item"><span class="day-dot"></span><div><strong>День 19. Мои маленькие победы</strong><br>Делимся историями прогресса — это закрепляет результат и вдохновляет двигаться дальше.</div></li>
-            <li class="day-item"><span class="day-dot"></span><div><strong>День 20. Осознанная забота о себе</strong><br>Подарок как опыт, а не вещь — массаж, прогулка, театр. Наполняем душу.</div></li>
-            <li class="day-item"><span class="day-dot"></span><div><strong>День 21. Итоги трёх недель</strong><br>Три недели позади. Записываем 5 главных изменений и ставим цель на следующий месяц.</div></li>
-          </ul>
-        </div>
-      </div>
-
-      <!-- WEEK 4 -->
-      <div class="week-card premium" onclick="toggleWeek(this)">
-        <div class="week-header">
-          <div class="week-num gold">4</div>
-          <div style="flex:1">
-            <div class="week-title">Движение вперёд</div>
-            <div class="week-sub">Самая мощная неделя + 20 минут лично с Евангелиной 🎁</div>
-          </div>
-          <div class="week-premium-badge">✦ Бонус</div>
-          <div class="week-arrow">▼</div>
-        </div>
-        <div class="week-body">
-          <div style="background:rgba(184,130,10,0.08);border:1px solid rgba(184,130,10,0.25);border-radius:12px;padding:16px 18px;margin:16px 0;font-size:14px;color:#5a4830;line-height:1.7;">
-            🎁 <strong>Бонус 4-й недели:</strong> после завершения вы получаете <strong>20-минутную личную встречу с Евангелиной</strong> — обратная связь, ваши вопросы, направление дальнейшего пути.
-          </div>
-          <ul class="day-list">
-            <li class="day-item"><span class="day-dot"></span><div><strong>День 22. Поддерживающие микропрактики</strong><br>5 минут в день меняют жизнь — выбираем практику и закрепляем навсегда.</div></li>
-            <li class="day-item"><span class="day-dot"></span><div><strong>День 23. Я управляю временем</strong><br>Ваше время — ваша главная валюта. Учимся тратить её осознанно.</div></li>
-            <li class="day-item"><span class="day-dot"></span><div><strong>День 24. Работа с сопротивлением</strong><br>«Лень», «не хочу», «потом» — это не враги, а сигналы роста. Учимся с ними работать.</div></li>
-            <li class="day-item"><span class="day-dot"></span><div><strong>День 25. Цель и маленькие шаги</strong><br>Формируем цель на 3 месяца и разбиваем её на ежедневные шаги по 10–15 минут.</div></li>
-            <li class="day-item"><span class="day-dot"></span><div><strong>День 26. Мой прогресс за неделю</strong><br>Фиксируем изменения — каждая записанная победа укрепляет движение вперёд.</div></li>
-            <li class="day-item"><span class="day-dot"></span><div><strong>День 27. Финальный подарок себе</strong><br>Самый значимый подарок за весь курс — символ уважения к пройденному пути.</div></li>
-            <li class="day-item"><span class="day-dot"></span><div><strong>День 28. Финал. Феникс поднялся. 🔥</strong><br>Итоги курса, 10 открытий, одна привычка навсегда — и встреча с Евангелиной.</div></li>
-          </ul>
-        </div>
-      </div>
-
+    <div class="weeks" id="courseWeeks">
+      <!-- Rendered by JS — edit LESSON_VIDEOS below to add/remove videos -->
     </div>
   </div>
 </section>
+
+<script>
+// ═══════════════════════════════════════════════════════════════
+//  LESSON VIDEOS — единственное место, которое нужно обновлять
+//  Формат: { номер_дня: "YouTube_video_id" }
+//  Чтобы добавить урок — просто добавьте строку:
+//  2: "ваш_id_здесь",
+// ═══════════════════════════════════════════════════════════════
+const LESSON_VIDEOS = {
+  // Videos live in members.html only — not on the landing page
+  // 1: "",
+  // 3: "",
+  // ... добавляйте сюда по одной строке
+};
+
+// ═══════════════════════════════════════════════════════════════
+//  СТРУКТУРА КУРСА — не менять
+// ═══════════════════════════════════════════════════════════════
+const COURSE_WEEKS = [
+  {
+    num:1, title:"Энергия и очистка", sub:"Где вы теряете силы — и как остановить утечку",
+    premium:false,
+    days:[
+      {day:1, title:"Где я трачу энергию?", desc:"Составляем честный аудит: на что уходят ваши силы и где главные утечки."},
+      {day:2, title:"Разговоры-«унитазы»", desc:"Учимся распознавать пустые разговоры, которые забирают энергию без остатка."},
+      {day:3, title:"Письмо обидчику", desc:"Мощная практика освобождения от накопленных обид — без цензуры, без отправки."},
+      {day:4, title:"Внутренний критик", desc:"Откуда он взялся и как перестать верить чужим голосам в своей голове."},
+      {day:5, title:"Практика похвалы", desc:"Учимся видеть и доказывать себе: «Я молодец» — с реальными примерами."},
+      {day:6, title:"Благодарность вместо жалоб", desc:"Меняем привычку жаловаться на привычку замечать хорошее."},
+      {day:7, title:"Итоги первой недели", desc:"Подводим итог, выбираем одну практику для продолжения."},
+    ]
+  },
+  {
+    num:2, title:"Ревизия и границы", sub:"Честный взгляд на себя и строительство своего государства",
+    premium:false,
+    days:[
+      {day:8,  title:"Ревизия и работа над ошибками", desc:"Смотрим честно: где оступились, что можно сделать лучше — без самобичевания."},
+      {day:9,  title:"«Если бы я хотела…»", desc:"Возвращаем себе право на желания — пишем без ограничений и страха."},
+      {day:10, title:"Право на отдых", desc:"Разрешаем себе паузу без чувства вины. Отдых — часть работы, а не слабость."},
+      {day:11, title:"Самоуважение и маленькие шаги", desc:"Самоуважение растёт через выполненные обещания — даже самые маленькие."},
+      {day:12, title:"Моё государство — границы", desc:"Строим личные границы: что для вас неприкосновенно и как говорить «нет» твёрдо, но мягко."},
+      {day:13, title:"Подарок себе", desc:"Отмечаем результат — маленький подарок как знак уважения к своему труду."},
+      {day:14, title:"Итоги второй недели", desc:"Осознаём: ваш ресурс — ваш. Подводим итог и идём дальше."},
+    ]
+  },
+  {
+    num:3, title:"Новые привычки и уверенность", sub:"Закладываем фундамент, который не сломается",
+    premium:false,
+    days:[
+      {day:15, title:"Новая привычка", desc:"Выбираем одну маленькую привычку и закрепляем её — это фундамент больших перемен."},
+      {day:16, title:"Мини-ритуалы силы", desc:"Создаём личный утренний ритуал 5–10 минут, который даёт энергию на весь день."},
+      {day:17, title:"Работа с окружением", desc:"Честно смотрим: кто из близких даёт энергию, а кто забирает — и что с этим делать."},
+      {day:18, title:"Уверенность и «я могу»", desc:"Уверенность рождается из опыта. Вспоминаем свои победы и укрепляем веру в себя."},
+      {day:19, title:"Мои маленькие победы", desc:"Делимся историями прогресса — это закрепляет результат и вдохновляет двигаться дальше."},
+      {day:20, title:"Осознанная забота о себе", desc:"Подарок как опыт, а не вещь — массаж, прогулка, театр. Наполняем душу."},
+      {day:21, title:"Итоги трёх недель", desc:"Три недели позади. Записываем 5 главных изменений и ставим цель на следующий месяц."},
+    ]
+  },
+  {
+    num:4, title:"Движение вперёд", sub:"Самая мощная неделя + 20 минут лично с Евангелиной 🎁",
+    premium:true,
+    bonusNote:'🎁 <strong>Бонус 4-й недели:</strong> после завершения вы получаете <strong>20-минутную личную встречу с Евангелиной</strong> — обратная связь, ваши вопросы, направление дальнейшего пути.',
+    days:[
+      {day:22, title:"Поддерживающие микропрактики", desc:"5 минут в день меняют жизнь — выбираем практику и закрепляем навсегда."},
+      {day:23, title:"Я управляю временем", desc:"Ваше время — ваша главная валюта. Учимся тратить её осознанно."},
+      {day:24, title:"Работа с сопротивлением", desc:"«Лень», «не хочу», «потом» — это не враги, а сигналы роста. Учимся с ними работать."},
+      {day:25, title:"Цель и маленькие шаги", desc:"Формируем цель на 3 месяца и разбиваем её на ежедневные шаги по 10–15 минут."},
+      {day:26, title:"Мой прогресс за неделю", desc:"Фиксируем изменения — каждая записанная победа укрепляет движение вперёд."},
+      {day:27, title:"Финальный подарок себе", desc:"Самый значимый подарок за весь курс — символ уважения к пройденному пути."},
+      {day:28, title:"Финал. Феникс поднялся. 🔥", desc:"Итоги курса, 10 открытий, одна привычка навсегда — и встреча с Евангелиной."},
+    ]
+  }
+];
+
+// ═══════════════════════════════════════════════════════════════
+//  RENDER — не менять
+// ═══════════════════════════════════════════════════════════════
+(function renderCourse() {
+  const container = document.getElementById('courseWeeks');
+  if (!container) return;
+
+  COURSE_WEEKS.forEach((week, wi) => {
+    const isOpen = wi === 0;
+    const card = document.createElement('div');
+    card.className = 'week-card' + (week.premium ? ' premium' : '') + (isOpen ? ' open' : '');
+    card.onclick = function(){ toggleWeek(this); };
+
+    const numClass = week.premium ? 'week-num gold' : 'week-num';
+    const premBadge = week.premium ? '<div class="week-premium-badge">✦ Бонус</div>' : '';
+
+    let daysHTML = '';
+    week.days.forEach(lesson => {
+      const videoId = LESSON_VIDEOS[lesson.day];
+      const videoHTML = videoId
+        ? `<div style="margin-top:14px;border-radius:12px;overflow:hidden;aspect-ratio:16/9;background:#000;">
+             <iframe width="100%" height="100%"
+               src="https://www.youtube.com/embed/${videoId}"
+               title="День ${lesson.day}. ${lesson.title}"
+               frameborder="0"
+               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+               allowfullscreen style="display:block;"></iframe>
+           </div>`
+        : '';
+      daysHTML += `
+        <li class="day-item">
+          <span class="day-dot"></span>
+          <div><strong>День ${lesson.day}. ${lesson.title}</strong><br>${lesson.desc}${videoHTML}</div>
+        </li>`;
+    });
+
+    const bonusNote = week.bonusNote
+      ? `<div style="background:rgba(184,130,10,0.08);border:1px solid rgba(184,130,10,0.25);border-radius:12px;padding:16px 18px;margin:16px 0;font-size:14px;color:#5a4830;line-height:1.7;">${week.bonusNote}</div>`
+      : '';
+
+    card.innerHTML = `
+      <div class="week-header">
+        <div class="${numClass}">${week.num}</div>
+        <div style="flex:1">
+          <div class="week-title">${week.title}</div>
+          <div class="week-sub">${week.sub}</div>
+        </div>
+        ${premBadge}
+        <div class="week-arrow">▼</div>
+      </div>
+      <div class="week-body">
+        ${bonusNote}
+        <ul class="day-list">${daysHTML}</ul>
+      </div>`;
+
+    container.appendChild(card);
+  });
+})();
+</script>
 
 <!-- RESULTS -->
 <section class="results">
@@ -790,15 +827,15 @@ footer a { color: var(--gold-dark); text-decoration: none; }
         <div class="price-name">3 недели</div>
         <div class="price-sub">Энергия · Границы · Деньги<br>Фундамент изменений</div>
         <div class="price-amount">£97</div>
-        <div class="price-period">полный доступ навсегда</div>
+        <div class="price-period">полный доступ на 12 месяцев</div>
         <div class="price-items">
           <div class="price-item"><span class="price-check">✦</span>21 видеоурок</div>
           <div class="price-item"><span class="price-check">✦</span>21 практическое задание</div>
           <div class="price-item"><span class="price-check">✦</span>Рабочая тетрадь</div>
           <div class="price-item"><span class="price-check">✦</span>Психологический тест</div>
-          <div class="price-item"><span class="price-check">✦</span>Доступ навсегда</div>
+          <div class="price-item"><span class="price-check">✦</span>Доступ на 12 месяцев</div>
         </div>
-        <a href="#" class="btn-buy-outline">Начать за £97</a>
+        <a href="thankyou.html?plan=3weeks" class="btn-buy-outline">Начать за £97</a>
         <p class="price-note">Visa, Mastercard, PayPal</p>
       </div>
 
@@ -807,7 +844,7 @@ footer a { color: var(--gold-dark); text-decoration: none; }
         <div class="price-name">4 недели</div>
         <div class="price-sub">Все 3 недели + <strong style="color:var(--gold)">4-я неделя «Феникс»</strong></div>
         <div class="price-amount">£147</div>
-        <div class="price-period">полный доступ навсегда</div>
+        <div class="price-period">полный доступ на 12 месяцев</div>
         <div class="price-items">
           <div class="price-item"><span class="price-check">✦</span>28 видеоуроков</div>
           <div class="price-item"><span class="price-check">✦</span>28 практических заданий</div>
@@ -815,9 +852,9 @@ footer a { color: var(--gold-dark); text-decoration: none; }
           <div class="price-item"><span class="price-check">✦</span>Психологический тест</div>
           <div class="price-item"><span class="price-check">✦</span>Неделя «Феникс» включена</div>
           <div class="price-item"><span class="price-check">🎁</span><strong>20 минут лично с Евангелиной</strong></div>
-          <div class="price-item"><span class="price-check">✦</span>Доступ навсегда</div>
+          <div class="price-item"><span class="price-check">✦</span>Доступ на 12 месяцев</div>
         </div>
-        <a href="#" class="btn-buy">Полный курс за £147 🔥</a>
+        <a href="thankyou.html?plan=full" class="btn-buy">Полный курс за £147 🔥</a>
         <p class="price-note">Visa, Mastercard, PayPal</p>
       </div>
 
@@ -826,16 +863,16 @@ footer a { color: var(--gold-dark); text-decoration: none; }
         <div class="price-name">4-я неделя</div>
         <div class="price-sub">Только для тех, кто уже прошёл 3 недели</div>
         <div class="price-amount">£69.99</div>
-        <div class="price-period">доступ навсегда</div>
+        <div class="price-period">доступ на 12 месяцев</div>
         <div class="price-items">
           <div class="price-item"><span class="price-check">✦</span>7 видеоуроков</div>
           <div class="price-item"><span class="price-check">✦</span>7 практических заданий</div>
           <div class="price-item"><span class="price-check">✦</span>Будущее и движение вперёд</div>
           <div class="price-item"><span class="price-check">✦</span>Финал — Феникс поднялся 🔥</div>
           <div class="price-item"><span class="price-check">🎁</span><strong>20 минут лично с Евангелиной</strong></div>
-          <div class="price-item"><span class="price-check">✦</span>Доступ навсегда</div>
+          <div class="price-item"><span class="price-check">✦</span>Доступ на 12 месяцев</div>
         </div>
-        <a href="#" class="btn-buy-outline">Добавить за £69.99</a>
+        <a href="thankyou.html?plan=week4" class="btn-buy-outline">Добавить за £69.99</a>
         <p class="price-note">Visa, Mastercard, PayPal</p>
       </div>
 
@@ -864,7 +901,7 @@ footer a { color: var(--gold-dark); text-decoration: none; }
       </div>
       <div class="faq-item" onclick="toggleFaq(this)">
         <div class="faq-q">Что если я пропущу день? <span class="faq-icon">+</span></div>
-        <div class="faq-a">Ничего страшного. Доступ к материалам навсегда — можно идти в своём темпе и возвращаться когда угодно.</div>
+        <div class="faq-a">Ничего страшного. Доступ к материалам открывается сразу и действует 12 месяцев с момента оплаты — идите в своём темпе.</div>
       </div>
       <div class="faq-item" onclick="toggleFaq(this)">
         <div class="faq-q">Можно получить личную консультацию? <span class="faq-icon">+</span></div>
