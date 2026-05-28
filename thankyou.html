@@ -260,9 +260,9 @@ body {
           Если у вас есть вопросы по курсу или вы хотите записаться на личную консультацию — напишите мне напрямую. Я отвечаю лично.
         </div>
         <div class="contact-links">
-          <a href="mailto:evangelina@example.com" class="contact-link">✉ Email</a>
-          <a href="https://t.me/yourtelegram" class="contact-link" target="_blank">✈ Telegram</a>
-          <a href="https://wa.me/447700000000" class="contact-link" target="_blank">💬 WhatsApp</a>
+          <a href="mailto:evangelinamiles.psychology@gmail.com" class="contact-link">✉ Email</a>
+          <a href="https://t.me/evasmiles" class="contact-link" target="_blank">✈ Telegram</a>
+          <a href="https://wa.me/447842897313" class="contact-link" target="_blank">💬 WhatsApp</a>
         </div>
       </div>
     </div>
@@ -290,16 +290,33 @@ if (plan === 'week4' || plan === 'full') {
 }
 
 // Email submit (placeholder — connects to your email provider later)
-function submitEmail() {
+async function submitEmail() {
   const email = document.getElementById('emailInput').value.trim();
   if (!email || !email.includes('@')) {
     document.getElementById('emailInput').style.borderColor = '#c44a1e';
     return;
   }
-  // TODO: connect to Mailchimp / ConvertKit / your email tool here
-  document.getElementById('formSuccess').classList.add('visible');
-  document.getElementById('emailInput').disabled = true;
-  document.querySelector('.btn-send').disabled = true;
+  const btn = document.querySelector('.btn-send');
+  btn.textContent = '...';
+  btn.disabled = true;
+  try {
+    const plan = new URLSearchParams(window.location.search).get('plan') || 'unknown';
+    const response = await fetch('https://formspree.io/f/xredjapl', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email: email, plan: plan, message: 'Новый студент: ' + email + ' (план: ' + plan + ')' })
+    });
+    if (response.ok) {
+      document.getElementById('formSuccess').classList.add('visible');
+      document.getElementById('emailInput').disabled = true;
+    } else {
+      btn.textContent = 'Отправить';
+      btn.disabled = false;
+    }
+  } catch(e) {
+    btn.textContent = 'Отправить';
+    btn.disabled = false;
+  }
 }
 </script>
 
