@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Phoenix Admin — Управление уроками</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700&family=Raleway:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:'Raleway',sans-serif; background:#0f0d0b; color:#f0e8d8; min-height:100vh; }
+
+.topbar {
+  background: linear-gradient(135deg,#1a1410,#231c14);
+  border-bottom:1px solid rgba(184,130,10,0.2);
+  padding:18px 32px;
+  display:flex; align-items:center; gap:16px;
+}
+.topbar-logo { font-family:'Playfair Display',serif; font-size:20px; color:#e0aa48; }
+.topbar-sub { font-size:11px; letter-spacing:0.2em; text-transform:uppercase; color:rgba(224,170,72,0.5); }
+.topbar-badge {
+  margin-left:auto; font-size:10px; font-weight:700; letter-spacing:0.15em;
+  text-transform:uppercase; background:rgba(196,74,30,0.15); border:1px solid rgba(196,74,30,0.3);
+  color:#c44a1e; padding:5px 14px; border-radius:100px;
+}
+
+.layout { display:grid; grid-template-columns:340px 1fr; min-height:calc(100vh - 61px); }
+
+/* SIDEBAR */
+.sidebar {
+  background:#13110e;
+  border-right:1px solid rgba(184,130,10,0.12);
+  padding:28px 24px;
+  overflow-y:auto;
+}
+.sidebar-title { font-size:11px; font-weight:700; letter-spacing:0.2em; text-transform:uppercase; color:rgba(224,170,72,0.5); margin-bottom:16px; }
+
+.lesson-list { display:flex; flex-direction:column; gap:6px; }
+.lesson-pill {
+  display:flex; align-items:center; gap:10px;
+  padding:10px 14px; border-radius:10px;
+  border:1px solid transparent;
+  cursor:pointer; transition:all 0.2s;
+  background:rgba(255,255,255,0.02);
+}
+.lesson-pill:hover { background:rgba(184,130,10,0.06); border-color:rgba(184,130,10,0.15); }
+.lesson-pill.active { background:rgba(184,130,10,0.1); border-color:rgba(184,130,10,0.3); }
+.lesson-pill.has-video .pill-dot { background:#4caf50; }
+.lesson-pill.no-video .pill-dot { background:rgba(255,255,255,0.15); }
+.pill-dot { width:7px; height:7px; border-radius:50%; flex-shrink:0; }
+.pill-num { font-size:10px; color:rgba(224,170,72,0.5); font-weight:600; min-width:24px; }
+.pill-title { font-size:13px; color:#d4c4a8; font-weight:400; flex:1; line-height:1.3; }
+.pill-check { font-size:12px; color:#4caf50; }
+
+.sidebar-week-label {
+  font-size:10px; font-weight:700; letter-spacing:0.18em; text-transform:uppercase;
+  color:rgba(196,74,30,0.7); padding:16px 0 6px; border-top:1px solid rgba(184,130,10,0.1);
+  margin-top:10px;
+}
+.sidebar-week-label:first-child { border-top:none; padding-top:0; }
+
+/* MAIN */
+.main { padding:40px 48px; overflow-y:auto; }
+
+.main-empty {
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+  height:100%; text-align:center; opacity:0.4;
+}
+.main-empty-icon { font-size:56px; margin-bottom:16px; }
+.main-empty-text { font-size:15px; color:#a09070; }
+
+.editor { display:none; max-width:680px; }
+.editor.visible { display:block; }
+
+.editor-breadcrumb { font-size:11px; color:rgba(224,170,72,0.5); letter-spacing:0.1em; margin-bottom:8px; text-transform:uppercase; }
+.editor-title { font-family:'Playfair Display',serif; font-size:28px; color:#f0e8d8; margin-bottom:6px; }
+.editor-desc { font-size:14px; color:#8a7a60; font-weight:300; line-height:1.7; margin-bottom:32px; }
+
+.field-label { font-size:11px; font-weight:700; letter-spacing:0.18em; text-transform:uppercase; color:rgba(224,170,72,0.6); margin-bottom:8px; display:block; }
+
+.url-row { display:flex; gap:10px; margin-bottom:8px; }
+.url-input {
+  flex:1; background:rgba(255,255,255,0.04); border:1px solid rgba(184,130,10,0.2);
+  border-radius:10px; padding:13px 16px; font-family:'Raleway',sans-serif;
+  font-size:14px; color:#f0e8d8; outline:none; transition:border-color 0.2s;
+}
+.url-input:focus { border-color:rgba(184,130,10,0.5); background:rgba(255,255,255,0.06); }
+.url-input::placeholder { color:rgba(255,255,255,0.2); }
+
+.btn-save {
+  background:linear-gradient(135deg,#c44a1e,#b8820a);
+  color:#fff; font-family:'Raleway',sans-serif; font-size:12px; font-weight:700;
+  letter-spacing:0.12em; text-transform:uppercase; padding:13px 24px;
+  border:none; border-radius:10px; cursor:pointer; transition:all 0.2s; white-space:nowrap;
+}
+.btn-save:hover { transform:translateY(-1px); box-shadow:0 6px 20px rgba(196,74,30,0.35); }
+
+.btn-clear {
+  background:transparent; color:rgba(255,100,80,0.7); font-family:'Raleway',sans-serif;
+  font-size:11px; font-weight:600; letter-spacing:0.1em; text-transform:uppercase;
+  padding:8px 14px; border:1px solid rgba(255,100,80,0.2); border-radius:8px;
+  cursor:pointer; transition:all 0.2s; margin-top:8px;
+}
+.btn-clear:hover { border-color:rgba(255,100,80,0.5); color:rgba(255,100,80,1); }
+
+.hint { font-size:12px; color:rgba(255,255,255,0.2); margin-bottom:28px; line-height:1.6; }
+.hint code { background:rgba(255,255,255,0.06); padding:2px 6px; border-radius:4px; font-family:monospace; font-size:11px; color:#e0aa48; }
+
+.preview-box {
+  background:rgba(255,255,255,0.03); border:1px solid rgba(184,130,10,0.15);
+  border-radius:14px; overflow:hidden; margin-top:28px; display:none;
+}
+.preview-box.visible { display:block; }
+.preview-label { font-size:10px; font-weight:700; letter-spacing:0.2em; text-transform:uppercase; color:rgba(224,170,72,0.4); padding:12px 16px; border-bottom:1px solid rgba(184,130,10,0.1); }
+.preview-frame { aspect-ratio:16/9; background:#000; }
+.preview-frame iframe { width:100%; height:100%; display:block; border:none; }
+
+.status-bar {
+  margin-top:16px; padding:12px 16px; border-radius:10px;
+  font-size:13px; font-weight:500; display:none;
+}
+.status-bar.success { display:block; background:rgba(76,175,80,0.1); border:1px solid rgba(76,175,80,0.25); color:#81c784; }
+.status-bar.error { display:block; background:rgba(255,80,60,0.1); border:1px solid rgba(255,80,60,0.25); color:#ef9a9a; }
+
+.export-section { margin-top:48px; padding-top:32px; border-top:1px solid rgba(184,130,10,0.1); }
+.export-title { font-size:13px; font-weight:600; color:#d4c4a8; margin-bottom:8px; }
+.export-sub { font-size:12px; color:#6a5a40; margin-bottom:16px; font-weight:300; }
+.btn-export {
+  background:rgba(184,130,10,0.1); border:1px solid rgba(184,130,10,0.25);
+  color:#e0aa48; font-family:'Raleway',sans-serif; font-size:12px; font-weight:700;
+  letter-spacing:0.1em; text-transform:uppercase; padding:11px 22px;
+  border-radius:10px; cursor:pointer; transition:all 0.2s;
+}
+.btn-export:hover { background:rgba(184,130,10,0.18); }
+
+.progress-bar-wrap { margin-top:28px; }
+.progress-label { font-size:11px; color:rgba(224,170,72,0.5); letter-spacing:0.1em; text-transform:uppercase; margin-bottom:8px; display:flex; justify-content:space-between; }
+.progress-track { height:6px; background:rgba(255,255,255,0.06); border-radius:100px; overflow:hidden; }
+.progress-fill { height:100%; background:linear-gradient(90deg,#c44a1e,#e0aa48); border-radius:100px; transition:width 0.5s; }
+
+@media(max-width:900px){
+  .layout { grid-template-columns:1fr; }
+  .sidebar { border-right:none; border-bottom:1px solid rgba(184,130,10,0.12); max-height:260px; }
+  .main { padding:28px 24px; }
+}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div>
+    <div class="topbar-logo">🦅 Феникс — Admin</div>
+    <div class="topbar-sub">Управление уроками курса</div>
+  </div>
+  <div class="topbar-badge">Только для автора</div>
+</div>
+
+<div class="layout">
+
+  <!-- SIDEBAR -->
+  <div class="sidebar">
+    <div class="sidebar-title">Все уроки курса</div>
+    <div class="lesson-list" id="lessonList"></div>
+  </div>
+
+  <!-- MAIN EDITOR -->
+  <div class="main" id="mainArea">
+    <div class="main-empty" id="emptyState">
+      <div class="main-empty-icon">🎬</div>
+      <div class="main-empty-text">Выберите урок слева<br>чтобы добавить видео</div>
+    </div>
+
+    <div class="editor" id="editor">
+      <div class="editor-breadcrumb" id="edBreadcrumb"></div>
+      <div class="editor-title" id="edTitle"></div>
+      <div class="editor-desc" id="edDesc"></div>
+
+      <label class="field-label">YouTube ссылка</label>
+      <div class="url-row">
+        <input type="text" class="url-input" id="urlInput" placeholder="https://youtu.be/... или https://www.youtube.com/watch?v=...">
+        <button class="btn-save" onclick="saveLesson()">Сохранить</button>
+      </div>
+      <div class="hint">
+        Принимаются форматы:<br>
+        <code>https://youtu.be/ABC123</code> &nbsp;·&nbsp; <code>https://youtube.com/watch?v=ABC123</code><br>
+        Видео должно быть <strong style="color:#e0aa48">Unlisted</strong> на YouTube.
+      </div>
+      <button class="btn-clear" id="clearBtn" onclick="clearLesson()" style="display:none">✕ Удалить видео из этого урока</button>
+
+      <div class="preview-box" id="previewBox">
+        <div class="preview-label">Предпросмотр</div>
+        <div class="preview-frame"><iframe id="previewFrame" allowfullscreen></iframe></div>
+      </div>
+
+      <div class="status-bar" id="statusBar"></div>
+
+      <div class="export-section">
+        <div class="export-title">Экспорт курса</div>
+        <div class="export-sub">После добавления уроков — скачайте обновлённый phoenix-light.html и загрузите на GitHub.</div>
+        <button class="btn-export" onclick="exportCourse()">⬇ Скачать обновлённый курс</button>
+
+        <div class="progress-bar-wrap">
+          <div class="progress-label">
+            <span>Прогресс записи курса</span>
+            <span id="progressText">0 / 28</span>
+          </div>
+          <div class="progress-track"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+// ─── COURSE DATA ───────────────────────────────────────────────────────────────
+const WEEKS = [
+  {
+    num:1, title:"Неделя 1 — Энергия", sub:"Осознаём и восстанавливаем главный ресурс",
+    days:[
+      {day:1, title:"Где я трачу энергию?", desc:"Составляем честный аудит: на что уходят ваши силы и где главные утечки."},
+      {day:2, title:"Разговоры-«унитазы»", desc:"Учимся распознавать пустые разговоры, которые забирают энергию без остатка."},
+      {day:3, title:"Письмо обидчику", desc:"Мощная практика освобождения от накопленных обид — без цензуры, без отправки."},
+      {day:4, title:"Внутренний критик", desc:"Откуда он взялся и как перестать верить чужим голосам в своей голове."},
+      {day:5, title:"Практика похвалы", desc:"Учимся видеть и доказывать себе: «Я молодец» — с реальными примерами."},
+      {day:6, title:"Благодарность вместо жалоб", desc:"Меняем привычку жаловаться на привычку замечать хорошее."},
+      {day:7, title:"Итоги первой недели", desc:"Подводим итог, выбираем одну практику для продолжения."},
+    ]
+  },
+  {
+    num:2, title:"Неделя 2 — Границы", sub:"Восстанавливаем личное пространство и ресурс",
+    days:[
+      {day:8,  title:"Ревизия и работа над ошибками", desc:"Смотрим честно: где оступились, что можно сделать лучше — без самобичевания."},
+      {day:9,  title:"«Если бы я хотела…»", desc:"Возвращаем себе право на желания — пишем без ограничений и страха."},
+      {day:10, title:"Право на отдых", desc:"Разрешаем себе паузу без чувства вины. Отдых — часть работы, а не слабость."},
+      {day:11, title:"Самоуважение и маленькие шаги", desc:"Самоуважение растёт через выполненные обещания — даже самые маленькие."},
+      {day:12, title:"Моё государство — границы", desc:"Строим личные границы: что для вас неприкосновенно и как говорить «нет» твёрдо, но мягко."},
+      {day:13, title:"Подарок себе", desc:"Отмечаем результат — маленький подарок как знак уважения к своему труду."},
+      {day:14, title:"Итоги второй недели", desc:"Осознаём: ваш ресурс — ваш. Подводим итог и идём дальше."},
+    ]
+  },
+  {
+    num:3, title:"Неделя 3 — Деньги и ценность", sub:"Связываем самооценку с реальными изменениями",
+    days:[
+      {day:15, title:"Новая привычка", desc:"Выбираем одну маленькую привычку и закрепляем её — это фундамент больших перемен."},
+      {day:16, title:"Мини-ритуалы силы", desc:"Создаём личный утренний ритуал 5–10 минут, который даёт энергию на весь день."},
+      {day:17, title:"Работа с окружением", desc:"Честно смотрим: кто из близких даёт энергию, а кто забирает — и что с этим делать."},
+      {day:18, title:"Уверенность и «я могу»", desc:"Уверенность рождается из опыта. Вспоминаем свои победы и укрепляем веру в себя."},
+      {day:19, title:"Мои маленькие победы", desc:"Делимся историями прогресса — это закрепляет результат и вдохновляет двигаться дальше."},
+      {day:20, title:"Осознанная забота о себе", desc:"Подарок как опыт, а не вещь — массаж, прогулка, театр. Наполняем душу."},
+      {day:21, title:"Итоги трёх недель", desc:"Три недели позади. Записываем 5 главных изменений и ставим цель на следующий месяц."},
+    ]
+  },
+  {
+    num:4, title:"Неделя 4 — Феникс ✦ Бонус", sub:"Самая мощная неделя + 20 минут лично с Евангелиной",
+    days:[
+      {day:22, title:"Поддерживающие микропрактики", desc:"5 минут в день меняют жизнь — выбираем практику и закрепляем навсегда."},
+      {day:23, title:"Я управляю временем", desc:"Ваше время — ваша главная валюта. Учимся тратить её осознанно."},
+      {day:24, title:"Работа с сопротивлением", desc:"«Лень», «не хочу», «потом» — это не враги, а сигналы роста. Учимся с ними работать."},
+      {day:25, title:"Цель и маленькие шаги", desc:"Формируем цель на 3 месяца и разбиваем её на ежедневные шаги по 10–15 минут."},
+      {day:26, title:"Мой прогресс за неделю", desc:"Фиксируем изменения — каждая записанная победа укрепляет движение вперёд."},
+      {day:27, title:"Финальный подарок себе", desc:"Самый значимый подарок за весь курс — символ уважения к пройденному пути."},
+      {day:28, title:"Финал. Феникс поднялся. 🔥", desc:"Итоги курса, 10 открытий, одна привычка навсегда — и встреча с Евангелиной."},
+    ]
+  }
+];
+
+// ─── STATE ─────────────────────────────────────────────────────────────────────
+const STORAGE_KEY = 'phoenix_lessons_v1';
+let videos = {};
+let activeDay = null;
+
+function loadVideos() {
+  try { videos = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}'); } catch(e) { videos = {}; }
+}
+function saveVideos() {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(videos));
+}
+
+// ─── YOUTUBE UTILS ─────────────────────────────────────────────────────────────
+function extractYouTubeId(url) {
+  if (!url) return null;
+  const patterns = [
+    /youtu\.be\/([a-zA-Z0-9_-]{11})/,
+    /youtube\.com\/watch\?.*v=([a-zA-Z0-9_-]{11})/,
+    /youtube\.com\/embed\/([a-zA-Z0-9_-]{11})/,
+  ];
+  for (const p of patterns) {
+    const m = url.match(p);
+    if (m) return m[1];
+  }
+  return null;
+}
+
+function toEmbedUrl(videoId) {
+  return `https://www.youtube.com/embed/${videoId}`;
+}
+
+// ─── RENDER SIDEBAR ────────────────────────────────────────────────────────────
+function renderSidebar() {
+  const list = document.getElementById('lessonList');
+  let html = '';
+  let total = 0, done = 0;
+
+  WEEKS.forEach(week => {
+    html += `<div class="sidebar-week-label">${week.title}</div>`;
+    week.days.forEach(lesson => {
+      total++;
+      const hasVideo = !!videos[lesson.day];
+      if (hasVideo) done++;
+      const isActive = activeDay === lesson.day;
+      html += `
+        <div class="lesson-pill ${hasVideo ? 'has-video' : 'no-video'} ${isActive ? 'active' : ''}"
+             onclick="selectLesson(${lesson.day})">
+          <span class="pill-dot"></span>
+          <span class="pill-num">${lesson.day}</span>
+          <span class="pill-title">${lesson.title}</span>
+          ${hasVideo ? '<span class="pill-check">✓</span>' : ''}
+        </div>`;
+    });
+  });
+
+  list.innerHTML = html;
+  document.getElementById('progressText').textContent = `${done} / ${total}`;
+  document.getElementById('progressFill').style.width = `${(done/total)*100}%`;
+}
+
+// ─── SELECT LESSON ─────────────────────────────────────────────────────────────
+function selectLesson(dayNum) {
+  activeDay = dayNum;
+  document.getElementById('emptyState').style.display = 'none';
+  const editor = document.getElementById('editor');
+  editor.classList.add('visible');
+
+  let lesson = null, weekTitle = '';
+  WEEKS.forEach(w => {
+    w.days.forEach(d => { if (d.day === dayNum) { lesson = d; weekTitle = w.title; } });
+  });
+
+  document.getElementById('edBreadcrumb').textContent = weekTitle;
+  document.getElementById('edTitle').textContent = `День ${lesson.day}. ${lesson.title}`;
+  document.getElementById('edDesc').textContent = lesson.desc;
+
+  const existing = videos[dayNum];
+  const urlInput = document.getElementById('urlInput');
+  const clearBtn = document.getElementById('clearBtn');
+  const previewBox = document.getElementById('previewBox');
+  const previewFrame = document.getElementById('previewFrame');
+  const statusBar = document.getElementById('statusBar');
+
+  statusBar.className = 'status-bar';
+  statusBar.textContent = '';
+
+  if (existing) {
+    urlInput.value = `https://youtu.be/${existing}`;
+    clearBtn.style.display = 'inline-block';
+    previewBox.classList.add('visible');
+    previewFrame.src = toEmbedUrl(existing);
+  } else {
+    urlInput.value = '';
+    clearBtn.style.display = 'none';
+    previewBox.classList.remove('visible');
+    previewFrame.src = '';
+  }
+
+  renderSidebar();
+}
+
+// ─── SAVE ──────────────────────────────────────────────────────────────────────
+function saveLesson() {
+  const url = document.getElementById('urlInput').value.trim();
+  const statusBar = document.getElementById('statusBar');
+
+  if (!url) {
+    statusBar.className = 'status-bar error';
+    statusBar.textContent = '⚠ Вставьте ссылку на YouTube видео.';
+    return;
+  }
+
+  const id = extractYouTubeId(url);
+  if (!id) {
+    statusBar.className = 'status-bar error';
+    statusBar.textContent = '⚠ Ссылка не распознана. Используйте формат youtu.be/... или youtube.com/watch?v=...';
+    return;
+  }
+
+  videos[activeDay] = id;
+  saveVideos();
+
+  const previewBox = document.getElementById('previewBox');
+  const previewFrame = document.getElementById('previewFrame');
+  previewBox.classList.add('visible');
+  previewFrame.src = toEmbedUrl(id);
+  document.getElementById('clearBtn').style.display = 'inline-block';
+
+  statusBar.className = 'status-bar success';
+  statusBar.textContent = `✓ День ${activeDay} сохранён. Видео добавлено в курс.`;
+
+  renderSidebar();
+}
+
+// ─── CLEAR ─────────────────────────────────────────────────────────────────────
+function clearLesson() {
+  if (!confirm(`Удалить видео из Дня ${activeDay}?`)) return;
+  delete videos[activeDay];
+  saveVideos();
+  document.getElementById('urlInput').value = '';
+  document.getElementById('clearBtn').style.display = 'none';
+  document.getElementById('previewBox').classList.remove('visible');
+  document.getElementById('previewFrame').src = '';
+  const statusBar = document.getElementById('statusBar');
+  statusBar.className = 'status-bar success';
+  statusBar.textContent = `✓ Видео из Дня ${activeDay} удалено.`;
+  renderSidebar();
+}
+
+// ─── EXPORT ────────────────────────────────────────────────────────────────────
+function exportCourse() {
+  const data = JSON.stringify(videos, null, 2);
+  const blob = new Blob([generateCourseHTML(data)], {type:'text/html'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'phoenix-light.html';
+  a.click();
+}
+
+function generateCourseHTML(videosJson) {
+  // This injects the videos data into the course page JS
+  return COURSE_HTML_TEMPLATE.replace('/*__VIDEOS_DATA__*/', `const LESSON_VIDEOS = ${videosJson};`);
+}
+
+// ─── INIT ──────────────────────────────────────────────────────────────────────
+loadVideos();
+renderSidebar();
+
+// Pre-load Day 1 with existing video
+if (!videos[1]) { videos[1] = 'ZeCX4TMfzUs'; saveVideos(); renderSidebar(); }
+</script>
+
+<script>
+// The course HTML template is embedded here as a string
+// (generated dynamically on export)
+const COURSE_HTML_TEMPLATE = `PLACEHOLDER_REPLACED_ON_EXPORT`;
+</script>
+
+</body>
+</html>
