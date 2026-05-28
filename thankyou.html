@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Добро пожаловать — Инструменты Феникса</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Raleway:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body {
+  font-family:'Raleway',sans-serif;
+  background: linear-gradient(180deg, #1a1a1e 0%, #1e1c18 60%, #faf6f0 60%);
+  min-height:100vh;
+  color:#1a1410;
+}
+
+.hero {
+  text-align:center;
+  padding:72px 24px 56px;
+  position:relative;
+}
+.hero::before {
+  content:'';
+  position:absolute; inset:0;
+  background:
+    radial-gradient(ellipse 60% 80% at 50% 40%, rgba(196,74,30,0.18) 0%, transparent 65%),
+    radial-gradient(ellipse 40% 40% at 50% 80%, rgba(224,170,72,0.12) 0%, transparent 60%);
+  pointer-events:none;
+}
+.hero-inner { position:relative; z-index:1; max-width:620px; margin:0 auto; }
+
+.flame { font-size:64px; display:block; margin-bottom:20px; animation: pulse 2s ease-in-out infinite; }
+@keyframes pulse { 0%,100%{transform:scale(1)} 50%{transform:scale(1.08)} }
+
+.hero-label {
+  font-size:10px; font-weight:700; letter-spacing:0.28em; text-transform:uppercase;
+  color:#e0aa48; margin-bottom:16px; display:block;
+}
+.hero-title {
+  font-family:'Playfair Display',serif;
+  font-size:clamp(32px,7vw,58px); font-weight:900; line-height:1.05;
+  color:#fff8ee; margin-bottom:14px;
+  text-shadow:0 4px 40px rgba(196,74,30,0.4);
+}
+.hero-title em { font-style:italic; color:#e0aa48; }
+.hero-sub {
+  font-size:16px; font-weight:300; color:rgba(250,242,226,0.7);
+  line-height:1.8; margin-bottom:0;
+}
+
+/* CARD AREA */
+.cards-area {
+  max-width:700px; margin:0 auto; padding:0 24px 80px;
+  display:flex; flex-direction:column; gap:16px;
+}
+
+.card {
+  background:#fff;
+  border:1px solid #e0d4c0;
+  border-radius:20px;
+  padding:32px 36px;
+  box-shadow:0 4px 32px rgba(26,20,16,0.06);
+}
+
+/* PLAN BADGE */
+.plan-badge {
+  display:inline-flex; align-items:center; gap:8px;
+  background:linear-gradient(135deg,rgba(196,74,30,0.08),rgba(184,130,10,0.08));
+  border:1px solid rgba(184,130,10,0.25);
+  border-radius:100px; padding:8px 18px;
+  margin-bottom:20px;
+}
+.plan-badge-icon { font-size:16px; }
+.plan-badge-text { font-size:11px; font-weight:700; letter-spacing:0.15em; text-transform:uppercase; color:#b8820a; }
+
+.card-title {
+  font-family:'Playfair Display',serif;
+  font-size:22px; font-weight:700; color:#1a1410; margin-bottom:8px;
+}
+.card-desc { font-size:14px; font-weight:300; color:#5a4830; line-height:1.8; margin-bottom:24px; }
+
+/* WHAT'S INCLUDED */
+.includes { display:flex; flex-direction:column; gap:8px; margin-bottom:28px; }
+.include-item {
+  display:flex; align-items:center; gap:12px;
+  font-size:14px; color:#3d3020; font-weight:400;
+}
+.include-icon { font-size:16px; min-width:22px; }
+
+/* ACCESS BUTTON */
+.btn-access {
+  display:block; width:100%; text-align:center;
+  background:linear-gradient(135deg,#c44a1e,#b8820a);
+  color:#fff; font-family:'Raleway',sans-serif;
+  font-size:13px; font-weight:700; letter-spacing:0.14em; text-transform:uppercase;
+  padding:17px; border-radius:100px; text-decoration:none;
+  box-shadow:0 8px 32px rgba(196,74,30,0.3);
+  transition:all 0.25s;
+}
+.btn-access:hover { transform:translateY(-2px); box-shadow:0 12px 40px rgba(196,74,30,0.4); }
+
+/* EMAIL FORM CARD */
+.form-label { font-size:11px; font-weight:700; letter-spacing:0.18em; text-transform:uppercase; color:#b8820a; margin-bottom:8px; display:block; }
+.form-note { font-size:13px; color:#8a7060; font-weight:300; line-height:1.7; margin-bottom:20px; }
+
+.input-row { display:flex; gap:10px; }
+.email-input {
+  flex:1; background:#faf6f0; border:1px solid #e0d4c0;
+  border-radius:12px; padding:13px 16px;
+  font-family:'Raleway',sans-serif; font-size:14px; color:#1a1410;
+  outline:none; transition:border-color 0.2s;
+}
+.email-input:focus { border-color:#b8820a; background:#fff; }
+.email-input::placeholder { color:#c0b090; }
+
+.btn-send {
+  background:linear-gradient(135deg,#c44a1e,#b8820a);
+  color:#fff; font-family:'Raleway',sans-serif;
+  font-size:12px; font-weight:700; letter-spacing:0.1em; text-transform:uppercase;
+  padding:13px 22px; border:none; border-radius:12px;
+  cursor:pointer; transition:all 0.2s; white-space:nowrap;
+}
+.btn-send:hover { transform:translateY(-1px); box-shadow:0 6px 20px rgba(196,74,30,0.3); }
+
+.form-success {
+  display:none; padding:14px 18px; border-radius:12px;
+  background:rgba(76,175,80,0.08); border:1px solid rgba(76,175,80,0.25);
+  color:#2e7d32; font-size:13px; font-weight:500; margin-top:12px;
+}
+.form-success.visible { display:block; }
+
+/* CONSULTATION CARD */
+.consult-row {
+  display:flex; align-items:flex-start; gap:20px;
+}
+@media(max-width:520px){ .consult-row { flex-direction:column; gap:14px; } }
+
+.consult-avatar {
+  width:72px; height:72px; border-radius:50%; flex-shrink:0;
+  background:linear-gradient(135deg,#c44a1e,#b8820a);
+  display:flex; align-items:center; justify-content:center;
+  font-size:28px; border:2px solid rgba(184,130,10,0.3);
+}
+.consult-name { font-family:'Playfair Display',serif; font-size:18px; font-weight:700; color:#1a1410; margin-bottom:3px; }
+.consult-role { font-size:11px; font-weight:600; letter-spacing:0.12em; text-transform:uppercase; color:#b8820a; margin-bottom:12px; }
+.consult-text { font-size:14px; font-weight:300; color:#5a4830; line-height:1.8; margin-bottom:16px; }
+
+.contact-links { display:flex; flex-wrap:wrap; gap:8px; }
+.contact-link {
+  display:inline-flex; align-items:center; gap:7px;
+  font-size:12px; font-weight:600; letter-spacing:0.06em;
+  padding:9px 16px; border-radius:100px; text-decoration:none;
+  border:1px solid #e0d4c0; color:#5a4830; background:#faf6f0;
+  transition:all 0.2s;
+}
+.contact-link:hover { border-color:#b8820a; color:#b8820a; background:#fff; }
+
+/* FOOTER */
+.page-footer {
+  text-align:center; padding:32px 24px;
+  font-size:12px; color:#b0a090; border-top:1px solid #e0d4c0;
+  background:#faf6f0;
+}
+
+/* HIDDEN until JS runs */
+.plan-section { display:none; }
+.plan-section.active { display:block; }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-inner">
+    <span class="flame">🔥</span>
+    <span class="hero-label">Оплата получена</span>
+    <h1 class="hero-title">Добро пожаловать,<br><em>Феникс поднимается.</em></h1>
+    <p class="hero-sub">Вы сделали самый важный шаг — решились начать.<br>Ниже — всё, что вам нужно для старта.</p>
+  </div>
+</div>
+
+<!-- CARDS -->
+<div class="cards-area">
+
+  <!-- ══ PLAN: 3 WEEKS ══ -->
+  <div class="card plan-section" id="plan-3weeks">
+    <div class="plan-badge">
+      <span class="plan-badge-icon">⚡</span>
+      <span class="plan-badge-text">Ваш курс — 3 недели · £97</span>
+    </div>
+    <div class="card-title">Ваш доступ открыт</div>
+    <div class="card-desc">Недели 1, 2 и 3 — полностью доступны прямо сейчас. Идите в своём темпе, доступ действует 12 месяцев.</div>
+    <div class="includes">
+      <div class="include-item"><span class="include-icon">✦</span>21 видеоурок — Недели 1–3</div>
+      <div class="include-item"><span class="include-icon">✦</span>21 практическое задание</div>
+      <div class="include-item"><span class="include-icon">✦</span>Рабочая тетрадь</div>
+      <div class="include-item"><span class="include-icon">✦</span>Психологический тест</div>
+      <div class="include-item"><span class="include-icon">🔒</span>Неделя 4 — доступна как дополнение за £69.99</div>
+    </div>
+    <a href="members.html?plan=3weeks" class="btn-access">Войти в курс →</a>
+  </div>
+
+  <!-- ══ PLAN: WEEK 4 ONLY ══ -->
+  <div class="card plan-section" id="plan-week4">
+    <div class="plan-badge">
+      <span class="plan-badge-icon">🎁</span>
+      <span class="plan-badge-text">Ваш курс — Неделя 4 · £69.99</span>
+    </div>
+    <div class="card-title">Ваш доступ открыт</div>
+    <div class="card-desc">Неделя 4 «Феникс» — самая мощная неделя курса. Плюс личная встреча с Евангелиной в подарок.</div>
+    <div class="includes">
+      <div class="include-item"><span class="include-icon">✦</span>7 видеоуроков — Неделя 4</div>
+      <div class="include-item"><span class="include-icon">✦</span>7 практических заданий</div>
+      <div class="include-item"><span class="include-icon">🎁</span>20-минутная личная встреча с Евангелиной</div>
+      <div class="include-item"><span class="include-icon">🔒</span>Недели 1–3 — доступны отдельно за £97</div>
+    </div>
+    <a href="members.html?plan=week4" class="btn-access">Войти в курс →</a>
+  </div>
+
+  <!-- ══ PLAN: FULL ══ -->
+  <div class="card plan-section" id="plan-full">
+    <div class="plan-badge">
+      <span class="plan-badge-icon">🔥</span>
+      <span class="plan-badge-text">Полный курс — 4 недели · £147</span>
+    </div>
+    <div class="card-title">Ваш доступ открыт</div>
+    <div class="card-desc">Все 28 уроков доступны прямо сейчас. Идите в своём темпе — 12 месяцев полного доступа.</div>
+    <div class="includes">
+      <div class="include-item"><span class="include-icon">✦</span>28 видеоуроков — все 4 недели</div>
+      <div class="include-item"><span class="include-icon">✦</span>28 практических заданий</div>
+      <div class="include-item"><span class="include-icon">✦</span>Рабочая тетрадь + психологический тест</div>
+      <div class="include-item"><span class="include-icon">🎁</span>20-минутная личная встреча с Евангелиной</div>
+      <div class="include-item"><span class="include-icon">✦</span>Доступ на 12 месяцев</div>
+    </div>
+    <a href="members.html?plan=full" class="btn-access">Войти в курс →</a>
+  </div>
+
+  <!-- ══ EMAIL CAPTURE ══ -->
+  <div class="card">
+    <span class="form-label">Сохраните доступ к курсу</span>
+    <p class="form-note">Введите ваш email — мы пришлём вам ссылку на курс, чтобы вы могли вернуться в любой момент с любого устройства.</p>
+    <div class="input-row">
+      <input type="email" class="email-input" id="emailInput" placeholder="ваш@email.com">
+      <button class="btn-send" onclick="submitEmail()">Отправить</button>
+    </div>
+    <div class="form-success" id="formSuccess">
+      ✓ Готово! Ссылка на курс отправлена на ваш email.
+    </div>
+  </div>
+
+  <!-- ══ CONSULTATION ══ -->
+  <div class="card" id="consultCard">
+    <div class="consult-row">
+      <div class="consult-avatar">🦅</div>
+      <div>
+        <div class="consult-name">Евангелина Майлс</div>
+        <div class="consult-role">Психолог · Коуч · Лондон</div>
+        <div class="consult-text" id="consultText">
+          Если у вас есть вопросы по курсу или вы хотите записаться на личную консультацию — напишите мне напрямую. Я отвечаю лично.
+        </div>
+        <div class="contact-links">
+          <a href="mailto:evangelina@example.com" class="contact-link">✉ Email</a>
+          <a href="https://t.me/yourtelegram" class="contact-link" target="_blank">✈ Telegram</a>
+          <a href="https://wa.me/447700000000" class="contact-link" target="_blank">💬 WhatsApp</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="page-footer">
+  © 2026 Evangelina Miles Academy · Лондон, Великобритания
+</div>
+
+<script>
+// Detect plan from URL ?plan=3weeks / week4 / full
+const params = new URLSearchParams(window.location.search);
+const plan = params.get('plan') || 'full';
+
+// Show the right plan card
+const section = document.getElementById('plan-' + plan);
+if (section) section.classList.add('active');
+
+// Adjust consultation note for plans that include personal session
+if (plan === 'week4' || plan === 'full') {
+  document.getElementById('consultText').textContent =
+    'Ваш план включает 20-минутную личную встречу со мной. Напишите, чтобы договориться об удобном времени — я отвечаю лично.';
+}
+
+// Email submit (placeholder — connects to your email provider later)
+function submitEmail() {
+  const email = document.getElementById('emailInput').value.trim();
+  if (!email || !email.includes('@')) {
+    document.getElementById('emailInput').style.borderColor = '#c44a1e';
+    return;
+  }
+  // TODO: connect to Mailchimp / ConvertKit / your email tool here
+  document.getElementById('formSuccess').classList.add('visible');
+  document.getElementById('emailInput').disabled = true;
+  document.querySelector('.btn-send').disabled = true;
+}
+</script>
+
+</body>
+</html>
