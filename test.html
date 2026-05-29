@@ -1,0 +1,837 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Какие скрытые программы управляют вашей жизнью?</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Raleway:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #1a1208;
+  --bg2: #221808;
+  --surface: #2a1f0e;
+  --surface2: #332616;
+  --border: rgba(201,149,74,0.2);
+  --gold: #d4a030;
+  --gold-light: #f0c050;
+  --gold-dark: #a07820;
+  --ember: #d05020;
+  --ember-light: #e86030;
+  --cream: #f8f0e0;
+  --cream-soft: rgba(248,240,224,0.85);
+  --cream-dim: rgba(248,240,224,0.5);
+}
+
+* { margin:0; padding:0; box-sizing:border-box; } html, body { background:#1a1208 !important; }
+html { scroll-behavior:smooth; }
+
+body {
+  font-family:'Raleway',sans-serif;
+  background:#1a1208;
+  color:#f8f0e0;
+  min-height:100vh;
+  overflow-x:hidden;
+}
+
+/* ── BACKGROUND ── */
+body::before {
+  content:'';
+  position:fixed; inset:0; z-index:0; pointer-events:none;
+  background:
+    radial-gradient(ellipse 80% 60% at 50% -10%, rgba(196,74,30,0.18) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 40% at 80% 80%, rgba(184,130,10,0.1) 0%, transparent 55%);
+}
+
+.wrap { position:relative; z-index:1; max-width:720px; margin:0 auto; padding:0 24px; }
+
+/* ── HERO ── */
+.hero {
+  text-align:center;
+  padding:80px 0 60px;
+}
+.hero-eyebrow {
+  display:inline-flex; align-items:center; gap:8px;
+  font-size:10px; font-weight:700; letter-spacing:0.28em; text-transform:uppercase;
+  color:var(--gold); margin-bottom:28px;
+  border:1px solid rgba(201,149,74,0.25); padding:8px 20px; border-radius:100px;
+  background:rgba(201,149,74,0.06);
+}
+.hero-title {
+  font-family:'Playfair Display',serif;
+  font-size:clamp(30px,6vw,52px); font-weight:900; line-height:1.08;
+  color:#f8f0e0 !important; margin-bottom:20px;
+}
+.hero-title em { font-style:italic; color:var(--gold-light); }
+.hero-sub {
+  font-size:16px; font-weight:300; color:#d8c8a8 !important;
+  line-height:1.9; max-width:540px; margin:0 auto 36px;
+}
+.hero-meta {
+  display:flex; justify-content:center; gap:28px; flex-wrap:wrap;
+  font-size:12px; font-weight:600; letter-spacing:0.1em; text-transform:uppercase;
+  color:#b09870 !important;
+}
+.hero-meta span { display:flex; align-items:center; gap:7px; }
+
+/* ── START BUTTON ── */
+.btn-start {
+  display:inline-flex; align-items:center; gap:12px;
+  background:linear-gradient(135deg, var(--ember), var(--gold));
+  color:#fff; font-family:'Raleway',sans-serif;
+  font-size:13px; font-weight:700; letter-spacing:0.16em; text-transform:uppercase;
+  padding:18px 44px; border:none; border-radius:100px; cursor:pointer;
+  box-shadow:0 8px 40px rgba(196,74,30,0.4), 0 2px 8px rgba(0,0,0,0.3);
+  transition:all 0.3s; margin-top:40px;
+}
+.btn-start:hover { transform:translateY(-3px); box-shadow:0 16px 52px rgba(196,74,30,0.5); }
+.btn-start-arrow { font-size:18px; transition:transform 0.2s; }
+.btn-start:hover .btn-start-arrow { transform:translateX(4px); }
+
+/* ── PROGRESS ── */
+.progress-bar-wrap {
+  position:sticky; top:0; z-index:50;
+  background:rgba(15,13,11,0.92); backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--border);
+  padding:14px 24px; display:none;
+}
+.progress-bar-wrap.visible { display:block; }
+.progress-inner { max-width:720px; margin:0 auto; display:flex; align-items:center; gap:16px; }
+.progress-label { font-size:11px; font-weight:600; letter-spacing:0.1em; text-transform:uppercase; color:var(--gold); white-space:nowrap; }
+.progress-track { flex:1; height:4px; background:rgba(255,255,255,0.08); border-radius:100px; overflow:hidden; }
+.progress-fill { height:100%; background:linear-gradient(90deg,var(--ember),var(--gold-light)); border-radius:100px; transition:width 0.5s cubic-bezier(0.4,0,0.2,1); }
+.progress-count { font-size:11px; color:var(--cream-dim); white-space:nowrap; font-weight:600; }
+
+/* ── QUESTIONS ── */
+.questions-section { padding:20px 0 80px; display:none; }
+.questions-section.visible { display:block; }
+
+.question-card {
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:20px; padding:36px 40px;
+  margin-bottom:16px;
+  transition:border-color 0.3s, box-shadow 0.3s;
+  opacity:0; transform:translateY(20px);
+  animation:fadeUp 0.5s forwards;
+}
+.question-card:hover { border-color:rgba(201,149,74,0.3); }
+.question-card.answered { border-color:rgba(201,149,74,0.25); background:var(--surface2); }
+
+@keyframes fadeUp {
+  to { opacity:1; transform:translateY(0); }
+}
+
+.q-number {
+  font-size:10px; font-weight:700; letter-spacing:0.2em; text-transform:uppercase;
+  color:var(--gold); margin-bottom:14px; display:block;
+}
+.q-text {
+  font-family:'Playfair Display',serif;
+  font-size:18px; font-weight:400; line-height:1.6;
+  color:var(--cream); margin-bottom:28px;
+  font-style:italic;
+}
+
+.scale-row {
+  display:flex; gap:8px; flex-wrap:wrap;
+}
+.scale-btn {
+  flex:1; min-width:52px;
+  background:rgba(255,255,255,0.04);
+  border:1px solid rgba(255,255,255,0.1);
+  border-radius:12px; padding:12px 8px;
+  cursor:pointer; transition:all 0.2s;
+  display:flex; flex-direction:column; align-items:center; gap:5px;
+}
+.scale-btn:hover {
+  background:rgba(201,149,74,0.1);
+  border-color:rgba(201,149,74,0.35);
+  transform:translateY(-2px);
+}
+.scale-btn.selected {
+  background:linear-gradient(135deg,rgba(196,74,30,0.25),rgba(184,130,10,0.2));
+  border-color:var(--gold);
+  box-shadow:0 4px 20px rgba(196,74,30,0.2);
+}
+.scale-num { font-size:18px; font-weight:700; color:var(--cream); }
+.scale-btn.selected .scale-num { color:var(--gold-light); }
+.scale-label { font-size:9px; font-weight:600; letter-spacing:0.05em; text-transform:uppercase; color:var(--cream-dim); text-align:center; line-height:1.3; }
+.scale-btn.selected .scale-label { color:rgba(224,170,72,0.7); }
+
+.scale-legend {
+  display:flex; justify-content:space-between;
+  font-size:10px; color:var(--cream-dim); margin-top:10px; padding:0 4px;
+}
+
+/* ── SUBMIT ── */
+.submit-wrap { text-align:center; padding:20px 0 40px; display:none; }
+.submit-wrap.visible { display:block; }
+.btn-submit {
+  background:linear-gradient(135deg,var(--ember),var(--gold));
+  color:#fff; font-family:'Raleway',sans-serif;
+  font-size:13px; font-weight:700; letter-spacing:0.16em; text-transform:uppercase;
+  padding:18px 52px; border:none; border-radius:100px; cursor:pointer;
+  box-shadow:0 8px 40px rgba(196,74,30,0.4); transition:all 0.3s;
+}
+.btn-submit:hover { transform:translateY(-3px); box-shadow:0 16px 52px rgba(196,74,30,0.5); }
+.btn-submit:disabled { opacity:0.4; cursor:not-allowed; transform:none; }
+.submit-note { font-size:12px; color:var(--cream-dim); margin-top:12px; }
+.answers-count { font-size:13px; color:var(--gold); font-weight:600; margin-bottom:16px; }
+
+/* ── RESULTS ── */
+.results-section { display:none; padding:60px 0 100px; }
+.results-section.visible { display:block; }
+
+.results-hero { text-align:center; margin-bottom:56px; }
+.results-hero-label {
+  font-size:10px; font-weight:700; letter-spacing:0.28em; text-transform:uppercase;
+  color:var(--gold); margin-bottom:20px; display:block;
+}
+.results-hero-title {
+  font-family:'Playfair Display',serif;
+  font-size:clamp(26px,5vw,44px); font-weight:900; line-height:1.1;
+  color:var(--cream); margin-bottom:16px;
+}
+.results-hero-sub {
+  font-size:15px; font-weight:300; color:var(--cream-soft); line-height:1.9;
+}
+
+/* TOP PROGRAMS */
+.top-programs { margin-bottom:56px; }
+.section-title-sm {
+  font-size:11px; font-weight:700; letter-spacing:0.22em; text-transform:uppercase;
+  color:var(--gold); margin-bottom:24px; display:block;
+}
+
+.top-program-card {
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:20px; padding:32px 36px;
+  margin-bottom:12px; position:relative; overflow:hidden;
+}
+.top-program-card::before {
+  content:''; position:absolute; left:0; top:0; bottom:0;
+  width:3px; background:linear-gradient(180deg,var(--ember),var(--gold));
+}
+.top-program-card.rank-1::before { width:4px; background:linear-gradient(180deg,#ff6b35,var(--gold-light)); }
+
+.top-rank {
+  font-size:10px; font-weight:700; letter-spacing:0.2em; text-transform:uppercase;
+  color:var(--ember); margin-bottom:8px; display:block;
+}
+.top-rank.rank-1 { color:var(--gold-light); }
+
+.top-name {
+  font-family:'Playfair Display',serif;
+  font-size:22px; font-weight:700; color:var(--cream); margin-bottom:6px;
+}
+.top-score-bar { display:flex; align-items:center; gap:14px; margin-bottom:16px; }
+.top-bar-track { flex:1; height:5px; background:rgba(255,255,255,0.07); border-radius:100px; overflow:hidden; }
+.top-bar-fill { height:100%; border-radius:100px; background:linear-gradient(90deg,var(--ember),var(--gold-light)); transition:width 1s cubic-bezier(0.4,0,0.2,1); }
+.top-score-num { font-size:12px; font-weight:700; color:var(--gold); min-width:40px; text-align:right; }
+
+.top-steal {
+  font-size:13px; font-weight:600; color:rgba(196,74,30,0.9);
+  margin-bottom:10px; letter-spacing:0.02em;
+}
+.top-steal::before { content:'⚡ '; }
+
+.top-desc { font-size:14px; font-weight:300; color:var(--cream-soft); line-height:1.8; margin-bottom:16px; }
+
+.top-tip {
+  background:rgba(184,130,10,0.08); border:1px solid rgba(184,130,10,0.2);
+  border-radius:12px; padding:16px 18px;
+  font-size:13px; color:rgba(224,170,72,0.9); line-height:1.8; font-weight:300;
+}
+.top-tip::before { content:'✦ Первый шаг: '; font-weight:700; }
+
+/* ALL PROGRAMS */
+.all-programs { margin-bottom:56px; }
+.program-row {
+  display:flex; align-items:center; gap:16px;
+  padding:16px 0; border-bottom:1px solid rgba(255,255,255,0.05);
+}
+.program-row:last-child { border-bottom:none; }
+.prog-name { font-size:14px; font-weight:500; color:var(--cream-soft); min-width:180px; }
+.prog-bar-track { flex:1; height:4px; background:rgba(255,255,255,0.06); border-radius:100px; overflow:hidden; }
+.prog-bar-fill { height:100%; border-radius:100px; background:linear-gradient(90deg,var(--ember),var(--gold)); transition:width 1.2s cubic-bezier(0.4,0,0.2,1); }
+.prog-score { font-size:12px; font-weight:700; color:var(--gold); min-width:36px; text-align:right; }
+.prog-level {
+  font-size:9px; font-weight:700; letter-spacing:0.1em; text-transform:uppercase;
+  padding:4px 10px; border-radius:100px; min-width:64px; text-align:center;
+}
+.prog-level.high { background:rgba(196,74,30,0.15); color:var(--ember-light); border:1px solid rgba(196,74,30,0.25); }
+.prog-level.mid  { background:rgba(184,130,10,0.12); color:var(--gold); border:1px solid rgba(184,130,10,0.2); }
+.prog-level.low  { background:rgba(255,255,255,0.04); color:var(--cream-dim); border:1px solid rgba(255,255,255,0.08); }
+
+/* CLOSING */
+.closing-card {
+  background:linear-gradient(135deg,rgba(196,74,30,0.08),rgba(184,130,10,0.06));
+  border:1px solid rgba(184,130,10,0.2); border-radius:24px;
+  padding:48px 40px; text-align:center; margin-bottom:40px;
+}
+.closing-icon { font-size:48px; margin-bottom:20px; display:block; }
+.closing-title {
+  font-family:'Playfair Display',serif;
+  font-size:clamp(22px,4vw,34px); font-weight:700; color:var(--cream);
+  margin-bottom:16px; line-height:1.2;
+}
+.closing-title em { font-style:italic; color:var(--gold-light); }
+.closing-text {
+  font-size:15px; font-weight:300; color:var(--cream-soft);
+  line-height:1.9; max-width:520px; margin:0 auto 32px;
+}
+.btn-course {
+  display:inline-flex; align-items:center; gap:10px;
+  background:linear-gradient(135deg,var(--ember),var(--gold));
+  color:#fff; font-family:'Raleway',sans-serif;
+  font-size:12px; font-weight:700; letter-spacing:0.16em; text-transform:uppercase;
+  padding:17px 40px; border-radius:100px; text-decoration:none;
+  box-shadow:0 8px 32px rgba(196,74,30,0.35); transition:all 0.3s;
+}
+.btn-course:hover { transform:translateY(-2px); box-shadow:0 14px 44px rgba(196,74,30,0.45); }
+
+.btn-retake {
+  display:inline-block; margin-top:16px;
+  font-size:12px; font-weight:600; letter-spacing:0.1em; text-transform:uppercase;
+  color:var(--cream-dim); text-decoration:none; cursor:pointer;
+  transition:color 0.2s; background:none; border:none;
+}
+.btn-retake:hover { color:var(--gold); }
+
+@media(max-width:600px){
+  .question-card { padding:28px 22px; }
+  .scale-btn { padding:10px 4px; min-width:44px; }
+  .scale-num { font-size:16px; }
+  .top-program-card { padding:24px 22px; }
+  .prog-name { min-width:130px; font-size:13px; }
+  .closing-card { padding:36px 24px; }
+  .hero { padding:60px 0 40px; }
+}
+</style>
+</head>
+<body>
+
+<!-- PROGRESS BAR -->
+<div class="progress-bar-wrap" id="progressBar">
+  <div class="progress-inner">
+    <span class="progress-label">Прогресс</span>
+    <div class="progress-track"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
+    <span class="progress-count" id="progressCount">0 / 15</span>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <!-- ══ HERO ══ -->
+  <section class="hero" id="heroSection">
+    <div class="hero-eyebrow">🔍 Психологический тест</div>
+    <h1 class="hero-title">Какие скрытые программы<br><em>незаметно управляют</em><br>вашей жизнью?</h1>
+    <p class="hero-sub">Большинство людей думают, что им не хватает силы воли или мотивации. Но чаще всего дело в другом — значительная часть вашей энергии ежедневно уходит на автоматические сценарии поведения, о которых вы даже не подозреваете.</p>
+    <div class="hero-meta">
+      <span>⏱ 10–12 минут</span>
+      <span>📋 25 вопросов</span>
+      <span>🔒 Только для вас</span>
+    </div>
+    <button class="btn-start" onclick="startTest()">
+      Начать тест <span class="btn-start-arrow">→</span>
+    </button>
+  </section>
+
+  <!-- ══ QUESTIONS ══ -->
+  <section class="questions-section" id="questionsSection">
+    <div id="questionsContainer"></div>
+    <div class="submit-wrap" id="submitWrap">
+      <div class="answers-count" id="answersCount"></div>
+      <button class="btn-submit" id="btnSubmit" onclick="showResults()">Узнать результат →</button>
+      <p class="submit-note">Все ответы конфиденциальны</p>
+    </div>
+  </section>
+
+  <!-- ══ RESULTS ══ -->
+  <section class="results-section" id="resultsSection">
+    <div class="results-hero">
+      <span class="results-hero-label">Ваш результат</span>
+      <h2 class="results-hero-title" id="resultsTitle"></h2>
+      <p class="results-hero-sub" id="resultsSub"></p>
+    </div>
+
+    <div class="top-programs">
+      <span class="section-title-sm">Ваши главные программы</span>
+      <div id="topProgramsContainer"></div>
+    </div>
+
+    <div class="all-programs">
+      <span class="section-title-sm">Все программы — обзор</span>
+      <div id="allProgramsContainer"></div>
+    </div>
+
+    <div class="closing-card">
+      <span class="closing-icon">🔥</span>
+      <h3 class="closing-title">Это не приговор.<br><em>Это точка отсчёта.</em></h3>
+      <p class="closing-text">Эти программы — не ваша личность и не ваш характер. Это привычные модели поведения, которые сформировались когда-то давно как защита. Теперь, когда вы их видите — вы уже на шаг впереди большинства людей.</p>
+
+      <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(201,149,74,0.25);border-radius:18px;padding:32px 28px;margin:28px 0 0;">
+        <div style="font-size:11px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:#d4a030;margin-bottom:12px;">🦅 Курс «Инструменты Феникса»</div>
+        <div style="font-family:'Playfair Display',serif;font-size:20px;color:#f8f0e0;font-weight:700;margin-bottom:12px;line-height:1.3;">Я создаю курс именно для тех,<br>кто узнал себя в этом тесте.</div>
+        <p style="font-size:14px;font-weight:300;color:rgba(248,240,224,0.7);line-height:1.9;margin-bottom:24px;">28 дней. Один инструмент в день. Работа с теми самыми программами, которые вы только что увидели — через практику, а не теорию.<br><br>Курс скоро выходит. Оставьте email — и вы узнаете первой, когда он откроется, плюс получите специальные условия для ранних участников.</p>
+
+        <!-- STEP 1: Telegram -->
+        <div id="stepTelegram">
+          <div style="font-size:13px;font-weight:600;color:rgba(248,240,224,0.6);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:14px;">Шаг 1 из 2</div>
+          <p style="font-size:14px;font-weight:300;color:rgba(248,240,224,0.7);line-height:1.9;margin-bottom:20px;">Подпишитесь на мой Telegram-канал — там я публикую инсайты, практики и анонсы. Это также ваш приоритетный доступ к курсу.</p>
+          <a href="https://t.me/YOUR_CHANNEL" target="_blank" id="telegramBtn"
+            onclick="setTimeout(showEmailStep, 1500)"
+            style="display:flex;align-items:center;justify-content:center;gap:10px;background:linear-gradient(135deg,#229ED9,#1a7fb5);color:#fff;font-family:'Raleway',sans-serif;font-size:13px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;padding:15px 24px;border-radius:12px;text-decoration:none;margin-bottom:12px;">
+            ✈ Подписаться на Telegram-канал
+          </a>
+          <button onclick="showEmailStep()"
+            style="background:none;border:none;font-size:12px;color:rgba(248,240,224,0.3);cursor:pointer;font-family:'Raleway',sans-serif;text-decoration:underline;">
+            Уже подписана — перейти к следующему шагу
+          </button>
+        </div>
+
+        <!-- STEP 2: Email -->
+        <div id="stepEmail" style="display:none;">
+          <div style="font-size:13px;font-weight:600;color:rgba(248,240,224,0.6);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:14px;">Шаг 2 из 2</div>
+          <div style="background:rgba(196,74,30,0.1);border:1px solid rgba(196,74,30,0.25);border-radius:10px;padding:12px 16px;margin-bottom:16px;">
+            <div style="font-size:12px;font-weight:700;color:#e07050;letter-spacing:0.08em;">⚡ Мест ограничено</div>
+            <div style="font-size:13px;color:rgba(248,240,224,0.65);margin-top:4px;font-weight:300;">Я провожу бесплатные личные консультации 20 минут для первых участников курса. Места разбираются по очереди регистрации.</div>
+          </div>
+          <div id="waitlistForm">
+            <div style="display:flex;gap:10px;flex-wrap:wrap;">
+              <input type="email" id="waitlistEmail" placeholder="ваш@email.com"
+                style="flex:1;min-width:180px;background:rgba(255,255,255,0.06);border:1px solid rgba(201,149,74,0.25);border-radius:12px;padding:13px 16px;font-family:'Raleway',sans-serif;font-size:14px;color:#f8f0e0;outline:none;">
+              <button onclick="submitWaitlist()"
+                style="background:linear-gradient(135deg,#c44a1e,#b8820a);color:#fff;font-family:'Raleway',sans-serif;font-size:12px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;padding:13px 22px;border:none;border-radius:12px;cursor:pointer;white-space:nowrap;">
+                Занять место →
+              </button>
+            </div>
+            <div id="waitlistError" style="display:none;font-size:12px;color:#e06050;margin-top:8px;"></div>
+          </div>
+          <div id="waitlistSuccess" style="display:none;padding:16px 18px;border-radius:12px;background:rgba(76,175,80,0.1);border:1px solid rgba(76,175,80,0.25);color:#81c784;font-size:14px;font-weight:500;line-height:1.7;">
+            ✓ Готово! Вы в списке первых участников.<br>
+            <span style="font-size:13px;font-weight:300;color:rgba(129,199,132,0.8);">Я напишу вам лично, когда курс откроется. Ваше место в очереди зафиксировано.</span>
+          </div>
+        </div>
+
+        <p style="font-size:11px;color:rgba(248,240,224,0.2);margin-top:16px;">Никакого спама. Только одно письмо — когда курс будет готов.</p>
+      </div>
+
+      <button class="btn-retake" onclick="retakeTest()" style="margin-top:24px;">Пройти тест заново</button>
+    </div>
+  </section>
+
+</div>
+
+<script>
+// ═══════════════════════════════════════════════════════
+//  PROGRAMS — 9 total
+// ═══════════════════════════════════════════════════════
+const PROGRAMS = {
+  imbalance: {
+    name: "Односторонние отношения",
+    emoji: "⚖️",
+    steal: "Крадёт энергию незаметно — через постоянную отдачу без восполнения",
+    desc: `Вы регулярно помогаете, поддерживаете, подстраиваетесь — и считаете это нормой. Но если честно посмотреть на последние месяцы: в обратную сторону это происходит значительно реже.
+
+Это не значит, что вас не любят. Это значит, что такой формат давно стал привычным — для вас и для окружающих. Вы стали тем человеком, к которому приходят. Тем, на кого можно положиться. Тем, кто не откажет.
+
+На первый взгляд это звучит как комплимент. Но изнутри это ощущается иначе: хроническая усталость без видимой причины, внутренняя обида, которую вы стараетесь не замечать, и ощущение, что вас воспринимают как ресурс — а не как человека с собственными потребностями.`,
+    life: "Вы замечаете, что ваши планы меняются ради других — но не наоборот. Что некоторые люди приходят к вам только тогда, когда им что-то нужно. Что «хороший человек» в вашем окружении — это синоним «тот, кто никогда не отказывает».",
+    tip: "Возьмите лист бумаги. Напишите имена 5 ближайших людей. Напротив каждого ответьте честно: я чаще даю или получаю? Не нужно делать выводы сразу. Просто посмотрите на список."
+  },
+  authority: {
+    name: "Зависимость от значимых фигур",
+    emoji: "🗝️",
+    steal: "Крадёт автономию — вы живёте с внутренним «разрешением» от других людей",
+    desc: `Формально вы взрослый человек, который сам принимает решения. Но если посмотреть внимательнее — в вашей жизни есть люди, чьё одобрение или неодобрение реально влияет на то, что вы делаете.
+
+Это может быть родитель, партнёр, авторитетный друг, наставник или даже коллега. Перед важным шагом вы мысленно представляете их реакцию. Если они поддерживают — вы двигаетесь вперёд уверенно. Если нет — что-то внутри останавливается.
+
+Эта программа не означает, что вы слабый человек. Она означает, что когда-то давно вы усвоили: безопасно двигаться вперёд только тогда, когда кто-то значимый говорит «можно».`,
+    life: "Вы откладываете решения, пока не «посоветуетесь». Объясняете свои выборы так, будто вам нужно получить разрешение. После разговора с определённым человеком пересматриваете то, в чём секунду назад были уверены. Чьё-то неодобрение способно надолго выбить вас из колеи.",
+    tip: "Перед следующим важным шагом запишите свой ответ на вопрос: «Чего хочу именно я?» — до того, как обсудите это с кем-либо. Сравните потом: изменился ли ваш ответ после разговора — и если да, то почему?"
+  },
+  rescuer: {
+    name: "Спасатель",
+    emoji: "🛡️",
+    steal: "Крадёт время и силы — вы решаете чужие задачи вместо своих",
+    desc: `Когда рядом кто-то в трудной ситуации — вы автоматически включаетесь. Не потому что вас попросили. Просто потому что вы видите проблему — и чувствуете, что должны помочь.
+
+Эта программа часто маскируется под заботу, ответственность или доброту. И внешне она именно так и выглядит. Но внутри цена высока: пока вы решаете чужие проблемы, ваши собственные цели стоят в очереди.
+
+Со временем вы начинаете замечать усталость. Иногда — скрытое раздражение на тех, кому помогаете. И удивление: почему мне никто не помогает так, как я помогаю другим?`,
+    life: "Взрослые дети звонят вам с проблемами, которые могли бы решить сами. Коллеги приходят к вам, потому что «вы лучше справитесь». Вы беретесь за чужие задачи раньше, чем заканчиваете свои.",
+    tip: "Прежде чем броситься помогать, остановитесь на 30 секунд и спросите себя: «Меня просили об этом? Этот человек действительно не может справиться сам — или просто не хочет?»"
+  },
+  guilty: {
+    name: "Хроническая вина",
+    emoji: "⚖️",
+    steal: "Крадёт уверенность — вы действуете из страха, а не из желания",
+    desc: `Многие ваши решения принимаются не потому что вы хотите — а потому что иначе будет неловко, плохо или кто-то расстроится. Чувство вины работает как тихий фоновый процесс: вы соглашаетесь, когда хотите отказать. Помогаете, когда устали. Молчите, когда хотите высказаться.
+
+Важно понять: хроническая вина — это не признак плохого характера. Это усвоенный механизм, который когда-то помогал избегать конфликтов или сохранять отношения. Но сейчас он работает против вас.
+
+Вы живёте в постоянном долге — перед близкими, перед работой, перед обстоятельствами. И этот долг никогда не заканчивается.`,
+    life: "После разговора вы долго прокручиваете: не сказали ли лишнего. Соглашаетесь на просьбы, от которых внутри всё сжимается. Чувствуете себя виноватым(ой), когда делаете что-то только для себя.",
+    tip: "Начните замечать разницу: «Я делаю это, потому что хочу» — или «Я делаю это, потому что боюсь, что будет плохо, если не сделаю». Это два абсолютно разных состояния."
+  },
+  pleaser: {
+    name: "Угодник",
+    emoji: "🎭",
+    steal: "Крадёт аутентичность — вы живёте в режиме чужих ожиданий",
+    desc: `Вы очень тонко чувствуете, чего хотят другие люди — и автоматически подстраиваетесь. Сказать «нет», выразить несогласие или поступить вопреки чужим ожиданиям — физически некомфортно.
+
+Внешне это выглядит как гибкость и деликатность. Но изнутри это означает, что вы редко позволяете себе быть собой в полной мере. Со временем вы начинаете терять ощущение: а чего хочу лично я?
+
+Самое болезненное в этой программе: вы можете годами делать всё правильно по чужим меркам — и при этом чувствовать внутреннюю пустоту. Потому что жизнь, выстроенная вокруг чужих ожиданий, не ощущается как своя.`,
+    life: "Вы соглашаетесь на встречи, которых не хотите. Поддерживаете разговоры, которые вам неинтересны. Меняете своё мнение после того, как видите реакцию собеседника.",
+    tip: "Выберите одну небольшую ситуацию на этой неделе, где вы скажете честное «нет» или выразите своё настоящее мнение — даже если это создаст лёгкое напряжение. Понаблюдайте, что произойдёт."
+  },
+  comfort_keeper: {
+    name: "Хранитель чужого комфорта",
+    emoji: "🧤",
+    steal: "Крадёт ваши границы — ваши потребности всегда стоят последними",
+    desc: `Вы инстинктивно сглаживаете углы, берёте на себя неудобное, молчите о своём дискомфорте — лишь бы вокруг не было напряжения. Вам легче потерпеть самому(ой), чем видеть, что кому-то неудобно.
+
+На первый взгляд это выглядит как чуткость. Но за этим стоит кое-что другое: вы давно привыкли, что ваш комфорт — это то, чем можно пожертвовать ради чужого спокойствия.
+
+Результат — накопленное ощущение, что вас не видят. Что вы много отдаёте, но мало получаете. И что говорить о своих потребностях почему-то неловко или «эгоистично».`,
+    life: "Вы замалчиваете своё неудобство в разговорах. Берёте на себя организацию и «неудобные» части общих дел. Чувствуете, что если вы не позаботитесь — никто не позаботится.",
+    tip: "Попробуйте один раз сказать о своём неудобстве прямо — не как обвинение, а просто как факт: «Мне сейчас некомфортно, потому что...». Посмотрите, что изменится."
+  },
+  absorber: {
+    name: "Поглотитель чужих проблем",
+    emoji: "🌊",
+    steal: "Крадёт эмоциональный ресурс — вы несёте чужую боль как свою",
+    desc: `Когда кому-то из близких плохо — вам тоже становится плохо. Вы не просто сочувствуете. Вы физически ощущаете чужую тревогу, боль и стресс как свои собственные.
+
+Эмпатия — это ваш настоящий дар. Но без внутренних границ она работает как открытый канал: чужие эмоции свободно входят в вас и остаются там.
+
+Вы можете устать от разговора, который был не о вас. Можете не спать ночью из-за проблемы, которая касается другого человека. Можете провести день в тяжести — и только к вечеру понять, что это был не ваш стресс.`,
+    life: "После тяжёлых разговоров вы чувствуете опустошённость. Тревога близкого человека передаётся вам мгновенно. Вы не можете расслабиться, пока у кого-то из ближнего круга не решится проблема.",
+    tip: "После тяжёлого разговора сделайте простой ритуал: сделайте глубокий вдох и мысленно скажите себе: «Это их боль, не моя. Я сочувствую — но я отдельный человек, и мне можно выйти из этого»."
+  },
+  scattered: {
+    name: "Рассеиватель внимания",
+    emoji: "📡",
+    steal: "Крадёт самый ценный ресурс — ваше сфокусированное время и внимание",
+    desc: `Чужие новости, переписки, чужие истории, бесконечные ленты — всё это кажется важным в моменте. Но в итоге день заканчивается, а на собственные цели времени не осталось.
+
+Эта программа особенно коварна, потому что не ощущается как проблема. Вы не «ничего не делали» — вы были заняты. Просто заняты не тем.
+
+В результате — хроническое ощущение, что вы «весь день что-то делали», но не можете назвать ни одного конкретного шага в направлении своей жизни.`,
+    life: "Вы садитесь работать — и сначала «быстро» проверяете телефон. Обсуждаете чужие проблемы дольше, чем занимаетесь своими. К вечеру не можете вспомнить, на что ушёл день.",
+    tip: "Попробуйте один эксперимент: первые 30 минут после пробуждения — только для себя. Без телефона, без новостей, без чужого контента. Просто посмотрите, как это ощущается."
+  },
+  inertia: {
+    name: "Жизнь по инерции",
+    emoji: "⏳",
+    steal: "Крадёт осознанность — дни идут, но движения к своей жизни нет",
+    desc: `Многое происходит автоматически: по привычке, потому что «так заведено», потому что «так всегда было». Редко возникает вопрос: а чего хочу именно я? Не семья, не работа, не «правильно» — а я лично?
+
+Эта программа часто незаметна, потому что жизнь снаружи выглядит нормально. Вы заняты, вы функционируете, вы справляетесь. Но внутри — ощущение, что вы живёте чью-то жизнь. Или ждёте, когда «наконец начнётся настоящее».
+
+Проходят месяцы. Потом годы. А ответ на вопрос «чего я хочу?» так и не появляется — потому что его никто не задавал.`,
+    life: "Вы не можете быстро ответить, чего хотите для себя. Ваши цели звучат размыто или как чужие слова. Вы откладываете важные решения — без конкретной причины.",
+    tip: "Каждое утро задавайте себе один вопрос: «Что одно я сделаю сегодня для себя — не для кого-то, а именно для своей жизни?» Запишите ответ. Это и есть точка возврата к себе."
+  }
+};
+
+// ═══════════════════════════════════════════════════════
+//  QUESTIONS — 3 blocks, 25 total
+//  Block 1 (1-10): Balance & reciprocity + significant figures
+//  Block 2 (11-15): Approval & opinion
+//  Block 3 (16-25): Core programs
+// ═══════════════════════════════════════════════════════
+const QUESTIONS = [
+  // ── БЛОК 1: КТО РЕАЛЬНО УПРАВЛЯЕТ ВАШЕЙ ЖИЗНЬЮ? ──
+  { id:1,  text:"Если посмотреть на последние несколько месяцев — я чаще был(а) источником помощи, поддержки или ресурсов для других, чем получал(а) это в ответ.", programs:["imbalance","rescuer"] },
+  { id:2,  text:"Есть люди в моей жизни, чьи планы, настроение или потребности регулярно меняют мои планы — но не наоборот.", programs:["imbalance","comfort_keeper"] },
+  { id:3,  text:"Некоторые люди из моего окружения обращаются ко мне за помощью настолько регулярно, что это стало чем-то само собой разумеющимся — с их стороны.", programs:["imbalance","rescuer"] },
+  { id:4,  text:"Если я честно посмотрю на свои отношения — я чаще подстраиваюсь под удобство других, чем они под моё.", programs:["imbalance","pleaser"] },
+  { id:5,  text:"Бывает, что я трачу время, силы или деньги на поддержку взрослых людей, которые объективно могли бы справиться сами — и я это понимаю, но всё равно помогаю.", programs:["imbalance","guilty"] },
+  // ── БЛОК 1 продолжение: ЗНАЧИМЫЕ ФИГУРЫ ──
+  { id:6,  text:"Перед важным решением я мысленно представляю реакцию определённых людей ещё до того, как думаю о собственных желаниях.", programs:["authority","pleaser"] },
+  { id:7,  text:"Если значимый для меня человек не поддерживает мою идею — моя уверенность в ней заметно снижается, даже если я сам(а) считал(а) её правильной.", programs:["authority"] },
+  { id:8,  text:"Бывало, что я уже знал(а) чего хочу — но всё равно шёл(шла) обсуждать это с кем-то, чьё мнение особенно важно, прежде чем действовать.", programs:["authority","guilty"] },
+  { id:9,  text:"Некоторые решения я откладываю не потому, что не готов(а), а потому что опасаюсь реакции близких людей.", programs:["authority","pleaser"] },
+  { id:10, text:"Иногда я замечаю, что объясняю и защищаю свои решения так, будто мне необходимо получить разрешение на собственную жизнь.", programs:["authority","guilty"] },
+  // ── БЛОК 2: ОДОБРЕНИЕ И ЧУЖОЕ МНЕНИЕ ──
+  { id:11, text:"На этой неделе я согласился(лась) на встречу, просьбу или участие в чём-то, хотя внутри не хотел(а) или сомневался(лась).", programs:["pleaser","guilty"] },
+  { id:12, text:"Принимая решение — куда пойти, что ответить, как поступить — я автоматически думаю о том, как это воспримут другие, ещё до того, как думаю о том, чего хочу я.", programs:["pleaser","authority"] },
+  { id:13, text:"После разговора с близким человеком я ещё долго прокручивал(а) в голове: не сказал(а) ли лишнего, не обидел(а) ли, правильно ли поступил(а).", programs:["guilty","pleaser"] },
+  { id:14, text:"Если никто из близких не одобряет мой выбор — мне трудно быть уверенным(ой), что я поступаю правильно.", programs:["authority","guilty"] },
+  { id:15, text:"Есть люди, чьё неодобрение способно надолго испортить мне настроение или выбить из колеи — даже если их мнение объективно меня не касается.", programs:["authority","absorber"] },
+  // ── БЛОК 3: ЕЖЕДНЕВНЫЕ ПАТТЕРНЫ ──
+  { id:16, text:"На этой неделе я потратил(а) больше времени на решение чужих проблем или запросов, чем на продвижение собственных дел и целей.", programs:["rescuer","inertia"] },
+  { id:17, text:"За последние семь дней я переживал(а) о жизни, проблемах или настроении взрослого родственника или близкого человека больше, чем о своём собственном будущем.", programs:["rescuer","absorber"] },
+  { id:18, text:"Когда у близкого человека возникают трудности, мне сложно спокойно заниматься своими делами, пока ситуация у него не разрешится.", programs:["absorber","comfort_keeper"] },
+  { id:19, text:"Если близкий человек расстроен или в стрессе, я ощущаю тревогу, тяжесть или беспокойство — даже если его ситуация меня напрямую не касается.", programs:["absorber","comfort_keeper"] },
+  { id:20, text:"За последние две недели я чаще думал(а) о том, что нужно другим людям, чем о том, чего хочу лично я.", programs:["inertia","guilty"] },
+  { id:21, text:"За последний месяц я вложил(а) в своё развитие, обучение или здоровье меньше времени и денег, чем в нужды других людей.", programs:["inertia","rescuer"] },
+  { id:22, text:"На этой неделе я садился(лась) заниматься своими делами, но быстро отвлекался(лась) — на телефон, переписку, чужие новости или чужие запросы.", programs:["scattered","inertia"] },
+  { id:23, text:"За последние недели я провёл(а) больше часа в день в лентах, переписках, обсуждении чужих проблем или просмотре контента, который никак не помогает моим целям.", programs:["scattered"] },
+  { id:24, text:"Бывает, я испытываю облегчение или радость, когда у близких всё хорошо — но не могу вспомнить, когда последний раз испытывал(а) такую же радость за самого(саму) себя.", programs:["comfort_keeper","inertia"] },
+  { id:25, text:"Если меня прямо сейчас спросить: «Чего ты хочешь для себя в ближайшие месяцы?» — мне потребуется время, чтобы сформулировать ответ. Или я не знаю.", programs:["inertia","guilty"] },
+];
+
+const SCALE = [
+  { val:1, label:"Нет, не было" },
+  { val:2, label:"Было раз" },
+  { val:3, label:"Несколько раз" },
+  { val:4, label:"Регулярно" },
+  { val:5, label:"Это моя норма" },
+];
+
+// Block headers
+const BLOCK_HEADERS = {
+  1:  { title:"Кто реально управляет вашей жизнью?",  sub:"Баланс, взаимность и значимые фигуры", color:"rgba(196,74,30,0.07)", border:"rgba(196,74,30,0.18)", label_color:"#d05020" },
+  11: { title:"Откуда приходят ваши решения?",         sub:"Одобрение, мнение и чужие оценки",      color:"rgba(201,149,74,0.07)", border:"rgba(201,149,74,0.18)", label_color:"#d4a030" },
+  16: { title:"Ваши ежедневные паттерны",              sub:"Куда уходят время, внимание и энергия",  color:"rgba(90,72,140,0.07)",  border:"rgba(120,90,180,0.18)", label_color:"#9070c0" },
+};
+
+let answers = {};
+
+// ═══════════════════════════════════════════════════════
+//  RENDER
+// ═══════════════════════════════════════════════════════
+function startTest() {
+  document.getElementById('heroSection').style.display = 'none';
+  document.getElementById('questionsSection').classList.add('visible');
+  document.getElementById('progressBar').classList.add('visible');
+  renderQuestions();
+  window.scrollTo({ top:0, behavior:'smooth' });
+}
+
+function renderQuestions() {
+  const container = document.getElementById('questionsContainer');
+  container.innerHTML = '';
+  QUESTIONS.forEach((q, idx) => {
+    if (BLOCK_HEADERS[q.id]) {
+      const h = BLOCK_HEADERS[q.id];
+      const div = document.createElement('div');
+      div.style.cssText = `margin:${idx===0?'0':'40px'} 0 20px; padding:20px 28px; background:${h.color}; border:1px solid ${h.border}; border-radius:16px; text-align:center;`;
+      div.innerHTML = `<div style="font-size:10px;font-weight:700;letter-spacing:0.22em;text-transform:uppercase;color:${h.label_color};margin-bottom:6px;">Блок ${idx===0?1:q.id===11?2:3} из 3</div><div style="font-size:16px;font-family:'Playfair Display',serif;font-style:italic;color:#f8f0e0;margin-bottom:4px;">${h.title}</div><div style="font-size:12px;color:rgba(248,240,224,0.5);font-weight:300;">${h.sub}</div>`;
+      container.appendChild(div);
+    }
+
+    const card = document.createElement('div');
+    card.className = 'question-card';
+    card.id = 'q-card-' + q.id;
+    card.style.animationDelay = (idx * 0.03) + 's';
+
+    const scaleHTML = SCALE.map(s =>
+      `<button class="scale-btn" id="btn-${q.id}-${s.val}" onclick="selectAnswer(${q.id}, ${s.val})">
+        <span class="scale-num">${s.val}</span>
+        <span class="scale-label">${s.label}</span>
+      </button>`
+    ).join('');
+
+    card.innerHTML = `
+      <span class="q-number">Вопрос ${q.id} из ${QUESTIONS.length}</span>
+      <p class="q-text">«${q.text}»</p>
+      <div class="scale-row">${scaleHTML}</div>
+      <div class="scale-legend"><span>Нет, не было</span><span>Это моя норма жизни</span></div>`;
+    container.appendChild(card);
+  });
+}
+
+function selectAnswer(qId, val) {
+  answers[qId] = val;
+  SCALE.forEach(s => {
+    const btn = document.getElementById(`btn-${qId}-${s.val}`);
+    if (btn) btn.classList.toggle('selected', s.val === val);
+  });
+  document.getElementById('q-card-' + qId)?.classList.add('answered');
+  updateProgress();
+}
+
+function updateProgress() {
+  const total = QUESTIONS.length;
+  const done = Object.keys(answers).length;
+  document.getElementById('progressFill').style.width = (done/total*100) + '%';
+  document.getElementById('progressCount').textContent = done + ' / ' + total;
+  const submitWrap = document.getElementById('submitWrap');
+  const btnSubmit = document.getElementById('btnSubmit');
+  const answersCount = document.getElementById('answersCount');
+  if (done > 0) submitWrap.classList.add('visible');
+  if (done === total) {
+    answersCount.textContent = '✓ Все вопросы отвечены — готово!';
+    btnSubmit.disabled = false;
+    btnSubmit.style.opacity = '1';
+  } else {
+    // Find missing question numbers
+    const missing = QUESTIONS.map(q => q.id).filter(id => !answers[id]);
+    const remaining = total - done;
+    if (remaining <= 3) {
+      answersCount.innerHTML = `Осталось ${remaining}: вопрос${remaining>1?'ы':''} <strong style="color:#f0c050">${missing.join(', ')}</strong>`;
+    } else {
+      answersCount.textContent = `Отвечено ${done} из ${total} — осталось ${remaining}`;
+    }
+    btnSubmit.disabled = true;
+    btnSubmit.style.opacity = done >= 20 ? '0.5' : '0.3';
+  }
+}
+
+// ═══════════════════════════════════════════════════════
+//  CALCULATE
+// ═══════════════════════════════════════════════════════
+function calcScores() {
+  const scores = {}, counts = {};
+  Object.keys(PROGRAMS).forEach(k => { scores[k] = 0; counts[k] = 0; });
+  QUESTIONS.forEach(q => {
+    const val = answers[q.id] || 0;
+    q.programs.forEach(prog => { scores[prog] += val; counts[prog]++; });
+  });
+  const normalized = {};
+  Object.keys(PROGRAMS).forEach(k => {
+    const max = counts[k] * 5;
+    normalized[k] = max > 0 ? Math.round((scores[k] / max) * 100) : 0;
+  });
+  return normalized;
+}
+
+function getLevel(score) {
+  if (score >= 70) return { label:'Высокий', cls:'high' };
+  if (score >= 40) return { label:'Средний', cls:'mid' };
+  return { label:'Низкий', cls:'low' };
+}
+
+// ═══════════════════════════════════════════════════════
+//  RESULTS
+// ═══════════════════════════════════════════════════════
+function showResults() {
+  // Allow results if all answered
+
+  const scores = calcScores();
+  const sorted = Object.entries(scores).sort((a,b) => b[1]-a[1]);
+  const top3 = sorted.slice(0,3).filter((x,i) => i === 0 || x[1] >= 30);
+
+  document.getElementById('questionsSection').classList.remove('visible');
+  document.getElementById('resultsSection').classList.add('visible');
+  window.scrollTo({ top:0, behavior:'smooth' });
+
+  // Hero
+  const topProg = PROGRAMS[top3[0][0]];
+  document.getElementById('resultsTitle').innerHTML =
+    `Ваша главная программа —<br><em>«${topProg.name}»</em>`;
+  document.getElementById('resultsSub').textContent =
+    `Ниже — развёрнутый разбор ваших самых активных программ. Читайте внимательно: не как диагноз, а как зеркало. Многое может быть неожиданно узнаваемым.`;
+
+  // Top programs — expanded cards
+  const topContainer = document.getElementById('topProgramsContainer');
+  topContainer.innerHTML = '';
+
+  top3.forEach(([key, score], idx) => {
+    const prog = PROGRAMS[key];
+    const rankLabel = idx===0 ? '🔥 Самая активная программа' : idx===1 ? '⚡ Вторая по силе' : '△ Третья программа';
+    const card = document.createElement('div');
+    card.className = 'top-program-card' + (idx===0 ? ' rank-1' : '');
+
+    // Format multiline desc
+    const descHTML = prog.desc.split('\n\n').map(p => `<p style="margin-bottom:14px;last-child{margin-bottom:0}">${p}</p>`).join('');
+
+    card.innerHTML = `
+      <span class="top-rank ${idx===0?'rank-1':''}">${rankLabel}</span>
+      <div class="top-name">${prog.emoji} ${prog.name}</div>
+      <div class="top-score-bar">
+        <div class="top-bar-track"><div class="top-bar-fill" style="width:0%" data-target="${score}%"></div></div>
+        <span class="top-score-num">${score}%</span>
+      </div>
+
+      <div style="font-size:14px;font-weight:300;color:rgba(248,240,224,0.82);line-height:1.9;margin-bottom:20px;">${descHTML}</div>
+
+      <div style="background:rgba(255,255,255,0.04);border-radius:12px;padding:18px 20px;margin-bottom:16px;">
+        <div style="font-size:10px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:#d4a030;margin-bottom:10px;">Как это выглядит в жизни</div>
+        <div style="font-size:14px;font-weight:300;color:rgba(248,240,224,0.7);line-height:1.9;">${prog.life}</div>
+      </div>
+
+      <div class="top-tip">${prog.tip}</div>`;
+    topContainer.appendChild(card);
+  });
+
+  // All programs overview
+  const allContainer = document.getElementById('allProgramsContainer');
+  allContainer.innerHTML = '';
+  sorted.forEach(([key, score]) => {
+    const prog = PROGRAMS[key];
+    const level = getLevel(score);
+    const row = document.createElement('div');
+    row.className = 'program-row';
+    row.innerHTML = `
+      <span class="prog-name">${prog.emoji} ${prog.name}</span>
+      <div class="prog-bar-track"><div class="prog-bar-fill" style="width:0%" data-target="${score}%"></div></div>
+      <span class="prog-score">${score}%</span>
+      <span class="prog-level ${level.cls}">${level.label}</span>`;
+    allContainer.appendChild(row);
+  });
+
+  setTimeout(() => {
+    document.querySelectorAll('[data-target]').forEach(el => {
+      el.style.width = el.dataset.target;
+    });
+  }, 150);
+}
+
+function showEmailStep() {
+  document.getElementById('stepTelegram').style.display = 'none';
+  document.getElementById('stepEmail').style.display = 'block';
+}
+
+async function submitWaitlist() {
+  const email = document.getElementById('waitlistEmail').value.trim();
+  const errorEl = document.getElementById('waitlistError');
+  errorEl.style.display = 'none';
+
+  if (!email || !email.includes('@')) {
+    errorEl.textContent = 'Пожалуйста, введите корректный email.';
+    errorEl.style.display = 'block';
+    return;
+  }
+
+  const btn = event.target;
+  btn.textContent = '...';
+  btn.disabled = true;
+
+  try {
+    const res = await fetch('https://formspree.io/f/xredjapl', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        email: email,
+        source: 'test-waitlist',
+        message: 'Waitlist: ' + email
+      })
+    });
+    if (res.ok) {
+      document.getElementById('waitlistForm').style.display = 'none';
+      document.getElementById('waitlistSuccess').style.display = 'block';
+    } else {
+      btn.textContent = 'Я в списке →';
+      btn.disabled = false;
+      errorEl.textContent = 'Ошибка. Попробуйте ещё раз.';
+      errorEl.style.display = 'block';
+    }
+  } catch(e) {
+    btn.textContent = 'Я в списке →';
+    btn.disabled = false;
+    errorEl.textContent = 'Ошибка соединения. Попробуйте ещё раз.';
+    errorEl.style.display = 'block';
+  }
+}
+
+function retakeTest() {
+  answers = {};
+  document.getElementById('resultsSection').classList.remove('visible');
+  document.getElementById('heroSection').style.display = 'block';
+  document.getElementById('progressBar').classList.remove('visible');
+  document.getElementById('progressFill').style.width = '0%';
+  document.getElementById('progressCount').textContent = '0 / 25';
+  document.getElementById('submitWrap').classList.remove('visible');
+  window.scrollTo({ top:0, behavior:'smooth' });
+}
+</script>
+</body>
+</html>
