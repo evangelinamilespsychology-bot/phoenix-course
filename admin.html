@@ -10,138 +10,95 @@
 body { font-family:'Raleway',sans-serif; background:#0f0d0b; color:#f0e8d8; min-height:100vh; }
 
 .topbar {
-  background: linear-gradient(135deg,#1a1410,#231c14);
+  background:linear-gradient(135deg,#1a1410,#231c14);
   border-bottom:1px solid rgba(184,130,10,0.2);
-  padding:18px 32px;
-  display:flex; align-items:center; gap:16px;
+  padding:18px 32px; display:flex; align-items:center; gap:16px;
 }
 .topbar-logo { font-family:'Playfair Display',serif; font-size:20px; color:#e0aa48; }
 .topbar-sub { font-size:11px; letter-spacing:0.2em; text-transform:uppercase; color:rgba(224,170,72,0.5); }
-.topbar-badge {
-  margin-left:auto; font-size:10px; font-weight:700; letter-spacing:0.15em;
-  text-transform:uppercase; background:rgba(196,74,30,0.15); border:1px solid rgba(196,74,30,0.3);
-  color:#c44a1e; padding:5px 14px; border-radius:100px;
-}
+.topbar-badge { margin-left:auto; font-size:10px; font-weight:700; letter-spacing:0.15em; text-transform:uppercase; background:rgba(196,74,30,0.15); border:1px solid rgba(196,74,30,0.3); color:#c44a1e; padding:5px 14px; border-radius:100px; }
 
-.layout { display:grid; grid-template-columns:340px 1fr; min-height:calc(100vh - 61px); }
+.layout { display:grid; grid-template-columns:320px 1fr; min-height:calc(100vh - 61px); }
 
-/* SIDEBAR */
-.sidebar {
-  background:#13110e;
-  border-right:1px solid rgba(184,130,10,0.12);
-  padding:28px 24px;
-  overflow-y:auto;
-}
+.sidebar { background:#13110e; border-right:1px solid rgba(184,130,10,0.12); padding:24px 16px; overflow-y:auto; }
 .sidebar-title { font-size:11px; font-weight:700; letter-spacing:0.2em; text-transform:uppercase; color:rgba(224,170,72,0.5); margin-bottom:16px; }
 
-.lesson-list { display:flex; flex-direction:column; gap:6px; }
-.lesson-pill {
-  display:flex; align-items:center; gap:10px;
-  padding:10px 14px; border-radius:10px;
-  border:1px solid transparent;
-  cursor:pointer; transition:all 0.2s;
-  background:rgba(255,255,255,0.02);
-}
+.week-label { font-size:10px; font-weight:700; letter-spacing:0.18em; text-transform:uppercase; color:rgba(196,74,30,0.7); padding:14px 0 6px; border-top:1px solid rgba(184,130,10,0.1); margin-top:8px; }
+.week-label:first-of-type { border-top:none; padding-top:0; }
+
+.lesson-pill { display:flex; align-items:center; gap:8px; padding:9px 12px; border-radius:10px; border:1px solid transparent; cursor:pointer; transition:all 0.2s; background:rgba(255,255,255,0.02); margin-bottom:3px; }
 .lesson-pill:hover { background:rgba(184,130,10,0.06); border-color:rgba(184,130,10,0.15); }
 .lesson-pill.active { background:rgba(184,130,10,0.1); border-color:rgba(184,130,10,0.3); }
-.lesson-pill.has-video .pill-dot { background:#4caf50; }
-.lesson-pill.no-video .pill-dot { background:rgba(255,255,255,0.15); }
 .pill-dot { width:7px; height:7px; border-radius:50%; flex-shrink:0; }
-.pill-num { font-size:10px; color:rgba(224,170,72,0.5); font-weight:600; min-width:24px; }
-.pill-title { font-size:13px; color:#d4c4a8; font-weight:400; flex:1; line-height:1.3; }
-.pill-check { font-size:12px; color:#4caf50; }
+.pill-dot.has-media { background:#4caf50; }
+.pill-dot.no-media { background:rgba(255,255,255,0.15); }
+.pill-num { font-size:10px; color:rgba(224,170,72,0.5); font-weight:600; min-width:20px; }
+.pill-title { font-size:12px; color:#d4c4a8; flex:1; line-height:1.3; }
+.pill-type { font-size:9px; font-weight:700; padding:2px 7px; border-radius:100px; }
+.pill-type.video { background:rgba(196,74,30,0.15); color:#c44a1e; }
+.pill-type.audio { background:rgba(184,130,10,0.12); color:#e0aa48; }
 
-.sidebar-week-label {
-  font-size:10px; font-weight:700; letter-spacing:0.18em; text-transform:uppercase;
-  color:rgba(196,74,30,0.7); padding:16px 0 6px; border-top:1px solid rgba(184,130,10,0.1);
-  margin-top:10px;
-}
-.sidebar-week-label:first-child { border-top:none; padding-top:0; }
-
-/* MAIN */
 .main { padding:40px 48px; overflow-y:auto; }
+.empty-state { display:flex; flex-direction:column; align-items:center; justify-content:center; height:100%; text-align:center; opacity:0.4; }
+.empty-icon { font-size:52px; margin-bottom:14px; }
+.empty-text { font-size:14px; color:#a09070; }
 
-.main-empty {
-  display:flex; flex-direction:column; align-items:center; justify-content:center;
-  height:100%; text-align:center; opacity:0.4;
-}
-.main-empty-icon { font-size:56px; margin-bottom:16px; }
-.main-empty-text { font-size:15px; color:#a09070; }
-
-.editor { display:none; max-width:680px; }
+.editor { display:none; max-width:640px; }
 .editor.visible { display:block; }
 
-.editor-breadcrumb { font-size:11px; color:rgba(224,170,72,0.5); letter-spacing:0.1em; margin-bottom:8px; text-transform:uppercase; }
-.editor-title { font-family:'Playfair Display',serif; font-size:28px; color:#f0e8d8; margin-bottom:6px; }
-.editor-desc { font-size:14px; color:#8a7a60; font-weight:300; line-height:1.7; margin-bottom:32px; }
+.ed-breadcrumb { font-size:11px; color:rgba(224,170,72,0.5); letter-spacing:0.1em; margin-bottom:6px; text-transform:uppercase; }
+.ed-title { font-family:'Playfair Display',serif; font-size:26px; color:#f0e8d8; margin-bottom:6px; }
+.ed-desc { font-size:14px; color:#8a7a60; font-weight:300; line-height:1.7; margin-bottom:28px; }
 
 .field-label { font-size:11px; font-weight:700; letter-spacing:0.18em; text-transform:uppercase; color:rgba(224,170,72,0.6); margin-bottom:8px; display:block; }
+.field-hint { font-size:12px; color:rgba(255,255,255,0.2); margin-bottom:20px; line-height:1.6; }
+.field-hint code { background:rgba(255,255,255,0.06); padding:2px 6px; border-radius:4px; font-size:11px; color:#e0aa48; font-family:monospace; }
 
-.url-row { display:flex; gap:10px; margin-bottom:8px; }
-.url-input {
-  flex:1; background:rgba(255,255,255,0.04); border:1px solid rgba(184,130,10,0.2);
-  border-radius:10px; padding:13px 16px; font-family:'Raleway',sans-serif;
-  font-size:14px; color:#f0e8d8; outline:none; transition:border-color 0.2s;
-}
-.url-input:focus { border-color:rgba(184,130,10,0.5); background:rgba(255,255,255,0.06); }
-.url-input::placeholder { color:rgba(255,255,255,0.2); }
+/* TYPE SELECTOR */
+.type-row { display:flex; gap:10px; margin-bottom:24px; }
+.type-btn { flex:1; padding:14px; border-radius:12px; border:1px solid rgba(255,255,255,0.08); background:rgba(255,255,255,0.03); cursor:pointer; text-align:center; transition:all 0.2s; }
+.type-btn:hover { border-color:rgba(184,130,10,0.3); }
+.type-btn.selected { background:rgba(184,130,10,0.1); border-color:rgba(184,130,10,0.4); }
+.type-btn-icon { font-size:22px; margin-bottom:6px; }
+.type-btn-label { font-size:11px; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; color:#d4c4a8; }
+.type-btn-sub { font-size:10px; color:rgba(255,255,255,0.3); margin-top:3px; }
 
-.btn-save {
-  background:linear-gradient(135deg,#c44a1e,#b8820a);
-  color:#fff; font-family:'Raleway',sans-serif; font-size:12px; font-weight:700;
-  letter-spacing:0.12em; text-transform:uppercase; padding:13px 24px;
-  border:none; border-radius:10px; cursor:pointer; transition:all 0.2s; white-space:nowrap;
-}
+/* FIELDS */
+.input-row { display:flex; gap:10px; margin-bottom:8px; }
+.text-input { flex:1; background:rgba(255,255,255,0.04); border:1px solid rgba(184,130,10,0.2); border-radius:10px; padding:13px 16px; font-family:'Raleway',sans-serif; font-size:14px; color:#f0e8d8; outline:none; transition:border-color 0.2s; }
+.text-input:focus { border-color:rgba(184,130,10,0.5); }
+.text-input::placeholder { color:rgba(255,255,255,0.2); }
+
+.btn-save { background:linear-gradient(135deg,#c44a1e,#b8820a); color:#fff; font-family:'Raleway',sans-serif; font-size:12px; font-weight:700; letter-spacing:0.12em; text-transform:uppercase; padding:13px 24px; border:none; border-radius:10px; cursor:pointer; transition:all 0.2s; white-space:nowrap; }
 .btn-save:hover { transform:translateY(-1px); box-shadow:0 6px 20px rgba(196,74,30,0.35); }
 
-.btn-clear {
-  background:transparent; color:rgba(255,100,80,0.7); font-family:'Raleway',sans-serif;
-  font-size:11px; font-weight:600; letter-spacing:0.1em; text-transform:uppercase;
-  padding:8px 14px; border:1px solid rgba(255,100,80,0.2); border-radius:8px;
-  cursor:pointer; transition:all 0.2s; margin-top:8px;
-}
+.btn-clear { background:transparent; color:rgba(255,100,80,0.7); font-family:'Raleway',sans-serif; font-size:11px; font-weight:600; letter-spacing:0.1em; text-transform:uppercase; padding:8px 14px; border:1px solid rgba(255,100,80,0.2); border-radius:8px; cursor:pointer; transition:all 0.2s; margin-top:8px; }
 .btn-clear:hover { border-color:rgba(255,100,80,0.5); color:rgba(255,100,80,1); }
 
-.hint { font-size:12px; color:rgba(255,255,255,0.2); margin-bottom:28px; line-height:1.6; }
-.hint code { background:rgba(255,255,255,0.06); padding:2px 6px; border-radius:4px; font-family:monospace; font-size:11px; color:#e0aa48; }
-
-.preview-box {
-  background:rgba(255,255,255,0.03); border:1px solid rgba(184,130,10,0.15);
-  border-radius:14px; overflow:hidden; margin-top:28px; display:none;
-}
-.preview-box.visible { display:block; }
-.preview-label { font-size:10px; font-weight:700; letter-spacing:0.2em; text-transform:uppercase; color:rgba(224,170,72,0.4); padding:12px 16px; border-bottom:1px solid rgba(184,130,10,0.1); }
-.preview-frame { aspect-ratio:16/9; background:#000; }
-.preview-frame iframe { width:100%; height:100%; display:block; border:none; }
-
-.status-bar {
-  margin-top:16px; padding:12px 16px; border-radius:10px;
-  font-size:13px; font-weight:500; display:none;
-}
+.status-bar { margin-top:14px; padding:12px 16px; border-radius:10px; font-size:13px; font-weight:500; display:none; }
 .status-bar.success { display:block; background:rgba(76,175,80,0.1); border:1px solid rgba(76,175,80,0.25); color:#81c784; }
 .status-bar.error { display:block; background:rgba(255,80,60,0.1); border:1px solid rgba(255,80,60,0.25); color:#ef9a9a; }
 
-.export-section { margin-top:48px; padding-top:32px; border-top:1px solid rgba(184,130,10,0.1); }
-.export-title { font-size:13px; font-weight:600; color:#d4c4a8; margin-bottom:8px; }
-.export-sub { font-size:12px; color:#6a5a40; margin-bottom:16px; font-weight:300; }
-.btn-export {
-  background:rgba(184,130,10,0.1); border:1px solid rgba(184,130,10,0.25);
-  color:#e0aa48; font-family:'Raleway',sans-serif; font-size:12px; font-weight:700;
-  letter-spacing:0.1em; text-transform:uppercase; padding:11px 22px;
-  border-radius:10px; cursor:pointer; transition:all 0.2s;
-}
-.btn-export:hover { background:rgba(184,130,10,0.18); }
+/* INSTRUCTIONS */
+.instructions { margin-top:40px; padding-top:32px; border-top:1px solid rgba(184,130,10,0.1); }
+.instructions-title { font-size:13px; font-weight:600; color:#d4c4a8; margin-bottom:16px; }
+.step { display:flex; gap:14px; margin-bottom:14px; align-items:flex-start; }
+.step-num { width:24px; height:24px; border-radius:50%; background:linear-gradient(135deg,#c44a1e,#b8820a); color:#fff; font-size:11px; font-weight:700; display:flex; align-items:center; justify-content:center; flex-shrink:0; margin-top:1px; }
+.step-text { font-size:13px; color:#8a7a60; font-weight:300; line-height:1.7; }
+.step-text strong { color:#d4c4a8; font-weight:600; }
 
-.progress-bar-wrap { margin-top:28px; }
-.progress-label { font-size:11px; color:rgba(224,170,72,0.5); letter-spacing:0.1em; text-transform:uppercase; margin-bottom:8px; display:flex; justify-content:space-between; }
-.progress-track { height:6px; background:rgba(255,255,255,0.06); border-radius:100px; overflow:hidden; }
+/* PROGRESS */
+.progress-wrap { margin-top:32px; padding:20px; background:rgba(255,255,255,0.02); border-radius:14px; border:1px solid rgba(184,130,10,0.1); }
+.progress-label { display:flex; justify-content:space-between; font-size:11px; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; color:rgba(224,170,72,0.5); margin-bottom:10px; }
+.progress-track { height:5px; background:rgba(255,255,255,0.06); border-radius:100px; overflow:hidden; }
 .progress-fill { height:100%; background:linear-gradient(90deg,#c44a1e,#e0aa48); border-radius:100px; transition:width 0.5s; }
+.progress-sub { font-size:11px; color:rgba(255,255,255,0.2); margin-top:8px; }
 
-@media(max-width:900px){
-  .layout { grid-template-columns:1fr; }
-  .sidebar { border-right:none; border-bottom:1px solid rgba(184,130,10,0.12); max-height:260px; }
-  .main { padding:28px 24px; }
-}
+/* VIDEO FIELD */
+.video-field { display:none; }
+.video-field.visible { display:block; }
+.audio-field { display:none; }
+.audio-field.visible { display:block; }
 </style>
 </head>
 <body>
@@ -156,291 +113,272 @@ body { font-family:'Raleway',sans-serif; background:#0f0d0b; color:#f0e8d8; min-
 
 <div class="layout">
 
-  <!-- SIDEBAR -->
   <div class="sidebar">
     <div class="sidebar-title">Все уроки курса</div>
-    <div class="lesson-list" id="lessonList"></div>
+    <div id="lessonList"></div>
   </div>
 
-  <!-- MAIN EDITOR -->
-  <div class="main" id="mainArea">
-    <div class="main-empty" id="emptyState">
-      <div class="main-empty-icon">🎬</div>
-      <div class="main-empty-text">Выберите урок слева<br>чтобы добавить видео</div>
+  <div class="main">
+    <div class="empty-state" id="emptyState">
+      <div class="empty-icon">🎬</div>
+      <div class="empty-text">Выберите урок слева<br>чтобы добавить аудио или видео</div>
     </div>
 
     <div class="editor" id="editor">
-      <div class="editor-breadcrumb" id="edBreadcrumb"></div>
-      <div class="editor-title" id="edTitle"></div>
-      <div class="editor-desc" id="edDesc"></div>
+      <div class="ed-breadcrumb" id="edBreadcrumb"></div>
+      <div class="ed-title" id="edTitle"></div>
+      <div class="ed-desc" id="edDesc"></div>
 
-      <label class="field-label">YouTube ссылка</label>
-      <div class="url-row">
-        <input type="text" class="url-input" id="urlInput" placeholder="https://youtu.be/... или https://www.youtube.com/watch?v=...">
-        <button class="btn-save" onclick="saveLesson()">Сохранить</button>
-      </div>
-      <div class="hint">
-        Принимаются форматы:<br>
-        <code>https://youtu.be/ABC123</code> &nbsp;·&nbsp; <code>https://youtube.com/watch?v=ABC123</code><br>
-        Видео должно быть <strong style="color:#e0aa48">Unlisted</strong> на YouTube.
-      </div>
-      <button class="btn-clear" id="clearBtn" onclick="clearLesson()" style="display:none">✕ Удалить видео из этого урока</button>
-
-      <div class="preview-box" id="previewBox">
-        <div class="preview-label">Предпросмотр</div>
-        <div class="preview-frame"><iframe id="previewFrame" allowfullscreen></iframe></div>
+      <!-- TYPE SELECTOR -->
+      <label class="field-label">Тип урока</label>
+      <div class="type-row">
+        <div class="type-btn" id="typeVideo" onclick="selectType('video')">
+          <div class="type-btn-icon">🎬</div>
+          <div class="type-btn-label">Видео</div>
+          <div class="type-btn-sub">YouTube ID</div>
+        </div>
+        <div class="type-btn" id="typeAudio" onclick="selectType('audio')">
+          <div class="type-btn-icon">🎧</div>
+          <div class="type-btn-label">Аудио</div>
+          <div class="type-btn-sub">MP3 файл</div>
+        </div>
       </div>
 
+      <!-- VIDEO FIELD -->
+      <div class="video-field" id="videoField">
+        <label class="field-label">YouTube Video ID</label>
+        <div class="input-row">
+          <input type="text" class="text-input" id="videoInput" placeholder="например: ZeCX4TMfzUs">
+          <button class="btn-save" onclick="saveLesson()">Сохранить</button>
+        </div>
+        <div class="field-hint">
+          Из ссылки <code>https://youtu.be/<strong>ZeCX4TMfzUs</strong></code> — скопируйте только ID после последнего слэша.<br>
+          Видео должно быть <strong style="color:#e0aa48">Unlisted</strong> на YouTube.
+        </div>
+      </div>
+
+      <!-- AUDIO FIELD -->
+      <div class="audio-field" id="audioField">
+        <label class="field-label">Имя MP3 файла</label>
+        <div class="input-row">
+          <input type="text" class="text-input" id="audioInput" placeholder="например: lesson-02.mp3">
+          <button class="btn-save" onclick="saveLesson()">Сохранить</button>
+        </div>
+        <div class="field-hint">
+          Сначала загрузите MP3 файл в GitHub репозиторий.<br>
+          Затем введите точное имя файла здесь, например: <code>lesson-02.mp3</code><br>
+          Файл должен быть в корне репозитория рядом с <code>members.html</code>
+        </div>
+
+        <div class="instructions">
+          <div class="instructions-title">Как загрузить аудио урок:</div>
+          <div class="step"><div class="step-num">1</div><div class="step-text">Запишите урок на телефон через Voice Memos. Экспортируйте как <strong>MP3</strong>.</div></div>
+          <div class="step"><div class="step-num">2</div><div class="step-text">Назовите файл по шаблону: <strong>lesson-02.mp3</strong>, lesson-03.mp3 и т.д.</div></div>
+          <div class="step"><div class="step-num">3</div><div class="step-text">Откройте <strong>GitHub → phoenix-course</strong> → кнопка «Add file» → «Upload files» → загрузите MP3.</div></div>
+          <div class="step"><div class="step-num">4</div><div class="step-text">Вернитесь сюда, введите имя файла выше и нажмите <strong>Сохранить</strong>.</div></div>
+          <div class="step"><div class="step-num">5</div><div class="step-text">Скачайте обновлённый <strong>members.html</strong> и загрузите на GitHub вместо старого.</div></div>
+        </div>
+      </div>
+
+      <button class="btn-clear" id="clearBtn" onclick="clearLesson()" style="display:none">✕ Удалить медиа из этого урока</button>
       <div class="status-bar" id="statusBar"></div>
 
-      <div class="export-section">
-        <div class="export-title">Экспорт курса</div>
-        <div class="export-sub">После добавления уроков — скачайте обновлённый phoenix-light.html и загрузите на GitHub.</div>
-        <button class="btn-export" onclick="exportCourse()">⬇ Скачать обновлённый курс</button>
+      <div class="progress-wrap">
+        <div class="progress-label"><span>Прогресс записи курса</span><span id="progressText">0 / 26</span></div>
+        <div class="progress-track"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
+        <div class="progress-sub" id="progressSub"></div>
+      </div>
 
-        <div class="progress-bar-wrap">
-          <div class="progress-label">
-            <span>Прогресс записи курса</span>
-            <span id="progressText">0 / 28</span>
-          </div>
-          <div class="progress-track"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
-        </div>
+      <div style="margin-top:24px;padding-top:20px;border-top:1px solid rgba(184,130,10,0.1)">
+        <div class="instructions-title" style="margin-bottom:12px">Экспорт обновлённого курса</div>
+        <p style="font-size:13px;color:#6a5a40;margin-bottom:14px;font-weight:300">После добавления уроков скачайте обновлённый members.html и загрузите на GitHub.</p>
+        <button class="btn-save" onclick="exportMembers()">⬇ Скачать обновлённый members.html</button>
       </div>
     </div>
   </div>
-
 </div>
 
 <script>
-// ─── COURSE DATA ───────────────────────────────────────────────────────────────
+// ── COURSE STRUCTURE ──────────────────────────────────
 const WEEKS = [
-  {
-    num:1, title:"Неделя 1 — Энергия", sub:"Осознаём и восстанавливаем главный ресурс",
-    days:[
-      {day:1, title:"Где я трачу энергию?", desc:"Составляем честный аудит: на что уходят ваши силы и где главные утечки."},
-      {day:2, title:"Разговоры-«унитазы»", desc:"Учимся распознавать пустые разговоры, которые забирают энергию без остатка."},
-      {day:3, title:"Письмо обидчику", desc:"Мощная практика освобождения от накопленных обид — без цензуры, без отправки."},
-      {day:4, title:"Внутренний критик", desc:"Откуда он взялся и как перестать верить чужим голосам в своей голове."},
-      {day:5, title:"Практика похвалы", desc:"Учимся видеть и доказывать себе: «Я молодец» — с реальными примерами."},
-      {day:6, title:"Благодарность вместо жалоб", desc:"Меняем привычку жаловаться на привычку замечать хорошее."},
-      {day:7, title:"Итоги первой недели", desc:"Подводим итог, выбираем одну практику для продолжения."},
-    ]
-  },
-  {
-    num:2, title:"Неделя 2 — Границы", sub:"Восстанавливаем личное пространство и ресурс",
-    days:[
-      {day:8,  title:"Ревизия и работа над ошибками", desc:"Смотрим честно: где оступились, что можно сделать лучше — без самобичевания."},
-      {day:9,  title:"«Если бы я хотела…»", desc:"Возвращаем себе право на желания — пишем без ограничений и страха."},
-      {day:10, title:"Право на отдых", desc:"Разрешаем себе паузу без чувства вины. Отдых — часть работы, а не слабость."},
-      {day:11, title:"Самоуважение и маленькие шаги", desc:"Самоуважение растёт через выполненные обещания — даже самые маленькие."},
-      {day:12, title:"Моё государство — границы", desc:"Строим личные границы: что для вас неприкосновенно и как говорить «нет» твёрдо, но мягко."},
-      {day:13, title:"Подарок себе", desc:"Отмечаем результат — маленький подарок как знак уважения к своему труду."},
-      {day:14, title:"Итоги второй недели", desc:"Осознаём: ваш ресурс — ваш. Подводим итог и идём дальше."},
-    ]
-  },
-  {
-    num:3, title:"Неделя 3 — Деньги и ценность", sub:"Связываем самооценку с реальными изменениями",
-    days:[
-      {day:15, title:"Новая привычка", desc:"Выбираем одну маленькую привычку и закрепляем её — это фундамент больших перемен."},
-      {day:16, title:"Мини-ритуалы силы", desc:"Создаём личный утренний ритуал 5–10 минут, который даёт энергию на весь день."},
-      {day:17, title:"Работа с окружением", desc:"Честно смотрим: кто из близких даёт энергию, а кто забирает — и что с этим делать."},
-      {day:18, title:"Уверенность и «я могу»", desc:"Уверенность рождается из опыта. Вспоминаем свои победы и укрепляем веру в себя."},
-      {day:19, title:"Мои маленькие победы", desc:"Делимся историями прогресса — это закрепляет результат и вдохновляет двигаться дальше."},
-      {day:20, title:"Осознанная забота о себе", desc:"Подарок как опыт, а не вещь — массаж, прогулка, театр. Наполняем душу."},
-      {day:21, title:"Итоги трёх недель", desc:"Три недели позади. Записываем 5 главных изменений и ставим цель на следующий месяц."},
-    ]
-  },
-  {
-    num:4, title:"Неделя 4 — Феникс ✦ Бонус", sub:"Самая мощная неделя + 20 минут лично с Евангелиной",
-    days:[
-      {day:22, title:"Поддерживающие микропрактики", desc:"5 минут в день меняют жизнь — выбираем практику и закрепляем навсегда."},
-      {day:23, title:"Я управляю временем", desc:"Ваше время — ваша главная валюта. Учимся тратить её осознанно."},
-      {day:24, title:"Работа с сопротивлением", desc:"«Лень», «не хочу», «потом» — это не враги, а сигналы роста. Учимся с ними работать."},
-      {day:25, title:"Цель и маленькие шаги", desc:"Формируем цель на 3 месяца и разбиваем её на ежедневные шаги по 10–15 минут."},
-      {day:26, title:"Мой прогресс за неделю", desc:"Фиксируем изменения — каждая записанная победа укрепляет движение вперёд."},
-      {day:27, title:"Финальный подарок себе", desc:"Самый значимый подарок за весь курс — символ уважения к пройденному пути."},
-      {day:28, title:"Финал. Феникс поднялся. 🔥", desc:"Итоги курса, 10 открытий, одна привычка навсегда — и встреча с Евангелиной."},
-    ]
-  }
+  { num:1, title:"Неделя 1 — Видеть программы", premium:false, lessons:[
+    {id:1,  title:"Где уходит моя энергия?",                    defaultType:'video'},
+    {id:2,  title:"Что такое психологическая программа",          defaultType:'audio'},
+    {id:3,  title:"Спасатель",                                   defaultType:'audio'},
+    {id:4,  title:"Виноватый",                                   defaultType:'audio'},
+    {id:5,  title:"Угодник",                                     defaultType:'audio'},
+    {id:6,  title:"Хранитель чужого комфорта",                   defaultType:'audio'},
+    {id:7,  title:"Итоги недели 1",                              defaultType:'audio'},
+  ]},
+  { num:2, title:"Неделя 2 — Более глубокие программы", premium:false, lessons:[
+    {id:8,  title:"Поглотитель чужих эмоций",                    defaultType:'audio'},
+    {id:9,  title:"Жизнь ради взрослых детей",                   defaultType:'audio'},
+    {id:10, title:"Значимые фигуры",                             defaultType:'audio'},
+    {id:11, title:"Односторонние отношения",                     defaultType:'audio'},
+    {id:12, title:"Утечка внимания",                             defaultType:'audio'},
+    {id:13, title:"Жизнь на автопилоте",                         defaultType:'audio'},
+    {id:14, title:"Итоги недели 2",                              defaultType:'audio'},
+  ]},
+  { num:3, title:"Неделя 3 — Прерывать программы", premium:false, lessons:[
+    {id:15, title:"Пауза в 30 секунд",                           defaultType:'audio'},
+    {id:16, title:"Энергетический аудит",                        defaultType:'audio'},
+    {id:17, title:"Учимся говорить нет",                         defaultType:'audio'},
+    {id:18, title:"Возвращение чужих эмоций",                    defaultType:'audio'},
+    {id:19, title:"Возвращение внимания",                        defaultType:'audio'},
+    {id:20, title:"Первое решение из желания",                   defaultType:'audio'},
+    {id:21, title:"Итоги недели 3",                              defaultType:'audio'},
+  ]},
+  { num:4, title:"Неделя 4 — Феникс ✦ Бонус", premium:true, lessons:[
+    {id:22, title:"Утро до того, как мир начнёт вас требовать",  defaultType:'audio'},
+    {id:23, title:"Разговор о взаимности",                       defaultType:'audio'},
+    {id:24, title:"Деньги и самооценка",                         defaultType:'audio'},
+    {id:25, title:"Ваша первая граница",                         defaultType:'audio'},
+    {id:26, title:"Финал. Феникс поднялся. 🔥",                  defaultType:'audio'},
+  ]},
 ];
 
-// ─── STATE ─────────────────────────────────────────────────────────────────────
-const STORAGE_KEY = 'phoenix_lessons_v1';
-let videos = {};
-let activeDay = null;
+// ── STATE ─────────────────────────────────────────────
+const STORAGE_KEY = 'phoenix_admin_media_v2';
+let media = {};
+let activeId = null;
+let activeType = 'audio';
 
-function loadVideos() {
-  try { videos = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}'); } catch(e) { videos = {}; }
+function loadMedia() {
+  try { media = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}'); } catch(e) { media = {}; }
+  // Pre-load lesson 1 video
+  if (!media[1]) { media[1] = { type:'video', value:'ZeCX4TMfzUs' }; saveMedia(); }
 }
-function saveVideos() {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(videos));
-}
+function saveMedia() { localStorage.setItem(STORAGE_KEY, JSON.stringify(media)); }
 
-// ─── YOUTUBE UTILS ─────────────────────────────────────────────────────────────
-function extractYouTubeId(url) {
-  if (!url) return null;
-  const patterns = [
-    /youtu\.be\/([a-zA-Z0-9_-]{11})/,
-    /youtube\.com\/watch\?.*v=([a-zA-Z0-9_-]{11})/,
-    /youtube\.com\/embed\/([a-zA-Z0-9_-]{11})/,
-  ];
-  for (const p of patterns) {
-    const m = url.match(p);
-    if (m) return m[1];
-  }
-  return null;
-}
-
-function toEmbedUrl(videoId) {
-  return `https://www.youtube.com/embed/${videoId}`;
-}
-
-// ─── RENDER SIDEBAR ────────────────────────────────────────────────────────────
+// ── SIDEBAR ───────────────────────────────────────────
 function renderSidebar() {
   const list = document.getElementById('lessonList');
   let html = '';
   let total = 0, done = 0;
-
   WEEKS.forEach(week => {
-    html += `<div class="sidebar-week-label">${week.title}</div>`;
-    week.days.forEach(lesson => {
+    html += `<div class="week-label">${week.title}${week.premium ? ' ✦' : ''}</div>`;
+    week.lessons.forEach(lesson => {
       total++;
-      const hasVideo = !!videos[lesson.day];
-      if (hasVideo) done++;
-      const isActive = activeDay === lesson.day;
-      html += `
-        <div class="lesson-pill ${hasVideo ? 'has-video' : 'no-video'} ${isActive ? 'active' : ''}"
-             onclick="selectLesson(${lesson.day})">
-          <span class="pill-dot"></span>
-          <span class="pill-num">${lesson.day}</span>
-          <span class="pill-title">${lesson.title}</span>
-          ${hasVideo ? '<span class="pill-check">✓</span>' : ''}
-        </div>`;
+      const m = media[lesson.id];
+      if (m) done++;
+      const isActive = activeId === lesson.id;
+      html += `<div class="lesson-pill ${m?'has':'no'}-media ${isActive?'active':''}" onclick="selectLesson(${lesson.id})">
+        <span class="pill-dot ${m?'has-media':'no-media'}"></span>
+        <span class="pill-num">${lesson.id}</span>
+        <span class="pill-title">${lesson.title}</span>
+        ${m ? `<span class="pill-type ${m.type}">${m.type==='video'?'🎬':'🎧'}</span>` : ''}
+      </div>`;
     });
   });
-
   list.innerHTML = html;
   document.getElementById('progressText').textContent = `${done} / ${total}`;
   document.getElementById('progressFill').style.width = `${(done/total)*100}%`;
+  const remaining = total - done;
+  document.getElementById('progressSub').textContent = remaining > 0 ? `Осталось записать: ${remaining} урок${remaining===1?'':'ов'}` : '✓ Все уроки добавлены!';
 }
 
-// ─── SELECT LESSON ─────────────────────────────────────────────────────────────
-function selectLesson(dayNum) {
-  activeDay = dayNum;
+// ── SELECT LESSON ─────────────────────────────────────
+function selectLesson(id) {
+  activeId = id;
+  let lesson = null, week = null;
+  WEEKS.forEach(w => w.lessons.forEach(l => { if (l.id === id) { lesson = l; week = w; } }));
+
   document.getElementById('emptyState').style.display = 'none';
-  const editor = document.getElementById('editor');
-  editor.classList.add('visible');
+  document.getElementById('editor').classList.add('visible');
+  document.getElementById('edBreadcrumb').textContent = week.title;
+  document.getElementById('edTitle').textContent = `Урок ${lesson.id}. ${lesson.title}`;
 
-  let lesson = null, weekTitle = '';
-  WEEKS.forEach(w => {
-    w.days.forEach(d => { if (d.day === dayNum) { lesson = d; weekTitle = w.title; } });
-  });
-
-  document.getElementById('edBreadcrumb').textContent = weekTitle;
-  document.getElementById('edTitle').textContent = `День ${lesson.day}. ${lesson.title}`;
-  document.getElementById('edDesc').textContent = lesson.desc;
-
-  const existing = videos[dayNum];
-  const urlInput = document.getElementById('urlInput');
-  const clearBtn = document.getElementById('clearBtn');
-  const previewBox = document.getElementById('previewBox');
-  const previewFrame = document.getElementById('previewFrame');
-  const statusBar = document.getElementById('statusBar');
-
-  statusBar.className = 'status-bar';
-  statusBar.textContent = '';
+  const existing = media[id];
+  const type = existing ? existing.type : lesson.defaultType;
+  selectType(type);
 
   if (existing) {
-    urlInput.value = `https://youtu.be/${existing}`;
-    clearBtn.style.display = 'inline-block';
-    previewBox.classList.add('visible');
-    previewFrame.src = toEmbedUrl(existing);
+    if (existing.type === 'video') document.getElementById('videoInput').value = existing.value;
+    else document.getElementById('audioInput').value = existing.value;
+    document.getElementById('clearBtn').style.display = 'inline-block';
   } else {
-    urlInput.value = '';
-    clearBtn.style.display = 'none';
-    previewBox.classList.remove('visible');
-    previewFrame.src = '';
+    document.getElementById('videoInput').value = '';
+    document.getElementById('audioInput').value = '';
+    document.getElementById('clearBtn').style.display = 'none';
   }
 
+  document.getElementById('statusBar').className = 'status-bar';
   renderSidebar();
 }
 
-// ─── SAVE ──────────────────────────────────────────────────────────────────────
+function selectType(type) {
+  activeType = type;
+  document.getElementById('typeVideo').classList.toggle('selected', type === 'video');
+  document.getElementById('typeAudio').classList.toggle('selected', type === 'audio');
+  document.getElementById('videoField').classList.toggle('visible', type === 'video');
+  document.getElementById('audioField').classList.toggle('visible', type === 'audio');
+}
+
+// ── SAVE ─────────────────────────────────────────────
 function saveLesson() {
-  const url = document.getElementById('urlInput').value.trim();
+  const value = activeType === 'video'
+    ? document.getElementById('videoInput').value.trim()
+    : document.getElementById('audioInput').value.trim();
+
   const statusBar = document.getElementById('statusBar');
-
-  if (!url) {
+  if (!value) {
     statusBar.className = 'status-bar error';
-    statusBar.textContent = '⚠ Вставьте ссылку на YouTube видео.';
+    statusBar.textContent = '⚠ Введите ID видео или имя файла.';
     return;
   }
 
-  const id = extractYouTubeId(url);
-  if (!id) {
-    statusBar.className = 'status-bar error';
-    statusBar.textContent = '⚠ Ссылка не распознана. Используйте формат youtu.be/... или youtube.com/watch?v=...';
-    return;
-  }
-
-  videos[activeDay] = id;
-  saveVideos();
-
-  const previewBox = document.getElementById('previewBox');
-  const previewFrame = document.getElementById('previewFrame');
-  previewBox.classList.add('visible');
-  previewFrame.src = toEmbedUrl(id);
+  media[activeId] = { type: activeType, value: value };
+  saveMedia();
   document.getElementById('clearBtn').style.display = 'inline-block';
-
   statusBar.className = 'status-bar success';
-  statusBar.textContent = `✓ День ${activeDay} сохранён. Видео добавлено в курс.`;
-
+  statusBar.textContent = `✓ Урок ${activeId} сохранён (${activeType === 'video' ? 'видео' : 'аудио'}).`;
   renderSidebar();
 }
 
-// ─── CLEAR ─────────────────────────────────────────────────────────────────────
 function clearLesson() {
-  if (!confirm(`Удалить видео из Дня ${activeDay}?`)) return;
-  delete videos[activeDay];
-  saveVideos();
-  document.getElementById('urlInput').value = '';
+  if (!confirm(`Удалить медиа из Урока ${activeId}?`)) return;
+  delete media[activeId];
+  saveMedia();
+  document.getElementById('videoInput').value = '';
+  document.getElementById('audioInput').value = '';
   document.getElementById('clearBtn').style.display = 'none';
-  document.getElementById('previewBox').classList.remove('visible');
-  document.getElementById('previewFrame').src = '';
   const statusBar = document.getElementById('statusBar');
   statusBar.className = 'status-bar success';
-  statusBar.textContent = `✓ Видео из Дня ${activeDay} удалено.`;
+  statusBar.textContent = `✓ Медиа из Урока ${activeId} удалено.`;
   renderSidebar();
 }
 
-// ─── EXPORT ────────────────────────────────────────────────────────────────────
-function exportCourse() {
-  const data = JSON.stringify(videos, null, 2);
-  const blob = new Blob([generateCourseHTML(data)], {type:'text/html'});
-  const a = document.createElement('a');
-  a.href = URL.createObjectURL(blob);
-  a.download = 'phoenix-light.html';
-  a.click();
+// ── EXPORT ────────────────────────────────────────────
+function exportMembers() {
+  // Build LESSON_MEDIA object from current state
+  let mediaLines = '';
+  Object.entries(media).forEach(([id, m]) => {
+    if (m.type === 'video') mediaLines += `  ${id}: { type:'video', id:'${m.value}' },\n`;
+    else mediaLines += `  ${id}: { type:'audio', file:'${m.value}' },\n`;
+  });
+
+  // Fetch members.html from same directory and inject
+  fetch('members.html')
+    .then(r => r.text())
+    .then(html => {
+      const updated = html.replace(
+        /const LESSON_MEDIA = \{[\s\S]*?\};/,
+        `const LESSON_MEDIA = {\n${mediaLines}};`
+      );
+      const blob = new Blob([updated], {type:'text/html'});
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = 'members.html';
+      a.click();
+    })
+    .catch(() => {
+      alert('Не удалось загрузить members.html. Убедитесь что оба файла находятся в одной папке на GitHub.');
+    });
 }
 
-function generateCourseHTML(videosJson) {
-  // This injects the videos data into the course page JS
-  return COURSE_HTML_TEMPLATE.replace('/*__VIDEOS_DATA__*/', `const LESSON_VIDEOS = ${videosJson};`);
-}
-
-// ─── INIT ──────────────────────────────────────────────────────────────────────
-loadVideos();
+// ── INIT ─────────────────────────────────────────────
+loadMedia();
 renderSidebar();
-
-// Pre-load Day 1 with existing video
-if (!videos[1]) { videos[1] = 'ZeCX4TMfzUs'; saveVideos(); renderSidebar(); }
 </script>
-
-<script>
-// The course HTML template is embedded here as a string
-// (generated dynamically on export)
-const COURSE_HTML_TEMPLATE = `PLACEHOLDER_REPLACED_ON_EXPORT`;
-</script>
-
 </body>
 </html>
