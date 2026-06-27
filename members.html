@@ -229,8 +229,10 @@ body { font-family:'Raleway',sans-serif; background:var(--bg); color:var(--text)
       <!-- Audio (Lessons 2–26) -->
       <div class="audio-player" id="audioPlayer">
         <div class="audio-player-title" id="audioTitle"></div>
-        <audio id="audioElement" controls controlsList="nodownload">
-          <source id="audioSource" src="" type="audio/mpeg">
+        <audio id="audioElement" controls controlsList="nodownload" playsinline preload="metadata" style="width:100%;border-radius:8px;">
+          <source id="audioSource" src="" type="audio/mp4">
+          <source id="audioSource2" src="" type="audio/x-m4a">
+          <source id="audioSource3" src="" type="audio/mpeg">
         </audio>
       </div>
       <div class="audio-coming" id="audioComing">
@@ -441,16 +443,19 @@ function openLesson(lessonId) {
       // Also show audio if available
       if (media.audio) {
         document.getElementById('audioTitle').textContent = `Урок ${lesson.id} — аудиоверсия`;
-        document.getElementById('audioSource').src = decodeURIComponent(media.audio);
-        document.getElementById('audioElement').load();
+        const audioEl2 = document.getElementById('audioElement');
+        audioEl2.querySelectorAll('source').forEach(s => s.src = media.audio);
+        audioEl2.load();
         audioPlayer.classList.add('visible');
       }
     } else if (media.type === 'audio') {
       document.getElementById('formatBadge').className = 'format-badge audio';
       document.getElementById('formatBadge').textContent = '🎧 Аудиоурок';
       document.getElementById('audioTitle').textContent = `Урок ${lesson.id} — ${lesson.title}`;
-      document.getElementById('audioSource').src = decodeURIComponent(media.file);
-      document.getElementById('audioElement').load();
+      const audioEl = document.getElementById('audioElement');
+      const src = media.file;
+      audioEl.querySelectorAll('source').forEach(s => s.src = src);
+      audioEl.load();
       audioPlayer.classList.add('visible');
     }
   } else {
