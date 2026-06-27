@@ -229,11 +229,14 @@ body { font-family:'Raleway',sans-serif; background:var(--bg); color:var(--text)
       <!-- Audio (Lessons 2–26) -->
       <div class="audio-player" id="audioPlayer">
         <div class="audio-player-title" id="audioTitle"></div>
-        <audio id="audioElement" controls controlsList="nodownload" playsinline preload="metadata" style="width:100%;border-radius:8px;">
-          <source id="audioSource" src="" type="audio/mp4">
-          <source id="audioSource2" src="" type="audio/x-m4a">
-          <source id="audioSource3" src="" type="audio/mpeg">
-        </audio>
+        <iframe id="audioElement"
+          src=""
+          width="100%"
+          height="80"
+          frameborder="0"
+          allow="autoplay"
+          style="border-radius:8px;background:#000;">
+        </iframe>
       </div>
       <div class="audio-coming" id="audioComing">
         <div class="audio-coming-icon">🎧</div>
@@ -444,8 +447,8 @@ function openLesson(lessonId) {
       if (media.audio) {
         document.getElementById('audioTitle').textContent = `Урок ${lesson.id} — аудиоверсия`;
         const audioEl2 = document.getElementById('audioElement');
-        audioEl2.querySelectorAll('source').forEach(s => s.src = media.audio);
-        audioEl2.load();
+        const fileId2 = media.audio.split('id=')[1];
+        audioEl2.src = 'https://drive.google.com/file/d/' + fileId2 + '/preview';
         audioPlayer.classList.add('visible');
       }
     } else if (media.type === 'audio') {
@@ -453,9 +456,9 @@ function openLesson(lessonId) {
       document.getElementById('formatBadge').textContent = '🎧 Аудиоурок';
       document.getElementById('audioTitle').textContent = `Урок ${lesson.id} — ${lesson.title}`;
       const audioEl = document.getElementById('audioElement');
-      const src = media.file;
-      audioEl.querySelectorAll('source').forEach(s => s.src = src);
-      audioEl.load();
+      // Extract file ID and use preview URL for iframe
+      const fileId = media.file.split('id=')[1];
+      audioEl.src = 'https://drive.google.com/file/d/' + fileId + '/preview';
       audioPlayer.classList.add('visible');
     }
   } else {
